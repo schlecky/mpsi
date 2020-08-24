@@ -1,1 +1,164 @@
-page de test
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script> 
+
+	<link rel="SHORTCUT ICON" href="logo.ico">
+  <link rel="stylesheet" href="css/style.css" title="Style"/> 
+  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+	<title>Physique-Chimie</title>
+  </head>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://chip.schleck.ovh/matomo/";
+    _paq.push(["setTrackerUrl", u+"matomo.php"]); 
+    _paq.push(["setSiteId", "2"]);
+    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+    g.defer=true; g.async=true; g.src=u+"matomo.js"; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+
+<body>
+
+
+<nav class="navbar">
+    <div class=navbar-logo>
+      <img src=images/logo.png />
+    </div>
+  <div class="navbar-menu">
+    <div id=menu>
+		  <a class="navbar-item" href=#colles>Colles</a>
+		  <a class="navbar-item" href=#cours>Cours</a>
+		  <a class="navbar-item" href=#td>TD</a>
+		  <a class="navbar-item" href=#tp>TP</a>
+		  <a class="navbar-item" href=#devoirs>Devoirs</a>
+    </div>
+ </nav>
+      
+ <p class="avert"><strong>Attention</strong>, les cours, énoncés et corrigés disponibles ici comportent très probablement des erreurs, à utiliser avec discernement&nbsp;!</p>
+
+ <section id="colles">
+ <h1><span> Colles</span></h1>
+ <a href="fichiers/sem01.pdf" target="_blank" id=btnColles>
+   <div id="colles_container">
+   <div id="colles_icone">
+     <i class="fas fa-file-pdf"></i>
+   </div>
+   <div id=colles_texte>
+     <span><h1>Programme</h1>
+     <h2>Semaine 1 du 07/09 au 11/09</h2></span>
+   </div>
+   </div>
+
+ </a>
+ </section>
+
+ <section id="cours" class="cartes">
+ <h1><span> Cours</span></h1>
+  <div class="conteneur">
+    <div class="carte">
+      <header class="carte_header">
+        Optique géométrique
+      </header>
+      <div class="carte_contenu">
+        <div class="documents">
+        <a href="fichiers/01_optique_geo.pdf" target="_blank">Cours</a>
+        <a href="fichiers/01_optique_geo-memento.pdf" target="_blank">Mémento</a>
+        </div>
+        <div class="animations">
+          <a href="http://www.sciences.univ-nantes.fr/sites/genevieve_tulloue/optiqueGeo/dioptres/dioptre_plan.php?typanim=Javascript" target="_blank">Lois de Descartes</a> 
+          <a href="http://www.sciences.univ-nantes.fr/sites/genevieve_tulloue/optiqueGeo/dioptres/Descartes.php?typanim=Javascript" target="_blank">Lois de Descartes (3D)</a> 
+          <a href="http://www.sciences.univ-nantes.fr/sites/genevieve_tulloue/optiqueGeo/lentilles/lentille_mince.php?typanim=Javascript" target="_blank">Lentilles minces</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <header class="carte_header">
+        Circuits électriques
+      </header>
+      <div class="carte_contenu">
+        <div class="documents">
+        <a href="fichiers/02_circuits_elec.pdf" target="_blank">Cours</a>
+        <a href="fichiers/02_circuits_elec-memento.pdf" target="_blank">Mémento</a>
+        </div>
+        <div class="animations">
+        </div>
+      </div>
+    </div>
+  </div>
+ </section>
+
+ <section id="td" class="cartes">
+ <h1><span>Travaux dirigés</span></h1>
+ 
+  <div class="conteneur">
+    <div class="carte">
+      <header class="carte_header">
+        TD1 &ndash; Optique géométrique
+      </header>
+      <div class="carte_contenu">
+        <div class="documents">
+        <a href="fichiers/td1_opt_geo.pdf" target="_blank">énoncé</a>
+        <a href="fichiers/td1_opt_geo_corr.pdf" target="_blank">corrigé</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <header class="carte_header">
+        TD2 &ndash; Circuits électriques dans l'ARQS
+      </header>
+      <div class="carte_contenu">
+        <div class="documents">
+        <a href="fichiers/td2_elec_ARQS.pdf" target="_blank">énoncé</a>
+        <a href="fichiers/td2_elec_ARQS_corr.pdf" target="_blank">corrigé</a>
+        </div>
+        <div class="animations">
+        </div>
+      </div>
+    </div>
+  </div>
+ </section>
+
+ <section id="tp">
+ <h1><span>Travaux pratiques</span></h1>
+ </section>
+
+ <section id="devoirs">
+ <h1><span>Devoirs</span></h1>
+ </section>
+	<footer>
+	  <p>Dernière mise à jour : 25/08/2020</p>
+	</footer>
+  </body>
+<script charset="utf-8">
+  
+$("a[href*='youtu.be']").prepend("<i class=\"fab fa-youtube\"></i>");
+$("a[href*='youtube.com']").prepend("<i class=\"fab fa-youtube\"></i>");
+//$('a[href$=.swf]').prepend("<i class=\"fas fa-cogs\"></i>");
+$("div.animations a").prepend("<i class=\"fas fa-cogs\"></i>");
+$("a[href$='.pdf']:not(#btnColles)").prepend("<i class=\"fas fa-file-pdf\"></i>");
+$("a[href$='.py']").prepend("<i class=\"fas fa-python\"></i>");
+$("a[href$='.txt']").prepend("<i class=\"fas fa-file-alt\"></i>");
+
+
+
+function offsetAnchor() {
+  if (location.hash.length !== 0) {
+    window.scrollTo(window.scrollX, window.scrollY - $('nav').height());
+    console.log($('nav').height());
+  }
+}
+$("#menu a").click(function() {
+  window.setTimeout(function() {offsetAnchor();}, 5);
+});
+
+</script>
+</html>
