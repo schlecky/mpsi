@@ -211,3 +211,13 @@ a#btnColles:hover{
   padding:15px;
   
 }
+
+table{
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+td {
+  border: 1px solid #dbdbdb;
+  padding: 0.5em 0.75em;
+  vertical-align: top;
+}
