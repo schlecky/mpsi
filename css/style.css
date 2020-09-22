@@ -116,7 +116,7 @@ i.fas, i.fab {
   font-weight: 300;
 }
 
-.animations a{
+.animations a, .videos a{
   display:block;
   
 }
