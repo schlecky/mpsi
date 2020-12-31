@@ -12,6 +12,24 @@
   </head>
 <body>
 
+<!-- Start Open Web Analytics Tracker -->
+<script type="text/javascript">
+//<![CDATA[
+var owa_baseUrl = 'http://chip.schleck.ovh/owa/';
+var owa_cmds = owa_cmds || [];
+owa_cmds.push(['setSiteId', '226a0ca8903bebfaef4c459e6ae8a723']);
+owa_cmds.push(['trackPageView']);
+owa_cmds.push(['trackClicks']);
+
+(function() {
+    var _owa = document.createElement('script'); _owa.type = 'text/javascript'; _owa.async = true;
+    owa_baseUrl = ('https:' == document.location.protocol ? window.owa_baseSecUrl || owa_baseUrl.replace(/http:/, 'https:') : owa_baseUrl );
+    _owa.src = owa_baseUrl + 'modules/base/js/owa.tracker-combined-min.js';
+    var _owa_s = document.getElementsByTagName('script')[0]; _owa_s.parentNode.insertBefore(_owa, _owa_s);
+}());
+//]]>
+</script>
+<!-- End Open Web Analytics Code -->
 
 <nav class="navbar">
     <div class=navbar-logo>
@@ -466,7 +484,7 @@
  </table>
  </section>
 	<footer>
-	  <p>Dernière mise à jour : 30/12/2020</p>
+	  <p>Dernière mise à jour : 31/12/2020</p>
 	</footer>
   </body>
 <script charset="utf-8">
