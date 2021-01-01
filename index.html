@@ -512,6 +512,18 @@ $("#menu a").click(function() {
   window.setTimeout(function() {offsetAnchor();}, 5);
 });
 
+// Track links
+$('a').click(function(event) {
+    // Remember the link href
+    var href = this.href;
+
+    // Don't follow the link
+    event.preventDefault();
+    owa_cmds.push(['trackPageView', 'Lien', href]); 
+    // Do the async thing
+    window.open(href);
+    
+});
 
 </script>
 </html>
