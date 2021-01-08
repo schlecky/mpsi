@@ -564,7 +564,7 @@ $("#menu a").click(function() {
 });
 
 // Track links
-$('a').click(function(event) {
+$('a[href$=".pdf"]').click(function(event) {
     // Remember the link href
     var href = this.href;
 
