@@ -1,3 +1,5 @@
+# Mouvement d'un point matériel dans le champs de pesenteur terrestre avec
+# des frottements fluides proportionnels à v**2
 import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
