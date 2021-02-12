@@ -19,7 +19,10 @@ def sys(y,t):
     la dérivée de x et celle de x'
     """
     x, xprime = y
-    return [xprime, -np.sin(x)] #pendule simple non amorti
+
+    k=0.05 # Coefficient de frottements, mettre 0 pour un pendule non amorti
+    return [xprime, -np.sin(x)-k*xprime]
+
 
 
 #Liste de conditions initiales-------------------
