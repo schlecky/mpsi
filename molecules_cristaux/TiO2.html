@@ -1,0 +1,80 @@
+
+<!-- This script is used to show any of the Jmol models in this directory -->
+<html>
+<head>
+ <title>TiO2</title>
+<!-- The next little script sets the Jmol system up -->
+       <script type="text/javascript" src="JSmol.min.js"></script> 
+<!--  then the running conditions are set in this one  --> 
+       <script type="text/javascript">
+        var acted=0;
+        function readyfunc()
+         {
+          Jmol.script(JmolApplet0, "select all ; zoom 60;");
+         };
+        var Info = {
+// Let the applet fill the whole width of the popup, but leave some space at the
+//  bottom of the window for any html output
+// By using %s, the applet will be resized if the window is resized
+        height: "80%",
+        width: "100%",
+// php sets the Jmol variable Info.use
+        use: "HTML5",
+// The next line assumes that the .jar files in the Jmol distribution have been moved
+//  to the top level of the Jmol library directory
+        jarPath: ".",
+        j2sPath: "j2s",
+// The signed applet will be used
+        jarFile: "JmolAppletSigned0.jar",
+        isSigned: true,
+        console: "JmolApplet0_infodiv",
+        readyFunction: readyfunc
+        };
+       </script>
+</head>
+<!-- Begin the working part of the html script -->
+<body>
+<!--
+In the next script, a Jmol applet is opened with the properties set up in the head section
+-->
+       <script type="text/javascript">
+        JmolApplet0 = Jmol.getApplet("JmolApplet0", Info);
+        Jmol.script(JmolApplet0, "load TiO2.cif 1 {333 777 1};axes off;unitcell off;spacefill 0.4;");
+        Jmol.script(JmolApplet0, "set bondmode AND; select titanium; wireframe off;");
+       </script>
+<!-- A table is used to place useful Jmol buttons neatly along a row -->
+<table><tr>
+ <td>
+	<script type="text/javascript">
+    function UneMaille(){
+          Jmol.script(JmolApplet0, "display cell=555;unitcell on");
+    }
+ 	</script>
+   <button onclick="UneMaille()">Une maille</button>
+ </td>
+ <td>
+	<script type="text/javascript">
+    function Coordinance(){
+          Jmol.script(JmolApplet0, "select connected(@380); display ADD (selected);");
+    }
+  </script>
+   <button onclick="Coordinance()">Coordinance</button>
+ </td>
+ <td>
+	<script type="text/javascript">
+        Jmol.jmolButton(JmolApplet0, "display all;select all;color atoms TRANSLUCENT 0;", "Tous");
+ 	</script>
+ </td>
+ <td>
+<script type="text/javascript">
+ var r = [
+    ["select all;spacefill 0.4;","ball",true],
+    ["select oxygen;spacefill 1.28; select titanium; spacefill 0.7","spheres"]
+ ];
+ Jmol.jmolRadioGroup(JmolApplet0, r, "<br>", "atomstyle");
+</script>
+ </td>
+</tr></table>
+</body>
+</html>
+

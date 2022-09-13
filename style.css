@@ -1,0 +1,267 @@
+/*:root {
+ --color1:#F4F6F3;
+ --color2:#9C908C;
+ --color3:#C1613E;
+ --color4:#5B5E5E;
+ --color5:#3F282F;
+}*/
+
+:root {
+ --color1:#F6F6F8; /*Fond clair */
+ --color2:#4D5061; /*fond titre 1*/
+ --color3:#011638; /*fond titre 2*/
+ --color4:#4C5B61; /*ombre*/
+ --color5:#3F282F; /* Couleur titre */
+}
+body {
+ /*background-image:url(images/bg.png);
+ background-repeat:repeat;*/
+ background-color: var(--color2);
+ color:var(--color5);
+ font-size:.9em;
+ min-width:800px
+}
+h1 {
+ color:var(--color5);
+ font-family:times,helvetica,arial,sans-serif;
+ text-align:left;
+ font-style:normal;
+ margin:0;
+ margin-bottom:60px;
+ margin-left:20px;
+ padding:0;
+ font-size:2em;
+ border-bottom:var(--color2) solid 2px
+}
+span.sstitre {
+ font-size:.5em;
+ display:block
+}
+span.space {
+ width:50px;
+ display:inline-block;
+ text-align:center
+}
+span.right {
+ float:right
+}
+h2 {
+ color:var(--color1);
+ background-color:var(--color3);
+ background:linear-gradient(to bottom,var(--color2) 0,var(--color3) 100%);
+ border-radius:2px;
+ box-shadow:2px 2px 4px 0 var(--color4);
+ margin-left:auto;
+ margin-right:auto;
+ width:90%;
+ text-align:center;
+ padding:3px 5px
+}
+h3 {
+ color:var(--color5);
+ margin-left:8%;
+ margin-right:auto;
+ padding-right:10px;
+  margin-bottom:2px;
+  margin-top:5px;
+ display:inline-block;
+}
+h4 {
+ color:var(--color5);
+ margin-left:10%;
+ padding-right:10px;
+  margin-top:5px;
+  margin-bottom:2px;
+ display:block
+}
+section {
+ width:70%;
+ min-width:600px;
+ display:block;
+ border:solid #000 1px;
+ border-top:solid gray 1px;
+ margin-left:auto;
+ margin-right:auto;
+ margin-top:10px;
+ position:relative;
+ padding:20px;
+ background-color:var(--color1);
+ color:var(--color4)
+}
+a {
+ margin:0;
+ padding:2px 2px;
+ border-radius:3px;
+ border:0;
+ font-size:100%;
+ font:inherit;
+ color:inherit;
+ text-decoration:inherit;
+ vertical-align:baseline;
+ white-space:nowrap;
+}
+section a:not(.image) {
+ color:var(--color3);
+}
+section a:hover {
+ color:var(--color1);
+ background-color:var(--color3);
+ transition:all .1s ease-in-out
+}
+p {
+ width:80%;
+ margin-left:10%;
+  margin-top:5px;
+ text-align:justify
+}
+span.att {
+ font-weight:700
+}
+ul ,ol {
+ padding-top:0;
+ margin-top:0;
+ margin-left:10%;
+ margin-bottom:10px;
+ padding-left:0;
+ list-style-position:inside
+}
+
+ol.chapitres span{
+
+}
+
+li {
+ margin-top:5px;
+ margin-left:0;
+ padding-left:0;
+ color:var(--color5);
+}
+
+li>a {
+ margin-left:0px;
+ border-radius:3px
+}
+/*
+a[href^=http]:before {
+ font-family:FontAwesome;
+ content:"\f0c1";
+ display:inline-block;
+ padding-right:3px;
+ vertical-align:middle
+}
+a[href$=".pdf"]:before {
+ font-family:FontAwesome;
+ content:"\f1c1";
+ display:inline-block;
+ padding-right:3px;
+ vertical-align:middle
+}
+a[href$=".py"]:before {
+ font-family:FontAwesome;
+ content:"\f1c9";
+ display:inline-block;
+ padding-right:3px;
+ vertical-align:middle
+}
+a[href$=".swf"]:before {
+ font-family:FontAwesome;
+ content:"\f085";
+ display:inline-block;
+ padding-right:3px;
+ vertical-align:middle
+}
+*/
+i.fas,i.fab {
+ padding-right:3px;
+  margin-left:5px;
+   
+}
+#filler {
+ width:10%;
+ min-width:50px;
+ display:inline-block
+}
+
+.collapsed-list ul {
+ display:none
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:after {
+ font-family:FontAwesome;
+ content:"\f150";
+ display:inline-block;
+ padding-right:3px;
+ vertical-align:middle;
+}
+
+
+ol.chapitres h3{
+  font-size:16px;
+  font-weight:inherit;
+  padding:0px;
+  margin-left:0px;
+}
+
+ol.chapitres >li>div{
+  /*border-left: solid 3px;*/
+  margin-left:5px;
+  color:var(--color6);
+  opacity:1;
+  margin-bottom:15px;
+  font-size:12px;
+}
+
+div.documents, div.ressources{
+  margin-top:5px;
+  margin-left:0px;
+  /*! font-size:small; */
+}
+
+div.documents{
+  font-size:14px;
+}
+
+div.ressources{
+
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
