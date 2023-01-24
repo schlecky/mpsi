@@ -1,0 +1,44 @@
+div#controles{
+  display:inline-block;
+  width:300px;
+  vertical-align: top;
+  margin-left:30px;
+}
+div#graphiques{
+  display:inline-block;
+  width:800px;
+}
+
+.btn{
+  background:gray;
+  padding:10px;
+  text-align: center;
+  border-radius:5px;
+  color:white;
+  border: solid 1px black;
+}
+
+.btn:hover{
+  cursor:pointer;
+  background: #00bd26;
+}
+
+#tSlider{
+  width:100%;
+}
+
+.inputVal{
+  width:40px;
+  display:inline-block;
+}
+#cLabel{
+  display: inline-block;
+}
+
+.setup{
+  width:50px;
+  font-size:8pt;
+  margin-top:10px;
+  display: inline-block;
+
+}
