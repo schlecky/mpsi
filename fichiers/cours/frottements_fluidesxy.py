@@ -35,4 +35,6 @@ x2,xp2,y2,yp2 = odeint(f2,X0, t).transpose()
 
 plt.plot(x,y)
 plt.plot(x2,y2)
+plt.xlabel("x (m)")
+plt.ylabel("y (m)")
 plt.show()
