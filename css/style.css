@@ -55,8 +55,6 @@ h1 span{
 
 nav{
   min-height: 4.5rem;
-  display:flex;
-  align-items: stretch;
   background: white;
   box-shadow: 0 2px 0 0 whitesmoke;
   padding-left:1rem;
@@ -65,20 +63,39 @@ nav{
   right:0;
   top:0;
   z-index: 10;
+  width: 100%;
+  display:flex;
 }
+
+
 
 p.avert{
   text-align: center;
   font-weight: 300;
 }
 
+.navbar-logo{
+  display:flex;
+  width: 30%;
+}
+  .navbar-logo img{
+    width:80%;
+    height:auto;
+    margin:auto;
+  }
+
+nav label
+{
+    display: none;
+}
+
 nav .navbar-item{
-  position:relative;
+  display:inline-block;
   padding:0.35rem 0.75rem;
-  flex-grow:0;
-  flex-shrink: 0;
+  height:4.5rem;
+  text-align:center;
+  width: 13%;
   align-items: center;
-  display: flex;
 }
 
 nav .navbar-menu a{
@@ -93,20 +110,58 @@ nav .navbar-menu a:hover{
 
 nav .navbar-menu{
   display:flex;
-  flex-grow: 0;
-  flex-shrink: 0;
-  
-  align-items: stretch;
-  margin-left: 1rem;
+  width: 70%;
+  align-items: center;
+
 }
 
 nav #menu{
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-start;
-  flex-grow: 1;
+  display: inline-block;
+  width: 100%;
+}
+nav label, #toggle
+{
+  display: none;
 }
 
+@media only screen and (max-width: 768px){
+   .navbar-logo{
+    width:100%;
+    max-width:300px;
+  }
+  .navbar-logo img{
+    width:100%;
+  }
+  nav #menu{
+    display:none;
+    position:fixed;
+    top:4.5rem;
+    width:100vw;
+    left:0px;
+    flex-direction: column;
+  }
+  nav .navbar-item{
+    width:100%;
+  }
+  nav label 
+    {
+        width: 33%;
+        height:73%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        font-size: 8vw;
+        color: #1b375f;
+        cursor: pointer;
+    }
+    #toggle:checked + #menu {
+        display: flex;
+    }
+    #toggle:unchecked + #menu {
+        display: none;
+    }
+}
 section{
   padding:20px;
 }

@@ -15,16 +15,18 @@
 
 
 <nav class="navbar">
-    <div class=navbar-logo>
+    <div class="navbar-logo">
       <img src=images/logo.png />
     </div>
   <div class="navbar-menu">
+    <label for="toggle">☰</label>
+    <input type="checkbox" id="toggle">
     <div id=menu>
-		  <a class="navbar-item" href=#colles>Colles</a>
-		  <a class="navbar-item" href=#cours>Cours</a>
-		  <a class="navbar-item" href=#td>TD</a>
-		  <a class="navbar-item" href=#tp>TP</a>
-		  <a class="navbar-item" href=#devoirs>Devoirs</a>
+      <a class="navbar-item" href=#colles><p>Colles</p></a>
+      <a class="navbar-item" href=#cours><p>Cours</p></a>
+      <a class="navbar-item" href=#td><p>TD</p></a>
+      <a class="navbar-item" href=#tp><p>TP</p></a>
+      <a class="navbar-item" href=#devoirs><p>Devoirs</p></a>
     </div>
  </nav>
       
@@ -927,6 +929,10 @@ $("a[href$='.ipynb']").prepend("<i class=\"fab fa-python\"></i>");
 $("a[href$='.txt']").prepend("<i class=\"fas fa-file-alt\"></i>");
 $("a[href$='.zip']").prepend("<i class=\"fas fa-archive\"></i>");
 $("a[href$='.png']").prepend("<i class=\"fas fa-image\"></i>");
+
+$(".navbar-item").click(function(){
+    $("#toggle").click();
+})
 
 
 
