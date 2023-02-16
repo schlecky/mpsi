@@ -123,66 +123,6 @@ nav label, #toggle
 {
   display: none;
 }
-
-@media only screen and (max-width: 768px){
-   .navbar-logo{
-    width:100%;
-    max-width:300px;
-  }
-  .navbar-logo img{
-    width:100%;
-  }
-  nav #menu{
-    display:none;
-    position:fixed;
-    top:4.5rem;
-    width:100vw;
-    left:0px;
-    flex-direction: column;
-  }
-  nav .navbar-item{
-    width:100%;
-  }
-  nav label 
-    {
-        width: 33%;
-        height:73%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-        font-size: 8vw;
-        color: #1b375f;
-        cursor: pointer;
-    }
-    #toggle:checked + #menu {
-        display: flex;
-    }
-    #toggle:unchecked + #menu {
-        display: none;
-    }
-}
-section{
-  padding:20px;
-}
-
-i.fas, i.fab {
-  padding-right: 3px;
-  margin-left: 5px;
-}
-
-.animations, .videos, .python{
-  font-weight: 300;
-}
-
-.animations a, .videos a{
-  display:block;
-  
-}
-.documents a:not(:first-child) {
-    margin-left: 2rem;
-}
-
 a#btnColles{
   background:#1b375f;
   color: #fff;
@@ -244,6 +184,76 @@ div#colles{
   font-size: 0.8rem;
   opacity: 0.5;
 }
+
+@media only screen and (max-width: 768px){
+   .navbar-logo{
+    width:100%;
+    max-width:300px;
+  }
+  .navbar-logo img{
+    width:100%;
+  }
+  nav #menu{
+    display:none;
+    position:fixed;
+    top:4.5rem;
+    width:100vw;
+    left:0px;
+    flex-direction: column;
+  }
+  nav .navbar-item{
+    width:100%;
+  }
+  nav label 
+    {
+        width: 33%;
+        height:73%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        font-size: 8vw;
+        color: #1b375f;
+        cursor: pointer;
+    }
+    #toggle:checked + #menu {
+        display: flex;
+    }
+    #toggle:unchecked + #menu {
+        display: none;
+    }
+  div#colles{
+    width:80%
+  }
+    #colles_texte h1{
+      font-size:4vw
+    }
+    #colles_texte h2{
+      font-size:2vw
+    }
+}
+section{
+  padding:20px;
+}
+
+i.fas, i.fab {
+  padding-right: 3px;
+  margin-left: 5px;
+}
+
+.animations, .videos, .python{
+  font-weight: 300;
+}
+
+.animations a, .videos a{
+  display:block;
+  
+}
+.documents a:not(:first-child) {
+    margin-left: 2rem;
+}
+
+
 
 #colloscope{
   display: flex;
