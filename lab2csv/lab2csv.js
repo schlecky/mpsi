@@ -14,11 +14,19 @@ dropArea.addEventListener('drop', (event) => {
   event.stopPropagation();
   event.preventDefault();
   const fileList = event.dataTransfer.files;
-  console.log(fileList);
   readLabFile(fileList[0]);
 });
 
-
+function importData() {
+  let input = document.createElement('input');
+  input.type = 'file';
+  input.onchange = _ => {
+    // you can use this method to get file and perform respective operations
+            let files =   Array.from(input.files);
+            readLabFile(files[0]);
+        };
+  input.click();
+}
 
 
 function afficheVecteurs(vecteurs){
@@ -28,16 +36,13 @@ function afficheVecteurs(vecteurs){
     if(vecteurs[i].points.length>maxPoints)
       maxPoints = vecteurs[i].points.length;
   }
-  console.log(maxPoints);
 
   table.insertRow(0);
   for(i=0; i<maxPoints; i++){
     table.insertRow(i);
   }
-  console.log(table.rows.length);
   for(i=0;i<vecteurs.length; i++){
     table.rows[0].insertCell(i).innerHTML = vecteurs[i].nom;
-    console.log("taille vecteur", vecteurs[i].points.length);
     for(j=0; j<vecteurs[i].points.length; j++){
       table.rows[j+1].insertCell(i).innerHTML = vecteurs[i].points[j];
     }
@@ -166,11 +171,9 @@ function fileLoaded(event){
         }
 
         const [key, value] = currentLine.split('=');
-        console.log("Key :",key, "Value :",value);
         section[key.trim()] = value.trim().replace(/\"/g,"");
           if(value.trim().startsWith("table ")){
             nbpoints = parseInt( value.replace(/\s+/g, ' ').trim().split(" ")[1]);
-            console.log("Nombre de points : ",nbpoints)
             np = 0;
             vals = [];
             while(np<nbpoints){
@@ -184,7 +187,6 @@ function fileLoaded(event){
             }
             section[key.trim()] = vals;
             i++
-            console.log(vals)
           }
       }
     }
@@ -210,13 +212,11 @@ function fileLoaded(event){
           }
             value2 = value2+lines[++i];
         }
-        console.log("Key :",key, "Value :",value2);
         section[key.trim()] = value2.trim().replace(/\"/g,"");
       }
     }
     i++;
   }
-  console.log(event.target.result);
   dac = document.getElementById("drop-area-container")
   dac.remove();
   setSelects();

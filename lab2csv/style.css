@@ -3,6 +3,8 @@
   height:100%;
   position:fixed;
   background:white;
+  font-size:30px;
+  color:#a3a3c4;
 }
 
 #drop-area{
@@ -15,7 +17,8 @@ text-align:center;
 line-height:200px;
 background-color:#f7f7f7;
 border:dashed 1px gray;
-border-radius:20px
+border-radius:20px;
+cursor:pointer;
 }
 
 
