@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+	<meta charset="UTF-8">
+	<meta name=viewport content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css" title="Style"/> 
+  <link rel="stylesheet" href="chartist.min.css">
+	<title>Convertisseur fichier .lab</title>
+  </head>
+<body>
+
+<div id=drop-area-container>
+<div id=drop-area>
+  Déposez votre fichier ici
+</div></div>
+
+<!--
+<div id=table-wrapper>
+<p>
+  Données
+</p>
+<table id=table>
+</table> 
+</div>
+-->
+
+<div id=data_selection>
+<div id=courbes>
+<label for=courbes_select>Courbes</label>
+<select id=courbes_select multiple></select>
+</div>
+
+
+<div id=export>
+  <button onclick="exportBtnClick()">Exporter en csv</button>
+</div>
+</div>
+
+<div id="graph-container"></div>
+</body>
+<script src="./plotly.min.js"></script> 
+<script src="./lab2csv.js"></script> 
+</html>

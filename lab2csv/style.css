@@ -1,0 +1,80 @@
+#drop-area-container{
+  width:100%;
+  height:100%;
+  position:fixed;
+  background:white;
+}
+
+#drop-area{
+width:50%;
+height:200px;
+position:absolute;
+left:25%;
+top:25%;
+text-align:center;
+line-height:200px;
+background-color:#f7f7f7;
+border:dashed 1px gray;
+border-radius:20px
+}
+
+
+#table{
+  overflow:scroll;
+  height:200px;
+  display: inline-block;
+  width:100%;
+  margin-top:5px;
+  border-collapse: collapse;
+}
+
+#data_selection{
+  width:10%;
+  display:inline-block;
+}
+
+#graph-container{
+  display:inline-block;
+  width:80%;
+  height:100%;
+  vertical-align:top;
+}
+
+#table-wrapper{
+  width:50%;
+  display:inline-block;
+  vertical-align: top;
+}
+
+#courbes_select{
+  height:200px;
+  width:10vw;
+}
+
+#courbes{
+  display:inline-block;
+  width:20%;
+  vertical-align:top;
+  margin-top:40px;
+}
+
+#export{
+  display:inline-block;
+  margin-top:60px;
+}
+
+label{
+  display:block;
+}
+
+td{
+  border:1px solid lightgray;
+  padding:5px;
+}
+
+table tr:first-child td{
+  font-weight:bold;
+  border-bottom:solid 1px black;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
