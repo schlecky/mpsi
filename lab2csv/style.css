@@ -21,6 +21,10 @@ border-radius:20px;
 cursor:pointer;
 }
 
+#drop-area[drop-active=true]{
+  background-color:#eafbed;
+  box-shadow:green 0px 0px 2px;
+}
 
 #table{
   overflow:scroll;

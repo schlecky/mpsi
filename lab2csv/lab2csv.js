@@ -3,11 +3,20 @@ var result;
 var vecteurs = [];
 var courbes = [];
 
+function dragover(event){
+  console.log("dragover");
+}
+
 dropArea.addEventListener('dragover', (event) => {
   event.stopPropagation();
   event.preventDefault();
   // Style the drag-and-drop as a "copy file" operation.
   event.dataTransfer.dropEffect = 'copy';
+  event.target.setAttribute("drop-active", true);
+});
+
+dropArea.addEventListener('dragleave', (event) => {
+  event.target.setAttribute("drop-active", false);
 });
 
 dropArea.addEventListener('drop', (event) => {
