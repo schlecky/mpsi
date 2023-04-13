@@ -1,0 +1,119 @@
+h1{
+  width:80%;
+  text-align:center;
+  color:#fbfbfb;
+  background:#8f17ff;
+  height:60px;
+  line-height: 60px;
+  border-radius: 5px;
+}
+h1:not(:first-of-type){
+  margin-top:200px
+}
+
+.anim_container{
+  /*! background:rgba(255, 255, 255, 0); */
+  border: solid 1px #b40fff;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.anim_container .legende{
+  width:100%;
+  text-align:center;
+  //position:absolute;
+  left:0px;
+  height:40px;
+  line-height:40px;
+  margin: 0px;
+  background:#b18ebf;
+  
+}
+
+
+#box_particules{
+  width:25vw;
+  height:25vw;
+  margin:0px;
+  display:inline-block;
+}
+
+#espace_vitesses{
+  width:25vw;
+  height:25vw;
+  margin:0px;
+  display:inline-block;
+}
+
+.graph{
+  width:25vw;
+  height:25vw;
+  margin:0px;
+  display:inline-block;
+  position: relative;
+}
+
+.graph .graph_draw{
+  width:80%;
+  height:80%;
+  margin:10%;
+  display:inline-block;
+  position: relative;
+  border:solid 1px black;
+}
+.graph .xlabel{
+  position:absolute;
+  bottom:0px;left:50%;
+  transform:translate(-50%,0);
+}
+.graph .ylabel{
+  position:absolute;
+  text-align:center;
+  top:50%;
+  transform:translate(-50%,0)rotate(-90deg)translate(0,20px);
+   transform-origin: 50% 50%;
+  left: 0px;
+}
+
+
+#full{
+  width:25vw;
+  height:25vw;
+  margin:0px;
+  display:inline-block;
+}
+
+#zoom{
+  width:25vw;
+  height:25vw;
+  margin:0px;
+  display:inline-block;
+}
+
+#glcanvas{
+  width:100vw;
+  height:100vh;
+  display:block;
+  position:fixed;
+  top:0px;
+  z-index:-1;
+}
+
+ 
+#controls{
+  float:right;
+  position: fixed;
+  right: 0px;
+}
+
+.btn{
+  display:block;
+}
+
+.inlineblock{
+  display:inline-block;
+}
+
+h2{
+  margin:0px;
+}
