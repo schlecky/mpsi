@@ -34,6 +34,11 @@ var state = {
       lastY:0,
       dragging:false,
     },
+    touch:{
+      identifier:null,
+      lastX:0,
+      lastY:0,
+    },
     angle: {
         x: 0,
         y: 0,
@@ -94,11 +99,11 @@ const uniforms = {
 gl.lineWidth(3);
 
 gl.canvas.onmousedown = mousedown;
-gl.canvas.ontouchstart = mousedown;
+gl.canvas.ontouchstart = touchstart;
 gl.canvas.onmouseup = mouseup;
-gl.canvas.ontouchend = mouseup;
+gl.canvas.ontouchend = touchend;
 gl.canvas.onmousemove = mousemove;
-gl.canvas.ontouchmove = mousemove;
+gl.canvas.ontouchmove = touchmove;
 
 
 function temperatureChanged(e){
@@ -202,6 +207,50 @@ anime({
       state.mouse.lastX = x;
       state.mouse.lastY = y;
       state.mouse.dragging = true;
+    }
+  }
+
+  function touchstart(event){
+    console.log('touchstart');
+    event.preventDefault();
+    var touches = event.changedTouches;
+    if(state.touch.identifier == null){
+      state.touch.identifier = touches[0].identifier;
+      state.touch.lastX = touches[0].pageX;
+      state.touch.lastY = touches[0].pageY;
+    }
+  }
+
+  function touchend(event) {
+    event.preventDefault();
+    console.log('touchend');
+    var touches = event.changedTouches;
+    for(var j = 0; j < touches.length; j++) {
+        if(state.touch.identifier == touches[j].identifier){
+          state.touch.identifier = null;
+        }
+    }
+  }
+
+  function touchmove(event) {
+    event.preventDefault();
+    console.log('touchmove');
+    var touches = event.changedTouches;
+
+    for(var j = 0; j < touches.length; j++) {
+      if(state.touch.identifier == touches[j].identifier){
+        var factor = 3/gl.canvas.height;
+        var dx = factor*(touches[j].pageX - state.touch.lastX);  /* x-distance moved since touchstart */
+        var dy = factor*(touches[j].pageY - state.touch.lastY);  /* y-distance moved since touchstart */
+        state.touch.lastX = touches[j].pageX;
+        state.touch.lastY = touches[j].pageY;
+
+        // update the latest angle
+        //state.angle.x = state.angle.x + dy;
+        state.angle.y = state.angle.y + dx;
+        if(state.angle.y<-90*Math.PI/180) state.angle.y=-90*Math.PI/180;
+        if(state.angle.y>0) state.angle.y=0;
+      }
     }
   }
 
@@ -396,7 +445,12 @@ function render_cube(time){
   const zNear = 0.5;
   const zFar = 100;
   //const projection = m4.perspective(fov, aspect, zNear, zFar);
-  const projection = m4.ortho(-5*aspect, 5*aspect, -5, 5, 5, 100);
+  var projection;
+  if(aspect>=1){ 
+    projection = m4.ortho(-5*aspect, 5*aspect, -5, 5, 5, 100);
+  } else {
+    projection = m4.ortho(-5, 5, -5/aspect, 5/aspect, 5, 100);
+  }
 
   const camera = m4.lookAt(state.eye, state.target, state.target, up) ;
 
