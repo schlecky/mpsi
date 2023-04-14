@@ -94,8 +94,11 @@ const uniforms = {
 gl.lineWidth(3);
 
 gl.canvas.onmousedown = mousedown;
+gl.canvas.ontouchstart = mousedown;
 gl.canvas.onmouseup = mouseup;
+gl.canvas.ontouchend = mouseup;
 gl.canvas.onmousemove = mousemove;
+gl.canvas.ontouchmove = mousemove;
 
 
 function temperatureChanged(e){
