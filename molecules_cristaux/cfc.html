@@ -56,6 +56,9 @@ In the next script, a Jmol applet is opened with the properties set up in the he
         Jmol.script(JmolApplet0, "polyhedra octa off");
         Jmol.script(JmolApplet0, "polyhedra tetra off");
         Jmol.script(JmolApplet0, "polyhedra octa2 off");
+        Jmol.script(JmolApplet0, "data \"element_vdw\" 29 1.3; 82 0.4 END \"element_vdw\"");
+        Jmol.script(JmolApplet0, "set defaultVDW USER");
+
         Jmol.script(JmolApplet0, "");
         Jmol.script(JmolApplet0, "hide all;"); 
        </script>
@@ -79,20 +82,41 @@ In the next script, a Jmol applet is opened with the properties set up in the he
  <td>
 <script type="text/javascript">
  var r = [
-    ["select all;spacefill 23%; wireframe off;","ball"],
-    ["select all;spacefill 1.3; wireframe off;","spheres", true]
+    ["select all;spacefill 0.5; wireframe off;","ball"],
+    ["select all;spacefill 100%; wireframe off;","spheres", true]
  ];
  Jmol.jmolRadioGroup(JmolApplet0, r, "<br>", "atomstyle");
 </script>
  </td>
  <td>
 <script charset="utf-8">
+  let dispOcta = "polyhedra octa ON;"+
+                 "color polyhedra translucent 0.4;"+
+                 "polyhedra octa2 ON;"+
+                 "color polyhedra translucent 0.4;"+
+                 "display ADD (atomno=167) OR (atomno=159);"+
+                 "select (atomno=167) OR (atomno=159);"+
+                 "spacefill 0.1;";
+
+  let hideOcta = "polyhedra octa OFF;"+
+                 "polyhedra octa2 OFF;"+
+                 "display REMOVE (atomno=167) OR (atomno=159)";
+
+  let dispTetra = "polyhedra tetra ON;"+
+                 "color polyhedra translucent 0.4;"+
+                 "display ADD (atomno=161);"+
+                 "select (atomno=161)"+
+                 "spacefill 0.4;";
+
+  let hideTetra = "polyhedra tetra OFF;"+
+                 "display REMOVE (atomno=161)";
+
   Jmol.jmolCheckbox(JmolApplet0,"display ADD planA","display REMOVE planA","plan A", false);
   Jmol.jmolCheckbox(JmolApplet0,"display ADD planB","display REMOVE planB","plan B", false);
   Jmol.jmolCheckbox(JmolApplet0,"display ADD planC","display REMOVE planC","plan C", false);
   Jmol.jmolCheckbox(JmolApplet0,"display ADD planD","display REMOVE planD","plan D", false);
-  Jmol.jmolCheckbox(JmolApplet0,"polyhedra octa ON; polyhedra octa2 ON ","polyhedra octa OFF; polyhedra octa2 OFF","Site octa");
-  Jmol.jmolCheckbox(JmolApplet0,"polyhedra tetra ON;","polyhedra tetra OFF;","Site tetra");
+  Jmol.jmolCheckbox(JmolApplet0,dispOcta,hideOcta,"Site octa");
+  Jmol.jmolCheckbox(JmolApplet0,dispTetra,hideTetra,"Site tetra");
   Jmol.jmolCheckbox(JmolApplet0,"boundbox (cell=444) on","boundbox off","maille", false);
   
         Jmol.script(JmolApplet0, "");
@@ -106,7 +130,7 @@ In the next script, a Jmol applet is opened with the properties set up in the he
  	</script>
  </td>
  <td>
-	<script type="text/javascript">
+	<script typeSite="text/javascript">
         Jmol.jmolCheckbox(JmolApplet0, "color (copper) translucent 6", "color (copper) opaque", "Translucide");
  	</script>
  </td>
