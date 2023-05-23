@@ -118,8 +118,7 @@ In the next script, a Jmol applet is opened with the properties set up in the he
   Jmol.jmolCheckbox(JmolApplet0,dispOcta,hideOcta,"Site octa");
   Jmol.jmolCheckbox(JmolApplet0,dispTetra,hideTetra,"Site tetra");
   Jmol.jmolCheckbox(JmolApplet0,"boundbox (cell=444) on","boundbox off","maille", false);
-  
-        Jmol.script(JmolApplet0, "");
+  Jmol.script(JmolApplet0, "");
 </script>
  </td>
 </tr>
@@ -135,6 +134,18 @@ In the next script, a Jmol applet is opened with the properties set up in the he
  	</script>
  </td>
 </tr>
+ <tr><div class="slidecontainer">
+  <input type="range" min="0" max="100" value="0.6" class="slider" id="opacitySlider">
+</div>
+<script charset="utf-8">
+  var slider = document.getElementById("opacitySlider");
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  Jmol.script(JmolApplet0, "color atom translucent "+this.value/100;
+} 
+</script>
+ </tr> 
 </table>
 </body>
 </html>
