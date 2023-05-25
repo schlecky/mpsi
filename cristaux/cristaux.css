@@ -1,0 +1,34 @@
+*{
+  box-sizing: border-box;
+}
+
+.btnPlan {
+  background:white;
+  cursor:pointer;
+  padding: 0.5rem 1rem;
+  border:solid black 1px;
+  display:inline-block;
+}
+
+.num{
+  width:40px;
+}
+
+.checked{
+  background:#80b7fd;
+}
+#JmolApplet0_appletdiv{
+  z-index:0;
+}
+#controls{
+  position:fixed;
+  right:0px;
+  top:0px;
+  width:30%;
+  border-left:solid 1px black;
+  padding-left:10px;
+  padding-top:20px;
+  height:100%;
+  z-index: 9002;
+  box-shadow: 4px 4px 4px 4px gray;
+}

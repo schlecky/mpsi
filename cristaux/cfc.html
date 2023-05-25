@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="cristaux.css" title="Style"/> 
+ <title>Maille cubique faces centrées</title>
+       <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script> 
+       <script type="text/javascript" src="JSmol.min.js"></script> 
+</head>
+<body>
+  <div id="appdiv">
+  </div>
+  
+
+  
+<div id="controls">
+   <button onclick="mailleCFC()">Maille CFC</button>
+   <button onclick="effacer()">Effacer tout</button>
+   <div class="slidecontainer">
+     <label for="sizeSlider">Taille des atomes</label>
+     <input type="range" min="20" max="100" value="100" class="slider" id="sizeSlider">
+   </div>
+   <div class="slidecontainer">
+     <label for="opacitySlider">Opacité des atomes</label>
+     <input type="range" min="20" max="100" value="100" class="slider" id="opacitySlider">
+   </div>
+   <div class="chkboxcontainer">
+     <span>plans</span>
+     <div class="btnPlan" id="btnPlanA">A</div>
+     <div class="btnPlan" id="btnPlanB">B</div>
+     <div class="btnPlan" id="btnPlanC">C</div>
+     <div class="btnPlan" id="btnPlanD">D</div>
+   </div>
+   <div>
+     <label for="chkOcta">Sites octaédriques</label>
+     <input type="checkbox" value="" name="chkOcta" id="chkOcta"/>
+   </div>
+   <div>
+     <label for="chkTetra">Site tétraédrique</label>
+     <input type="checkbox" value="" name="chkTetra" id="chkTetra"/>
+   </div>
+   <button onclick="resetOrientation()">Orientation</button>
+</div>  
+  <script type="text/javascript" src=cfc.js></script>
+
+
+</body>
+</html>
+
