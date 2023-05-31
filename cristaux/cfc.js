@@ -32,6 +32,7 @@ var Info = {
 }
 
 function configApplet(){
+  Info.height = window.innerHeight;
   $("#appdiv").html(Jmol.getAppletHtml("JmolApplet0", Info))
   Jmol.script(JmolApplet0, "load cfc.cif 1 {333 666 1}; wireframe off;unitcell off;axes off;spacefill 1.3; moveto 0 {-1 1 0}  125");
   Jmol.script(JmolApplet0, "define planA (copper) AND WITHIN(0, PLANE, @{plane(@260,@261,@151)})");
@@ -60,7 +61,7 @@ function display_tous(){
 }
 
 function mailleCFC(){
-  effacerPlans();
+  effacer();
   showBBox(true);
   Jmol.script(JmolApplet0, "display mailleCFC;");
 }
@@ -78,6 +79,15 @@ function disp_plan(plan){
 
 function hide_plan(plan){ // set up in HTML table, belowunction hide_plan(plan){
   Jmol.script(JmolApplet0,"display REMOVE plan"+plan);
+}
+
+
+function coordinence(){
+  effacer();
+  Jmol.script(JmolApplet0, "display @1 or (copper AND WITHIN(3.0, @1));"); 
+  Jmol.script(JmolApplet0, "select (copper AND WITHIN(3.0, @1)); color atom TRANSLUCENT 0.7"); 
+  Jmol.script(JmolApplet0, "select @1; color atom TRANSLUCENT 0.0; halos ON; color HALOS GOLD;"); 
+  Jmol.script(JmolApplet0, "select (copper AND WITHIN(3.0, @1) AND not @1);"); 
 }
 
 function dispOcta(){
@@ -116,8 +126,10 @@ function effacerPlans(){
 
 function effacer(){
   Jmol.script(JmolApplet0, "hide (all)");
+  Jmol.script(JmolApplet0, "select (all); halos off;");
   effacerPlans();
   showBBox(false);
+  opacityChanged()
 }
 
 function dispTetra(){
@@ -145,13 +157,15 @@ function resetOrientation(){
   Jmol.script(JmolApplet0, "moveto 0 {1 -1 0}  -55");
 }
 
+function opacityChanged(){
+    var opacitySlider = document.getElementById("opacitySlider");
+    Jmol.script(JmolApplet0, "color atom translucent "+(100-opacitySlider.value)/100.0);
+}
 
 $( document ).ready(function() {
   configApplet();
   var opacitySlider = document.getElementById("opacitySlider");
-  opacitySlider.oninput = function() {
-    Jmol.script(JmolApplet0, "color atom translucent "+(100-this.value)/100.0);
-  } 
+  opacitySlider.oninput = opacityChanged; 
 
   var sizeSlider = document.getElementById("sizeSlider");
   sizeSlider.oninput = function() {
