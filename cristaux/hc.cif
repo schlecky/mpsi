@@ -1,0 +1,43 @@
+data_global
+_chemical_name_mineral 'Titanium'
+loop_
+_publ_author_name
+'Wyckoff R W G'
+_journal_name_full 'Crystal Structures'
+_journal_volume 1 
+_journal_year 1963
+_journal_page_first 7
+_journal_page_last 83
+_publ_section_title
+;
+ Second edition. Interscience Publishers, New York, New York
+ Hexagonal closest packed, hcp, structure
+;
+_database_code_amcsd 0011195
+_chemical_formula_sum 'Ti'
+_cell_length_a 3.820
+_cell_length_b 3.820
+_cell_length_c 6.238
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 120
+_cell_volume 35.316
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Ti  Ti0  1  0.00000000  0.00000000  0.00000000  1.0
+  Ti  Ti1  1  0.33333333  0.66666666  0.50000000  1.0
+  Pb  Pb0  1  0.33333333  0.66666666  0.10206207  1.0
+  Pb  Pb1  1  0.33333333  0.66666666  0.89793792  1.0
+  Pb  Pb2  1  0.66666666  0.33333333  0.25000000  1.0
+  Pb  Pb3  1  0.66666666  0.33333333  0.75000000  1.0
+

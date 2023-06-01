@@ -1,0 +1,74 @@
+
+<!-- This script is used to show any of the Jmol models in this directory -->
+<html>
+<head>
+  <link rel="stylesheet" href="cristaux.css" title="Style"/> 
+ <title>Diamant</title>
+<!-- The next little script sets the Jmol system up -->
+       <script type="text/javascript" src="JSmol.min.js"></script> 
+<!--  then the running conditions are set in this one  --> 
+       <script type="text/javascript">
+        var acted=0;
+        function readyfunc()
+         {
+          Jmol.script(JmolApplet0, "select all ; zoom 60;");
+         };
+        var Info = {
+// Let the applet fill the whole width of the popup, but leave some space at the
+//  bottom of the window for any html output
+// By using %s, the applet will be resized if the window is resized
+        height: "500",
+        width: "70%",
+// php sets the Jmol variable Info.use
+        use: "HTML5",
+// The next line assumes that the .jar files in the Jmol distribution have been moved
+//  to the top level of the Jmol library directory
+        jarPath: ".",
+        j2sPath: "j2s",
+// The signed applet will be used
+        jarFile: "JmolAppletSigned0.jar",
+        isSigned: true,
+        console: "JmolApplet0_infodiv",
+        readyFunction: readyfunc
+        };
+       </script>
+</head>
+<!-- Begin the working part of the html script -->
+<body>
+       <script type="text/javascript">
+        JmolApplet0 = Jmol.getApplet("JmolApplet0", Info);
+        Jmol.script(JmolApplet0, "load diamant.cif 1 {333 666 1};axes off;unitcell off;spacefill 0.4;");
+        Jmol.script(JmolApplet0, "define maille @2,@24,@45,@46,@47,@48,@50,@53,@54,@56,@62,@72,@77,@78,@80,@84,@86,@108;");
+        Jmol.script(JmolApplet0, "define octa @47,@77,@53,@45;");
+       </script>
+
+<div id="controls">
+<table><tr>
+ <td>
+	<script type="text/javascript">
+    function UneMaille(){
+      Jmol.script(JmolApplet0, "display maille;");
+      Jmol.script(JmolApplet0, "select octa; color atoms red;");
+    }
+ 	</script>
+   <button onclick="UneMaille()">Une maille</button>
+ </td>
+ <td>
+	<script type="text/javascript">
+        Jmol.jmolButton(JmolApplet0, "display all;select all;color atoms TRANSLUCENT 0;", "Tous");
+ 	</script>
+ </td>
+ <td>
+<script type="text/javascript">
+ var r = [
+    ["select all;spacefill 0.4;","ball",true],
+    ["select all;spacefill 1.0;","spheres"]
+ ];
+ Jmol.jmolRadioGroup(JmolApplet0, r, "<br>", "atomstyle");
+</script>
+ </td>
+</tr></table>
+</div>
+</body>
+</html>
+

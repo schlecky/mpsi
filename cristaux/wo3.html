@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="cristaux.css" title="Style"/> 
+ <title>Trioxyde de tungstène</title>
+       <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script> 
+       <script type="text/javascript" src="JSmol.min.js"></script> 
+</head>
+<body>
+  <div id="appdiv">
+  </div>
+  
+
+  
+<div id="controls">
+   <button onclick="tous()">Tous</button>
+   <button onclick="maille()">Maille</button>
+   <button onclick="effacer()">Effacer tout</button>
+   <div class="slidecontainer">
+     <label for="sizeSlider">Taille des atomes</label>
+     <input type="range" min="20" max="100" value="100" class="slider" id="sizeSlider" oninput="sizeChanged()">
+   </div>
+   <div class="slidecontainer">
+     <label for="opacitySlider">Opacité des atomes</label>
+     <input type="range" min="20" max="100" value="100" class="slider" id="opacitySlider">
+   </div>
+     <h4>Insertions</h4>
+   <div>
+     <label for="chkCentreMaille">Centre de la maille</label>
+     <input type="checkbox" value="" name="chkCentre" id="chkCentreMaille" onclick="chkCentreMailleClick()"/>
+     <label for="tailleCentreMaille">Taille (nm)</label>
+     <input type="number" id="tailleCentreMaille" step=0.1 class="num" oninput="tailleMailleChanged()">
+   </div>
+   <div>
+     <label for="chkCentreFace">Centre d'une face</label>
+     <input type="checkbox" value="" name="chkCentreFace" id="chkCentreFace" onclick="chkCentreFaceClick()"/>
+     <label for="tailleCentreFace">Taille (nm)</label>
+     <input type="number" id="tailleCentreFace" step=0.1 class="num" oninput="tailleFaceChanged()">
+   </div>
+     <h4>Informations</h4>
+     <label for="chkInfos">Rayons</label>
+     <input type="checkbox" value="" name="chkInfos" id="chkInfos" onclick="chkInfosClick()"/>
+</div>  
+  <script type="text/javascript" src=wo3.js></script>
+
+
+</body>
+</html>
+
