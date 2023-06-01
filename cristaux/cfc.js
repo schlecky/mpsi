@@ -64,6 +64,7 @@ function mailleCFC(){
   effacer();
   showBBox(true);
   Jmol.script(JmolApplet0, "display mailleCFC;");
+  Jmol.script(JmolApplet0, "center mailleCFC;");
 }
 
 function display_spheres(){
