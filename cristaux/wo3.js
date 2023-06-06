@@ -92,11 +92,11 @@ function chkInfosClick(){
 
 function tailleFaceChanged(){
   taille = tailleFace.value;
-  Jmol.script(JmolApplet0, "select Pb2;spacefill "+taille+";");
+  Jmol.script(JmolApplet0, "select Pb2;spacefill "+parseFloat(taille).toFixed(1)+";");
 }
 function tailleMailleChanged(){
   taille = tailleCentre.value;
-  Jmol.script(JmolApplet0, "select Pb1;spacefill "+taille+";");
+  Jmol.script(JmolApplet0, "select Pb1;spacefill "+parseFloat(taille).toFixed(1)+";");
 }
 
 function sizeChanged(){
