@@ -954,7 +954,8 @@ $("a[href$='.txt']").prepend("<i class=\"fas fa-file-alt\"></i>");
 $("a[href$='.zip']").prepend("<i class=\"fas fa-archive\"></i>");
 $("a[href$='.png']").prepend("<i class=\"fas fa-image\"></i>");
 
-$("a[href$='.pdf']").each(function(index){ $( this ).attr("data-goatcounter-click",this.href)});
+// goatcounter
+$("a[href$='.pdf']").each(function(index){ $( this ).attr("data-goatcounter-click", "MPSI : "+this.href.split(/(\\|\/)/g).pop())});
 
 $(".navbar-item").click(function(){
     $("#toggle").click();
