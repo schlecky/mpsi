@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Recettes de TP</title>
+    <link rel="stylesheet" href="css/style.css" title="Style"/> 
+    <link rel="stylesheet" href="css/prism.css" title="Style"/> 
+    <script src="js/prism.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    MathJax.InputJax.TeX.Definitions.number =
+      /^(?:[0-9]+(?:\.[0-9]{3})*(?:\{,\}[0-9]*)*|\{,\}[0-9]+)/
+  });
+    </script>
+
+    <script type="text/javascript" id="MathJax-script" async
+                                   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+  </head>
+  <body>
+    <h1>Appareils</h1>
+    <dl class="faq">
+      <dt><button type="button" aria-expanded="false" aria-controls="faq2_desc">Stabiliser un signal sur l'oscilloscope</button></dt>
+      <dd id="faq2_desc"><img src="images/trigger.png" width=100% alt=""></dd>
+    </dl>
+
+
+    <h1>Incertitudes</h1>
+    <dl class="faq">
+      <dt><button type="button" aria-expanded="false" aria-controls="faq_inc_notice_desc">Déterminer l'incertitude d'un multimètre</button></dt>
+      <dd id="faq_inc_notice_desc">
+        <p>On donne l'exemple d'une mesure de tension continue avec un multimètre, avec l'extrait de la notice de l'appareil.</p>
+        <img src="images/notice_incertitudes.png" alt="" width="500px"><img src="images/am535.jpg" alt="" width="200px" id="multimetre">
+        <p>
+        On commence par déterminer la gamme de mesure (c'est la plus petite valeur supérieure à la valeur mesurée). Puis on lit une précision de ±0.8 % + 1 chiffre. Dans le cas présent, l'incertitude sur la tension est :
+        $$\delta u = 0{,}008 \times 1{,}038 + 0{,}001  = 0{,}009 \text{ V}$$
+        </p>
+        <p><strong>1 chiffre</strong> signifie qu'il faut ajouter la valeur 1 à la position du dernier chiffre affiché.</p>
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq_inc_adc_desc">Déterminer l'incertitude d'une interface d'acquisition</button></dt>
+      <dd id="faq_inc_adc_desc">
+        <p>On utilise la notice de l'appareil.</p>
+        <img src="images/notice_sysam.png" alt="" width="800px">
+        <p>
+        <ul>
+          <li>L'interface possède 4 gains programmables. Il faut commencer par déterminer celui utilisé. Le gain par défaut est le gain 1 qui donne une gamme de mesure de ±10V.</li>
+          <li>La notice indique que la tension d'entrée est convertie sur 12 bits, ce qui donne \(2^{12} = 4096\) valeurs possible de tension entre -10V et +10V. Les valeurs de tension possibles sont séparées de \(20V/4096 \approx 5 mV\) </li>
+          <li>Enfin la notice indique que la précision est de ± 1LSB (least significant bit ou bit de poids faible). C'est-à-dire que l'incertitude correspond à l'intervalle minimum entre deux tensions, soit \(\delta u = 5 mV\). </li>
+        </ul>
+        </p>
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq_inc_prop_desc">Méthode générale pour déterminer l'incertitude sur le résultat d'un calcul</button></dt>
+      <dd id="faq_inc_prop_desc">
+        <p>On cherche l'incertitude \(\delta f\) sur la valeur \(f(x_1, x_2, x_3)\) d'une fonction de \(x_1\), \(x_2\) et \(x_3\), connaissant les incertitudes \(\delta x_1\), \(\delta x_2\) et \(\delta x_3\).</p> 
+        La formule générale est :
+        $$\delta f = \sqrt{\left(\frac{\partial f}{\partial x_1}\delta x_1\right)^2 + \left(\frac{\partial f}{\partial x_2}\delta x_2\right)^2 + \left(\frac{\partial f}{\partial x_3}\delta x_3\right)^2}$$
+        <p>La notation \(\frac{\partial f}{\partial x_1}\) signifie la dérivée de \(f\) par rapport à \(x_1\), on fait comme si toutes les autres variables étaient constantes.</p>
+        
+        <p>Par exemple, si on mesure un angle \(i\) avec une incertitude \(\delta i\) et un indice \(n\) avec une incertitude \(\delta n\), alors l'incertitude sur \(f(n,i)=n\sin(i)\) est :</p>
+        $$\delta(n\sin(i)) = \sqrt{\left(\frac{\partial f}{\partial n}\delta n\right)^2 + \left(\frac{\partial f}{\partial i}\delta i\right)^2} = \sqrt{(\sin(i)\delta n)^2 + (n\cos(i)\delta i)^2} $$
+      </dd>
+    </dl>
+
+    <h1>Python</h1>
+    <dl class="faq">
+      <dt><button type="button" aria-expanded="false" aria-controls="faq1_desc">Importer des données à partir d'un fichier</button></dt>
+      <dd id="faq1_desc"><pre class="line-numbers"><code class=language-python>import numpy as np
+# skiprows permet d'ignorer la première ligne du fichier qui contient les titres des colonnes.
+data = np.loadtxt("data.txt", skiprows=1)</pre></code>
+Il faut indiquer le chemin complet du fichier <code>data.txt</code>. Les données sont chargées dans le tableau <code>numpy</code> appelé <code>data</code>.
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq4_desc">Extraire une colonne d'un tableau numpy</button></dt>
+      <dd id="faq4_desc">
+        Lorsqu'on importe avec la commande <code>data = np.loadtxt("fichier.txt")</code> un fichier qui comporte plusieurs colonnes, par exemple :
+        <pre>temps  distance
+1 1.234
+2 2.432
+3 3.432
+...
+        </pre> 
+        On peut extraire la liste des temps et la liste des distance dans des tableau numpy en faisant
+        <pre class="line-numbers"><code class=language-python>t = data[:,0]
+d = data[:,1]</code></pre>
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq_plot_desc">Tracer un graphique avec des barres d'erreur</button></dt>
+      <dd id="faq_plot_desc">
+        <code>lx</code> et <code>ly</code> sont des listes (tableaux numpy ou listes python) contenant les valeurs de x et de y. <code>lux</code> et <code>luy</code> sont des listes contenant les incertitudes associées à x et y. On trace le graphique représentant y = f(x) avec les barres d'erreur correspondantes de la manière suivante :
+                <pre class="line-numbers"><code class=language-python>plt.errorbar(lx, ly, yerr=luy, xerr=lux, fmt="o", capsize=3, zorder=0) </code></pre>
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq5_desc">Effectuer une régression linéaire</button></dt>
+      <dd id="faq5_desc">
+        Si <code>lx</code> et <code>ly</code> sont des listes de valeurs de x et y (listes python ou tableaux numpy), on peut déterminer le coefficient directeur <code>a</code> et l'ordonnée à l'origine <code>b</code> de la droite passant au plus proche des points en faisant
+        <pre class="line-numbers"><code class=language-python>a, b = np.polyfit(lx, ly, 1)</pre></code>
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq8_desc">Effectuer une régression linéaire (sans ordonnée à l'origine)</button></dt>
+      <dd id="faq8_desc">
+        Si <code>lx</code> et <code>ly</code> sont des listes de valeurs de x et y (tableaux numpy), on peut déterminer le coefficient directeur <code>a</code> de la droite d'équation y=ax passant au plus proche des points en faisant
+        <pre class="line-numbers"><code class=language-python>a = np.sum(lx*ly)/np.sum(lx**2)</code></pre>
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq6_desc">Déterminer l'incertitude sur les paramètres d'une régression linéaire (Monte-Carlo)</button></dt>
+      <dd id="faq6_desc">
+        Si <code>lx</code> et <code>ly</code> sont des listes de valeurs de x et y (listes python ou tableaux numpy), <code>lux</code> et <code>luy</code> sont les listes des incertitudes-type sur les valeurs de x et y. On peut déterminer les paramètres <code>a</code> et <code>b</code> de la droite passant au mieux par les points ainsi que leur incertitude associée en faisant :
+        <pre class="line-numbers"><code class=language-python>Nexp = 1000 # Nombre de simulations de points de mesure 
+la = []
+lb = []
+for k in range(Nexp): 
+    temp_x = np.random.normal(lx, lux) # Simulation aléatoire de valeurs de x 
+    temp_y = np.random.normal(ly, luy) # Simulation aléatoire de valeurs de y 
+    a,b = np.polyfit(temp_x, temp_y, 1) # Régression linéaire 
+    la.append(a) 
+    lb.append(b) 
+print("Équation de la droite : y=ax+b") 
+print("a = {} ± {}".format(np.average(la), np.std(la))) 
+print("b = {} ± {}".format(np.average(lb), np.std(lb))) </code></pre>
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq7_desc">Déterminer l'incertitude sur le résultat d'un calcul (Monte-Carlo)</button></dt>
+      <dd id="faq7_desc">
+        Si <code>x1</code>, <code>x2</code> et <code>x3</code> sont des grandeurs mesurées avec des incertitudes <code>ux1</code>, <code>ux2</code> et <code>ux3</code>. On peut déterminer l'incertitude sur une grandeur y=f(x1, x2, x3) en faisant :
+        <pre class="line-numbers"><code class=language-python>def f(x1,x2,x3):
+  return np.sin(x1)*np.sqrt(x3)/x2**2 #Fonction choise pour l'exemple
+
+Nexp=1000 # Nombre de simulations de points de mesure 
+ly = [] # On initialise une liste de puissances vide 
+for j in range(Nexp): 
+    x1_j = np.random.normal(x1, ux1) # valeur de x1 aléatoire
+    x2_j = np.random.normal(x2, ux2) # valeur de x2 aléatoire
+    x3_j = np.random.normal(x3, ux3) # valeur de x3 aléatoire
+    ly.append(f(x1_j, x2_j, x3_j))
+dy = np.std(np.array(ly)) # Calcule l'écart-type de la liste des valeurs de y 
+</code></pre>
+      </dd>
+
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq9_desc">Effectuer un ajustement par une courbe qui n'est pas une droite</button></dt>
+      <dd id="faq9_desc">
+        <code>lx</code> et <code>ly</code> sont des listes de valeurs de x et y (tableaux numpy), <code>luy</code> est une liste contenant les incertitudes sur les valeurs de y. On souhaite déterminer les valeurs des paramètres <code>p1, p2, p3</code> tels que la courbe <code>yth=f(lx, p1, p2, p3)</code> passe au plus près des données expérimentales. Par exemple, on cherche à déterminer A et τ tels que la fonction y = A(1-exp(-t/τ)) décrive au mieux les données.
+        <pre class="line-numbers"><code class=language-python>from scipy.optimize import curve_fit
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f(x, A, tau):
+    return A*(1-np.exp(-x/tau))
+
+lx = np.linspace(0,10, 1000)
+ly = (1-np.exp(-lx/3))+np.random.normal(np.zeros(len(lx)),0.01)
+
+popt,_ = curve_fit(f, lx, ly, [1], 1/luy)
+
+A,tau = popt
+
+plt.plot(lx, ly)
+plt.plot(lx, A*(1-np.exp(-lx/tau)))
+plt.show()</code></pre>
+      </dd>
+
+    </dl>
+    <h1>Latis Pro</h1>
+    <dl class="faq">
+      <dt><button type="button" aria-expanded="false" aria-controls="faq3_desc">Exporter les données vers un fichier (pour importation dans python)</button></dt>
+      <dd id="faq3_desc">
+        Dans Latis-Pro, effectuer les actions suivantes :
+        <ol type="1">
+          <li>Fichier -> Exportation ;</li>
+          <li>Glisser la courbe à exporter vers la droite ;</li>
+          <li>Format : TXT ; Décimal : Point ; Entre les données : Tabulation</li>
+        </ol>
+        <img src="images/LatisPro_export.png" alt=""/>
+      </dd>
+    </dl>
+  </body>
+  <script charset="utf-8">
+'use strict';
+
+/*
+ *   @constructorDisclosureButton
+ *
+ *
+ */
+class DisclosureButton {
+  constructor(buttonNode) {
+    this.buttonNode = buttonNode;
+    this.controlledNode = false;
+
+    var id = this.buttonNode.getAttribute('aria-controls');
+
+    if (id) {
+      this.controlledNode = document.getElementById(id);
+    }
+
+    this.buttonNode.setAttribute('aria-expanded', 'false');
+    this.hideContent();
+
+    this.buttonNode.addEventListener('click', this.onClick.bind(this));
+    this.buttonNode.addEventListener('focus', this.onFocus.bind(this));
+    this.buttonNode.addEventListener('blur', this.onBlur.bind(this));
+  }
+
+  showContent() {
+    if (this.controlledNode) {
+      this.controlledNode.style.display = 'block';
+    }
+  }
+
+  hideContent() {
+    if (this.controlledNode) {
+      this.controlledNode.style.display = 'none';
+    }
+  }
+
+  toggleExpand() {
+    if (this.buttonNode.getAttribute('aria-expanded') === 'true') {
+      this.buttonNode.setAttribute('aria-expanded', 'false');
+      this.hideContent();
+    } else {
+      this.buttonNode.setAttribute('aria-expanded', 'true');
+      this.showContent();
+    }
+  }
+
+  /* EVENT HANDLERS */
+
+  onClick() {
+    this.toggleExpand();
+  }
+
+  onFocus() {
+    this.buttonNode.classList.add('focus');
+  }
+
+  onBlur() {
+    this.buttonNode.classList.remove('focus');
+  }
+}
+
+/* Initialize Hide/Show Buttons */
+
+window.addEventListener(
+  'load',
+  function () {
+    var buttons = document.querySelectorAll(
+      'button[aria-expanded][aria-controls]'
+    );
+
+    for (var i = 0; i < buttons.length; i++) {
+      new DisclosureButton(buttons[i]);
+    }
+  },
+  false
+);
+
+  // A $( document ).ready() block.
+$( document ).ready(function() {
+    $("code").addClass("language-python");
+});
+  </script>
+</html>
