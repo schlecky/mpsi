@@ -1,5 +1,7 @@
 
-
+dt button{
+  text-align:left;
+}
 
 dl dd {
   margin: 0;
@@ -13,6 +15,7 @@ dl dd {
 img{
   vertical-align:middle;
   margin:20px;
+  max-width: min(calc(100% - 30px), 600px);
 }
 
 h1{
