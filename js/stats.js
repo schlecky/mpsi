@@ -17,15 +17,25 @@ data = {'width':1, 'height':3, 'useragent':'testua', 'location':'ici', "fingerpr
   send_click(data);
 }
 
-let width = window.screen.availWidth
-let height = window.screen.availHeight
-let ua = window.navigator.useragent
+let width ;
+let height ;
+let ua ; 
 let fingerprint = "undef";
 let wf = new WasmFingerprint();
-setTimeout(()=>{fingerprint = wf.make_fingerprint()}, 200);
+
+function send_initial_click(){
+  send_click({'width':width, 'height':height, 'useragent':ua, 'location':window.location.toLocaleString(), "fingerprint":fingerprint.print}) ;
+}
+
 
 window.addEventListener("load", (event) => {
-  send_click({'width':width, 'height':height, 'useragent':ua, 'location':window.location, "fingerprint":fingerprint}) ;
+  width = window.screen.availWidth
+  height = window.screen.availHeight
+  ua = window.navigator.userAgent
+  fingerprint = "undef";
+  setTimeout(()=>{fingerprint = wf.make_fingerprint()}, 200);
+  setTimeout(send_initial_click, 400);
+
 
   function callback(e) {
       var e = window.e || e;
@@ -33,7 +43,7 @@ window.addEventListener("load", (event) => {
       if (e.target.tagName !== 'A')
           return;
 
-      send_click({'width':width, 'height':height, 'useragent':ua, 'location':e.target.href, "fingerprint":fingerprint})
+      send_click({'width':width, 'height':height, 'useragent':ua, 'location':e.target.href, "fingerprint":fingerprint.print})
   }
 
   if (document.addEventListener)
