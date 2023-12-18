@@ -205,7 +205,7 @@ class WasmFingerprint {
         }
 
         function init(module) {
-            module = "/wasm_fingerprint_bg.wasm"
+            module = "/js/wasm_fingerprint_bg.wasm"
             let result;
             const imports = {};
             imports.wbg = {};
