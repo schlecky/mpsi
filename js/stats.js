@@ -21,10 +21,9 @@ let width ;
 let height ;
 let ua ; 
 let fingerprint = "undef";
-let wf = new WasmFingerprint();
 
 function send_initial_click(){
-  send_click({'width':width, 'height':height, 'useragent':ua, 'location':window.location.toLocaleString(), "fingerprint":fingerprint.print}) ;
+  send_click({'width':width, 'height':height, 'useragent':ua, 'location':window.location.toLocaleString(), "fingerprint":fingerprint}) ;
 }
 
 
@@ -32,9 +31,8 @@ window.addEventListener("load", (event) => {
   width = window.screen.availWidth
   height = window.screen.availHeight
   ua = window.navigator.userAgent
-  fingerprint = "undef";
-  setTimeout(()=>{fingerprint = wf.make_fingerprint()}, 200);
-  setTimeout(send_initial_click, 400);
+  fingerprint = new Fingerprint().get().toString(16).toUpperCase();
+  setTimeout(send_initial_click, 100);
 
 
   function callback(e) {
@@ -43,7 +41,7 @@ window.addEventListener("load", (event) => {
       if (e.target.tagName !== 'A')
           return;
 
-      send_click({'width':width, 'height':height, 'useragent':ua, 'location':e.target.href, "fingerprint":fingerprint.print})
+      send_click({'width':width, 'height':height, 'useragent':ua, 'location':e.target.href, "fingerprint":fingerprint})
   }
 
   if (document.addEventListener)
