@@ -1,0 +1,53 @@
+\usepackage{standalone}
+\begin{document}
+\begin{tikzpicture}[global scale/.style={scale=1.0}, rotate=-5, xslant=-0.1, thick, every
+    node/.style={transform shape, scale=0.8}, decoration={markings, mark=at position 0.5 with {\arrow{latex}}}]
+    %tikz divers
+%inner square side length
+\def\a{3.0}
+%outer square side length
+\def\b{5.0}
+% x displacement of back squares
+\def\dx{0.8}
+% y displacement of back squares
+\def\dy{0.5}
+\def\lx{1.0}
+\def\ly{1.0}
+% round corner correction
+\def\dr{0.02}
+\begin{scope}[even odd rule]
+\filldraw[rounded corners=2pt, fill=gray, rotate=-0, opacity=1.0] (\dx,
+\dy) rectangle ++(5,5) (\lx+\dx,\ly+\dy) rectangle ++(\a, \a);
+\fill [rounded corners=2pt, fill=gray] (\b, 0) --++ (0, \dy+\dr+0.02) --++(\dx, 0) --cycle;
+\fill [rounded corners=2pt, fill=gray] (0, \b) --++ (\dx+\dr+0.02, 0) --++(0, \dy)--cycle;
+\filldraw[rounded corners=2pt, fill=gray!50, rotate=-0] (0,0) rectangle
+++(\b, \b) (\lx,\ly) rectangle ++(\a, \a);
+\draw (\b-\dr,\dr) --++(\dx, \dy);
+\draw (\b-\dr,\b-\dr) --++(\dx, \dy);
+\draw (\dr,\b-\dr) --++(\dx, \dy);
+\draw [blue, thick, postaction={decorate}] (0, \ly) --++(-1.5,0);
+\foreach \z in {0,.24,.48,...,2.5}
+    {
+    \draw [rounded corners=2pt,blue, thick]
+    (-0.0,\ly+\z+0.08)--(-0.09,\ly+\z) -- (\lx, \ly+\z)--++(0.89,0.5)
+    --++(-0.08, 0.05);
+}
+\draw [rounded corners=2pt,blue, thick, postaction={decorate}] (-1.5,
+\ly+2.8) --++(1.5,0) node[black, above, pos=0.4] {$I_p$};
+\draw[latex-latex] (-\lx, \ly) --++(0, 2.8) node[midway, left] {$V_p$};
+
+\draw [rounded corners=2pt,red, thick] (\a+\lx-2*\dr,
+\ly+2*\dr)--++(-\dr, -\dr)--++(\lx+\dx+2*\dr, 0);
+\draw [red, postaction={decorate}] (\b+\dx-\dr, \ly+\dr)--++(\a/2, 0);
+\draw [rounded corners=2pt, red, thick, postaction={decorate}]
+(\a+3*\lx-0.2, \ly+3.1) --++(\a/2, 0) node[black, midway, above] {$I_s$};
+\foreach \z in {.125,.25,.375,...,2.5}
+    {
+    \draw [rounded corners=2pt, red, thick] (\a+\lx,\ly+\z+0.1)--
+    (\a+\lx-0.07,\ly+\z) -- (\a+2*\lx, \ly+\z)--++(0.87,0.5)--++(-0.06,
+    0.06);
+    }
+\draw[latex-latex] (2*\a+\lx, \ly) --++(0, 3.1) node[midway, left] {$V_s$};
+\end{scope}
+ \end{tikzpicture}
+ \end{document}
