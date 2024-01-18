@@ -1,0 +1,76 @@
+\documentclass{tp}
+\titre{TP3 : Lunette astronomique}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+Le but de ce TP est d'étudier un système optique d'utilisation courante : une lunette astronomique simple.
+
+\textit{Ce TP vous laisse une relative liberté quant au protocole expérimental et aux mesures à effectuer. \`A vous de prendre des initiatives et de faire des propositions. Si vous avez besoin de matériel qui ne se trouve pas sur vos table, n'hésitez pas à le demander.}
+
+\section{Modélisation d'un objet à l'infini} 
+Avec le matériel à votre disposition, trouver un moyen de simuler un objet situé à l'infini.
+
+\section{Modélisation de l'\oe il}
+Avec le matériel à votre disposition, trouver une méthode permettant de simuler un \oe il au repos qui voit net un objet situé à l'infini.
+
+Vérifier que l'\oe il que vous avez modélisé voit nettement l'objet à l'infini modélisé dans la partie précédente.
+
+\section{Principe de la lunette astronomique}
+Une lunette astronomique est un instrument d'optique qui permet d'observer des objets lointains (à l'infini) en en formant une image elle aussi à l'infini qui peut être observée sans fatigue à l'\oe il. 
+
+On peut fabriquer une \textbf{lunette de Galilée} en associant une lentille $\mathcal{L}_1$ convergente de grande distance focale $f'_1$ (appelée \textit{objectif}) avec une lentille $\mathcal{L}_2$ convergente de distance focale $f'_2$ plus courte (appelée oculaire).
+
+L'objectif $\mathcal{L}_1$ forme de l'objet observé une image intermédiaire située dans son plan focal image. On ajuste l'oculaire $\mathcal{L}_2$ de telle sorte à ce que l'image intermédiaire formée par l'objectif se trouve dans son plan focal objet. Ainsi, l'image formée par l'oculaire se trouve renvoyée à l'infini et peut être observée sans fatigue à l'\oe il. Ces conditions imposent que le foyer principal image de l'objectif est superposé au foyer principal objet de l'oculaire.
+
+L'image d'un objet situé à l'infini par la lunette étant renvoyée à l'infini, le foyer principal image de la lunette se trouve aussi à l'infini. On dit que la lunette est un système optique \textit{afocal}. 
+
+\begin{center}
+
+\begin{tikzpicture}[
+% Rayon lumineux
+rayon/.style = {postaction={decorate},decoration = {markings, mark = at position 0.5 with {\arrow{latex}}}},
+% point
+point/.style={circle, fill=black, inner sep=1pt},
+%Lentilles
+conv/.style={Stealth-Stealth},
+div/.style = {{Stealth[reversed]}-{Stealth[reversed]}},
+]
+
+\draw[->] (0,0) -- (10,0);
+\draw[conv] (2,-1.5) -- (2,1.5) node[above]{$\mathcal{L}_1$} ;
+\draw[conv] (6,-1.5) -- (6,1.5) node[above]{$\mathcal{L}_2$};
+\draw[rayon] (0,0.5) -- (2,0);
+\draw[rayon] (2,0) -- (5,-0.75) coordinate (Bp);
+%\draw[dashed] (5,-0.75) -- (8,-1.5) coordinate (Bp) node[above right]{$B'$};
+%\draw (8,0) coordinate (Ap) node[point]{} node[above right]{$A'$} node [above left]  {$F'_1$} node[below right]{$F_2$};
+\coordinate (Ap) at (5, 0);
+\draw[rayon] (Bp) -- (6, 0); 
+\draw[-Latex] (Ap) -- (Bp) node[below]{$B'$} ;
+%\draw[rayon, dashed] (4,1.5) -- (6,0);
+\draw[rayon] (6,0) -- (8,1.5);
+\draw[->] (7,0.5) -- node[below, sloped] {$B''$} (8,1.25);
+\draw (5,0) node[point] {} node[above left]{$F'_1$} node[above right]{$F_2$};
+\draw (7,0) node[point] {} node[below]{$F'_2$} ;
+\draw[->] (1,-0.2) -- node[below]{$A$} (0,-0.2); 
+\draw[->] (1,0.45) -- node[above, sloped]{$B$} (0,0.7);
+\draw[->] (8,0.2) -- node[above] {$A''$} (9,0.2);
+\draw (1,0)  node[above left,yshift=-2] {$\alpha$} arc(180:166:1);
+\draw (7,0) node[above right] {$\alpha'$} arc(0:37:1);
+\end{tikzpicture}
+
+\end{center}
+
+On définit le \textbf{grossissement} $G$ de la lunette par $G=\dfrac{\alpha'}{\alpha}$ et on peut montrer (fait en exercice) que dans le cas où l'angle $\alpha$ est faible, le grossissement est donnée par :
+\begin{equation*}
+ G=\frac{f'_1}{f_2}
+ \end{equation*} 
+
+\section{Expérimentation}
+Avec le matériel dont vous disposez, construire une lunette de Galilée sur le banc optique.
+
+Utiliser cette lunette en association avec l'objet à l'infini que vous avez simulé dans la première partie et placer l'\oe il à la sortie de la lunette pour simuler un observateur.
+
+\'Etablir un protocole expérimental permettant de vérifier la formule du grossissement donnée dans la partie précédente.
+
+\end{document}

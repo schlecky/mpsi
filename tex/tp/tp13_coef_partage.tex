@@ -1,0 +1,140 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage{mhchem}
+\usepackage{makecell}
+\usepackage{pgfplots}
+\titre{TP13 : Mesure d'un coefficient de partage}
+\begin{document}
+%\small
+
+
+\section{Objectif du TP}
+L'objectif de ce TP est de mesurer le coefficient de partage d'une espèce chimique (l'acide benzoïque) entre une phase aqueuse et une phase organique (huile de tournesol).
+
+\section{L'acide  benzoïque}
+L'acide benzoïque (\ce{Ph-COOH}) est utilisé comme conservateur alimentaire dans les boissons sans alcool, sous la dénomination E210, et est naturellement présent dans certaines plantes. 
+
+\begin{center}
+  \chemfig{[:30]*6(-=(-([:60]=O)([:-60]-OH))-=-=)}
+
+  \captionof{figure}{Molécule d'acide benzoïque}
+\end{center}
+Parmi les composés qui dérivent de l'acide benzoïque, on peut citer l'acide salicylique et l'acide acétylesalicylique plus connu sous le nom d'aspirine. Pur, c'est un solide odorant, nocif et irritant. En solution aqueuse, il est trop peu concentré pour présenter un danger. 
+
+\section{Déroulement du TP}%
+\label{sec:deroulement_du_tp}
+Il ne s'agit pas ici d'extraire de l'acide benzoïque d'une phase aqueuse vers une phase organique mais de mesurer le coefficient de partage $P$ entre les deux phases, défini par :
+\[
+P = \frac{[\ce{Ph-COOH}]_\text{org,f}}{[\ce{Ph-COOH}]_\text{aq,f}}
+\]
+où $[\ce{Ph-COOH}]_\text{aq,f}$ et $[\ce{Ph-COOH}]_\text{org,f}$ sont les concentrations en acide benzoïque dans la phase aqueuse (volume $V_\text{aq}$) et dans la phase organique (volume $V_\text{org}$) après extraction. L'équilibre de partage de l'acide benzoïque dans les deux phases est caractérisé par l'équation de réaction 
+\[
+\ce{Ph-COOH(aq) <=> Ph-COOH(org)}
+\]
+Le tableau d'avancement correspondant est :
+\begin{center}
+  \begin{tabular}{ccc}
+  \toprule
+   & \ce{Ph-COOH(aq)} & \ce{Ph-COOH(org)} \\
+   \midrule
+   État initial & $\ce{[Ph-COOH]}_\text{aq,i}V_\text{aq}$ & 0 \\
+   État final & $\ce{[Ph-COOH]}_\text{aq,i}V_\text{aq}-\xi = \ce{[Ph-COOH]}_\text{aq,f}V_\text{aq}$ & $\xi$\\
+   \bottomrule
+  \end{tabular}
+\end{center}
+
+La détermination de $\ce{[Ph-COOH]}_\text{aq,f}$ par titrage permettra de connaitre l'avancement $\xi$, puis d'en déduire la concentration de la phase organique $[\ce{Ph-COOH}]_\text{org,f}=\frac{\xi}{V_\text{org}}$ et ainsi d'accéder à $P$. 
+
+\section{Quelques solvants}%
+\label{sec:quelques_solvants}
+\renewcommand{\arraystretch}{1.2}
+\begin{center}
+  \begin{tabular}{@{}llllll@{}}
+    \toprule
+    \textbf{Solvant} & Eau & Éthanol & Dichlorométhane & Cyclohexane & Huile de tournesol\\
+    \midrule
+    \textbf{Solubilité de \ce{Ph-COOH}} & faible & bonne & moyenne & nulle & bonne \\
+    \textbf{Densité à \SI{20}{\celsius}} & 1 & \num{0.8} & \num{1.3} & \num{0.8} & \num{0.9} \\
+    \textbf{Miscibilité à l'eau} & oui & oui & non & non & non \\
+    \textbf{Sécurité} & &Inflammable & \makecell[t{l}]{Toxique, irritant, \\sensibilisant et \\narcotique} & \makecell[t{l}]{Inflammable, toxique, \\ irritant, sensibilisant,\\narcotique et \\dangereux pour\\l'environnement} & \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+\begin{itemize}
+  \item Quels solvants sont \textit{a priori} utilisables pour l'extraction liquide-liquide de l'acide benzoïque ?
+
+  \item Proposer un choix de solvant en argumentant avec les données du tableau.
+
+  \item Pourquoi ne faut-il \textbf{pas jeter les phases organiques dans l'évier} ?  
+\end{itemize}
+
+\section{Solution aqueuse initiale d'acide benzoïque}%
+\label{sec:solution_aqueuse_initiale_d_acide_benzoique}
+
+\begin{itemize}
+  \item Prélever à l'aide d'une pipette jaugée un volume $V_\text{aq} = \SI{30}{\milli\litre}$ de solution d'acide benzoïque. On veillera bien à identifier le nombre de traits de la pipette.
+
+  \item Transférer directement ce volume dans une ampoule à décanter préalablement posée sur son support (et dont \textbf{le robinet est fermé}).
+
+  \item Noter la concentration $[\ce{Ph-COOH}]_\text{aq,i}$ de la solution. 
+\end{itemize}
+
+\section{Première étape : Extraction vers la phase organique}%
+\label{sec:premiere_etape_extraction_vers_la_phase_organique}
+
+\begin{itemize}
+  \item Ajouter dans l'ampoule un volume $V_\text{org}=\SI{40}{\milli\litre}$ d'huile de tournesol prélevée à l'éprouvette graduée.
+
+  \item Boucher l'ampoule à décanter, la retourner \textbf{en tenant le bouchon}, et l'agiter vigoureusement pendant une minute en n'oubliant pas d'ouvrir régulièrement le robinet quand il est en l'air pour dégazer.
+
+  \item Remettre l'ampoule sur son support, enlever le bouchon, et laisser décanter au moins 10 minutes.
+
+  \item Après décantation, prélever presque l'intégralité de la phase aqueuse dans un premier bécher, et le reste de la phase aqueuse ainsi que la phase organique dans un second bécher.
+
+  \item Faire un schéma annoté du dispositif, sans oublier de préciser la nature des phases en fin de décantation.
+\end{itemize}
+
+\section{Deuxième étape : Titrage de l'acide benzoïque dans la phase aqueuse}%
+\label{sec:deuxieme_etape_titrage_de_l_acide_benzoique_dans_la_phase_aqueuse}
+
+\begin{itemize}
+  \item Pendant la décantation, rincer la burette à l'eau puis à la soude. La remplir de soude et faire le niveau. La concentration de la soude sera notée $C_s$.
+
+  \item Prélever à la pipette jaugée exactement $V_A = \SI{10}{\milli\litre}$ de solution aqueuse (concentration $[\ce{Ph-COOH}]_\text{aq,f}$), et la transférer dans un erlenmeyer. Lorsque l'on prélève ce volume, bien mettre le bout de la pipette au fond du bécher pour ne pas pipeter d'huile qui pourrait encore surnager à la surface de la solution aqueuse.
+
+  \item Ajouter dans l'erlenmeyer quatre à cinq gouttes de BBT. Y placer un barreau aimanté, et disposer le tout sur un agitateur magnétique sur lequel on aura préalablement placé un papier blanc.
+
+  \item Effectuer soigneusement le titrage. Il est préférable de régler dès le début le robinet de la burette sur du goutte-à-goutte. Garder la main sur le robinet, de façon à pouvoir ralentir le débit dès que le BBT change de couleur autour des gouttes tombées récemment, et s'arrêter au moment du virage. Le volume $V_\text{s,eq}$ de soude versé à l'équivalence se situe entre 5 et \SI{10}{\milli\litre}.
+
+  \item Une fois le dosage terminé, ne pas oublier de sortir proprement le barreau aimanté de l'erlenmeyer.
+\end{itemize}
+
+L'équation de titrage est :
+\[
+\ce{Ph-COOH(aq) + HO- <=> Ph-COO-(aq) + H2O($\ell$)}
+\]
+
+
+\begin{itemize}
+  \item Déduire du titrage la concentration $[\ce{Ph-COOH}]_\text{aq,f}$ de l'acide benzoïque dans la solution aqueuse après partage puis la concentration $[\ce{Ph-COOH}]_\text{org,f}$.
+
+  \item En déduire le coefficient de partage $P$ entre les deux phases. De quel équilibre est-il la constante ? 
+\end{itemize}
+
+\section{Mutualisation des résultats}%
+\label{sec:mutualisation_des_resultats}
+Nous allons estimer l'incertitude sur la valeur de $P$ en comparant les valeurs obtenues par chaque binôme.
+
+\begin{itemize}
+  \item Inscrire au tableau votre valeur de $P$.
+  \item À partir de toutes les valeurs de $P$, déterminer la valeur moyenne $P_m$ ainsi que l'écart-type $\delta P$.  
+\end{itemize}
+
+
+
+
+
+
+
+\end{document}

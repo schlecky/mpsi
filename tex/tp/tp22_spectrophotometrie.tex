@@ -1,0 +1,278 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage[version=4]{mhchem}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{decorations.text}
+\titre{TP22 : Spectrophotométrie}
+\begin{document}
+%\small
+
+
+\section{Objectif du TP}
+L'objectif de ce TP est d'utiliser un spectrophotomètre pour mesurer l'absorbance d'une substance colorée acido-basique (le BBT) et de l'utiliser pour doser une solution de BBT de concentration inconnue.
+
+\textbf{Attention, il faudra mettre en marche l'ordinateur et le spectrophotomètre dès votre arrivée dans la salle pour laisser à la lampe du spectro le temps de chauffer. Ne pas l'éteindre entre les deux groupes de TP.
+}  
+
+\section{Principe de la spectrophotométrie}%
+\label{sec:principe_de_la_spectrophotometrie}
+\subsection{Spectrophotomètre}%
+\label{sub:spectrophotometre}
+
+Une solution est colorée parce qu'elle contient des molécules qui absorbent certaines longueurs d'onde du spectre visible. De ce fait, la solution éclairée par de la lumière blanche ne laisse passer que les longueurs d'onde qui n'ont pas été absorbées. C'est le mélange de ces longueurs d'onde qui donne sa couleur à la solution.
+
+Un spectrophotomètre est un appareil qui permet de mesurer la proportion de lumière absorbée par la solution à une longueur d'onde donnée. Une des conditions pour pouvoir utiliser la spectrophotométrie est donc que l'espèce étudiée absorbe une des longueurs d'onde émises par la lampe du spectrophotomètre.
+
+Un spectrophotomètre comporte une lampe de lumière blanche qui éclaire un réseau par réflexion. La lumière dispersée par le réseau passe par une fente correctement positionnée, qui permet ainsi de sélectionner une longueur d'onde du spectre. La longueur d'onde sélectionnée peut être modifiée par rotation du réseau.
+
+Le faisceau monochromatique de longueur d'onde $\lambda$ ainsi constitué arrive sur une cuve d'épaisseur $e$, remplie de la solution à étudier, avec une intensité lumineuse $I_0$. Au cours d'une mesure, on place successivement dans la cuve :
+\begin{itemize}
+  \item le solvant pur $S$. Il en ressort un faisceau d'intensité $I_{S}<I_0$ du fait de l'absorption due au solvant et à la cuve.
+  \item une solution de concentration $c$ d'un produit $P$ dans $S$. Il en ressort un faisceau d'intensité $I \leq I_S$ du fait de l'absorption due au soluté.
+\end{itemize}
+Une cellule photoélectrique mesure l'intensité lumineuse en sortie de la cuve.
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[very thick, rayon] (0,0)node[above right]{lumière blanche} -- (3, 0);
+    \draw[rotate around={45:(3,0)}, yshift=-0.5cm, fill=gray] (3,0) rectangle (3.2, 1) node[right, xshift=5pt]{réseau};
+    \draw[thick] (2,-2) node[left]{fente} -- (2.9,-2) (3.1,-2) --(4, -2);
+    \foreach \x in{2.1, 2.4, ..., 3.9}{
+      \draw[rayon, gray] (3,0) -- (\x, -2);
+      }
+    \draw[thick] (3, -3) node[left]{miroir} ++(135:0.5) -- ++(-45:1); 
+    \draw[rayon, gray] (3, -2) -- (3, -3);
+    \draw (5, -3) node[rectangle, draw, minimum height=1cm](ech) {échantillon};
+    \draw (8, -3) node[rectangle, draw, minimum height=1cm](det) {détecteur};
+    \draw[rayon, gray] (3, -3) -- (ech.west);
+    \draw[rayon, gray] (ech.east) -- (det.west);
+  \end{tikzpicture}
+  \captionof{figure}{Principe d'un spectrophotomètre.}
+\end{center}
+
+\subsection{Absorbance, loi de Beer-Lambert}%
+\label{sub:absorbance_loi_de_beer_lambert}
+On appelle \textbf{absorbance} (ou \emph{densité optique} ) du produit $P$ pour la longueur d'onde $\lambda$, la quantité $A$ définie par
+\begin{equation}
+  A = \log \left( \frac{I_S}{I} \right) 
+\end{equation}
+
+L'absorbance satisfait en général la \textbf{loi de Beer-Lambert} 
+\begin{equation}
+  A(\lambda) = \varepsilon(\lambda)ec \quad ,
+\end{equation}
+où $\epsilon$ est le \textbf{coefficient d'extinction molaire}.
+
+Une propriété remarquable de l'absorbance est son additivité. À une longueur d'onde $\lambda$ donnée, pour un mélange de deux produits $P_1$ et $P_2$, de coefficients d'extinction molaire respectifs $\varepsilon_1$ et $\varepsilon_2$, à des concentrations $c_1$ et $c_2$, l'absorbance du mélange sera $A=A_1+A_2=\varepsilon_1c_1e + \varepsilon_2c_2e$. 
+
+Lorsque deux espèces chimiques ont la même absorbance pour une longueur d'onde donnée, les points où leurs absorbances sont les mêmes est appelé \textbf{point isobestique}. L'absorbance à ces longueurs d'onde d'un mélange des deux espèces ne dépend pas de la proportion des deux espèces.
+
+\section{Détermination du \pKa{} d'un indicateur coloré acido-basique}
+
+\subsection{Rappels sur les indicateurs colorés acido-basiques}%
+\label{sub:rappels_sur_les_indicateurs_colores_acido_basiques}
+Un indicateur coloré acido-basique est une espèce chimique dont la forme acide \ce{HIn} et la forme basique \ce{In-} ont des couleurs différentes. Cette espèce appartient donc à un couple acide/base \ce{HIn}/\ce{In-}, dont on va chercher dans cette partie à déterminer le \pKa.
+
+L'indicateur coloré étudié dans ce TP est le bleu de bromotymol (BBT).
+
+\subsection{Manipulaiton : réalisation du faisceau de courbes d'absorbance}%
+\label{sub:manipulaiton_realisation_du_faisceau_de_courbes_d_absorbance}
+
+%\subsubsection{Préparation des solutions}%
+%\label{ssub:preparation_des_solutions}
+
+%Nous allons préparer des solutions $S_i$ de pH croissant, avec une concentration totale en indicateur coloré $C=[\ce{HIn}]_i + [\ce{In-}]_i$ identique. Pour cela, on va utiliser la solution de Britton-Robinson. Il s'agit d'un mélange de trois acides faibles (acide phosphorique, acide borique et acide éthanoïque) qui présente la particularité de former une solution tampon dont le pH  est ajustable par ajout de soude. De plus le pH est une fonction affine de la quantité de soude ajoutée.
+
+%\begin{itemize}
+  %\item À l'aide de la pipette jaugée, prélever dans un premier bécher un volume $V=\SI{20}{\milli\litre}$ de solution de Britton-Robinson.
+  %\item Ajouter, à la burette, le volume $V_i$ de solution de soude à la concentration $c_1=\SI{1.00e-1}{\mol\per\litre}$ selon les indications figurant dans le tableau suivant
+  %\begin{center}
+    %\begin{tabular}{lllllll}
+    %\toprule
+    %Solution & $S_1$  & $S_7$ & $S_8$ & $S_9$ & $S_{10}$ & $S_{11}$ \\
+    %$V_i$ (\si{\milli\litre}) & \num{4.00} & \num{7.00} & \num{7.50} & \num{8.00} & \num{8.50} & \num{9.00}\\ 
+    %\bottomrule
+    %\end{tabular}
+  %\end{center}
+  %\item À l'aide d'une pipette jaugée, prélever \SI{20}{\milli\litre} de la solution obtenue dans un second bécher. Y ajouter à l'aide de l'autre burette \SI{2.00}{\milli\litre} de BBT de concentration $c_2=\SI{3.00e-4}{\mol\per\litre}$. Quelle est la valeur de $C$ ?  
+  %\item Mesurer le pH de la solution $S_i$. 
+%\end{itemize}
+
+\subsubsection{Réalisation du faisceau de courbes}%
+\label{ssub:realisation_du_faisceau_de_courbes}
+Des solutions $S_i$ ($i \in [1, 6, 7, 8, 9, 10, 11]$) de pH croissant, avec une concentration totale en indicateur coloré $C=[\ce{HIn}] + [\ce{In-}]$ identique ont été préparées, constituant ainsi une échelle de teintes. On donne $C=\SI{2.73e-5}{\mol\per\litre}$.
+
+\begin{itemize}
+  \item Mesurer le pH des différentes solutions. \textbf{Attention, pour ne pas consommer trop de solution, les mesures de pH feront l'objet d'une mise en commun : la paillassa numéro $i$ mesurera le pH de la solution $S_i$}. Les résultats seront reportés au tableau. 
+\end{itemize}
+
+Nous allons maintenant réaliser le faisceau de courbes.
+
+\begin{itemize}
+  \item Les cuves doivent être tenues par les faces striées. Il faut prendre toujours la même cuve introduite toujours dans le même sens (flèche à droite). La cuve doit être remplie aux 2/3  et bien enfoncée dans l'appareil.
+
+  \item Pour chaque courbe, la cuve sera remplie directement sous la hotte grâce à la pipette pasteur présente dans le verre à pied se trouvant devant le bécher de solution $S_i$. 
+
+  \item Choisir l'option \emph{spectre d'absorption}. On sélectionnera l'absorbance $A$. 
+
+  \item Faire le \emph{blanc} en remplissant la cuve avec de l'eau et en cliquant sur \emph{mesure}. 
+
+  \item Faire les mesures en remplissant la cuve \textbf{successivement} avec les différentes solutions par ordre de pH croissant. On n'utilisera qu'une seule cuve. Avant de cliquer sur \emph{mesure}, il faut donner un nom à la courbe et choisir sa couleur. Pour la mesure suivante, cliquer sur \emph{nouveau}. Entre deux mesures consécutives, vider la cuve, la rincer avec un peu de la solution suivante et la remplir.
+
+  \item Les courbes sont bonnes lorsqu'elles passent toutes par le même point : le point isobestique. Pour éliminer une courbe, il faut cliquer sur son onglet. Quand le résultat est satisfaisant, imprimer.
+\end{itemize}
+
+On obtient un faisceau de courbes qui passent toute par le même point (voir figure~\ref{fig:absorbance}). 
+
+\begin{figure}
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+    width=14cm,
+    height=10cm,
+    xlabel=Longueur d'onde (nm),
+    ylabel=Absorbance,
+    xmin=350,
+    xmax=700,
+    ymin=0,
+    ]
+      \foreach \p in {0.1,0.2,...,0.9}{
+        \addplot[no marks, gray] table[x=x, y expr={\p*\thisrow{In-}+(1-\p)*\thisrow{HIn}}] {data/bbt.csv};
+      }
+      \addplot[no marks, thick,
+        postaction=decorate,
+        decoration={
+          text along path, 
+          text={Acide}, 
+          text align={left indent=1cm}, 
+          transform={yshift=2pt}
+        },
+      ] table[x=x, y=HIn] {data/bbt.csv}; 
+      \addplot[
+        no marks, thick, dashed,
+        postaction=decorate,
+        decoration={
+          text along path, 
+          text={Base}, 
+          text align={left indent=9cm}, 
+          transform={yshift=2pt}
+        },
+      ] table[x=x, y=In-] {data/bbt.csv};
+      \draw[-latex] (axis cs:504, 0.6) node[above,align=center] {point\\isobestique} -- (axis cs:504, 0.2);
+
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Absorbance du BBT à différents pH.}
+  \label{fig:absorbance}
+  \end{center}
+\end{figure}
+On a donc :
+\begin{itemize}
+  \item La courbe acide $A_a(\lambda)$ qui correspond à la courbe où seul \ce{HIn} est présent. Cette courbe passe par un maximum pour la longueur d'onde $\lambda_{a, \text{max}}$.
+
+  \item La courbe basique $A_b(\lambda)$ qui correspond à la courbe où seul \ce{In-} est présent. Cette courbe passe par un maximum pour la longueur d'onde $\lambda_{b, \text{max}}$. 
+
+  \item Des courbes intermédiaires $A_i(\lambda)$ . On note $A_{ib}$ (respectivement $A_{ia}$) l'absorbance de cette courbe à la longueur d'onde $\lambda_{a, \text{max}}$ (respectivement $\lambda_{b, \text{max}}$).
+\end{itemize}
+
+À l'aide du pointeur (bouton droit de la souris), relever les valeurs de $A_{ib}$ 
+
+\subsection{Exploitation : Détermination du \pKa{} du BBT}%
+\label{sub:exploitation_determination_du_pka}
+
+On commence par écrire la loi de Beer-Lambert pour les solutions acide et basique
+\begin{equation}
+  A_a(\lambda) = \varepsilon_a(\lambda)eC \quad \text{et} \quad A_b(\lambda)=\varepsilon_b(\lambda)eC
+\end{equation}
+Pour une courbe intermédiaire, on a 
+\begin{equation}
+  Ai(\lambda) = \varepsilon_a(\lambda)e[\ce{Hin}]_i + \varepsilon_b(\lambda)e[\ce{In-}]_i = x_iA_a(\lambda) + (1-x_i)A_b(\lambda) \quad \text{avec} \quad x_i=\frac{[\ce{HIn}]}{C}
+\end{equation}
+Par ailleurs, le pH de cette solution est $\pH_i = \pKa + \log \left( \frac{[\ce{In-}]_i}{[\ce{HIn}]_i} \right)=\pKa+\log\left( \frac{1-\xi_i}{x_i} \right) $. Donc finalement
+\begin{equation}
+  \pKa = \pH_i + \log\left( \frac{A_i(\lambda)-A_b(\lambda)}{A_a(\lambda)-A_i(\lambda)} \right) 
+\end{equation}
+On choisira $\lambda=\lambda_{b,\text{max}}$. 
+\begin{itemize}
+  \item Pour cette longueur d'onde, calculer la valeur $\pKa_i$ obtenue pour chaque pH, puis la valeur moyenne du \pKa. 
+\end{itemize}
+
+\section{Tracé du diagramme de distribution}%
+\label{sec:trace_du_diagramme_de_distribution}
+
+On souhaite tracer sur un même graphique $x=\frac{[\ce{HIn}]}{C}$ et $1-x=\frac{[\ce{In-}]}{C}$. Or, on a
+\begin{equation}
+  x_i = \frac{A_i(\lambda)-A_b(\lambda)}{A_a(\lambda)-A_b(\lambda)}
+\end{equation}
+En se plaçant à $\lambda=\lambda_{b, \text{max}}$, tracer le diagramme de distribution expérimental du BBT. Le comparer au diagramme attendu et en déduire une autre valeur du \pKa.
+
+\section{Dosage d'une solution de faible concentration}%
+\label{sec:dosage_d_une_solution_de_faible_concentration}
+
+\subsection{Principe}%
+\label{sub:principe_dosage}
+
+Nous allons voir comment déterminer la concentration d'une solution par spectrophotométrie. Le dosage se fait en trois étapes :
+\begin{itemize}
+  \item Choix d'une longueur d'onde appropriée ;
+  \item Construction d'une échelle de concentrations pour cette longueur d'onde ;
+  \item Dosage de la solution inconnue.
+\end{itemize}
+
+\subsection{Choix de la longueur d'onde}%
+\label{sub:choix_de_la_longueur_d_onde}
+
+La courbe d'absorbance de la solution $S_6$ (présente sous la hotte) présente un pic pour une longueur d'onde voisine de \SI{620}{\nano\meter}. C'est cette longueur d'onde que nous allons utiliser.
+
+\begin{itemize}
+  \item Compléter le faisceau de courbes avec celle de la solution $S_6$. 
+  \item Repérer la longueur d'onde $\lambda_\text{max}$ ainsi que l'absorbance correspondante $A_\text{max}$. 
+\end{itemize}
+
+\subsection{Manipulation : établissement de l'échelle des concentrations}%
+\label{sub:manipulation_etablissement_de_l_echelle_des_concentrations}
+
+L'objectif est d'établir une échelle $A_\text{max}=f(c)$ pour le BBT. on s'associera par paires de binômes pour préparer les solutions, c'est-à-dire qu'un binôme travaillera sur les solutions $S_A$, $S_B$, $S_C$ et l'autre sur les solutions $S_D$, $S_E$ et $S_6$. Les résultats seront mis en commun.
+
+\begin{itemize}
+  \item Prélever environ \SI{50}{\milli\litre} de la solution $S_6$ et réaliser dans des béchers, avec des pipettes jaugées appropriées, les mélanges indiqués dans le tableau ci-dessous : 
+  \begin{center}
+  \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{lllllll}
+      \toprule
+      Solution & $S_A$ & $S_B$ & $S_C$ & $S_D$ & $S_E$ & $S_6$ \\
+      \midrule
+      Volume de $S_6$ (\si{\milli\litre}) & \num{5.0}& \num{5.0} & \num{5.0} & \num{10.0} & \num{20.0} & Volume restant \\
+      Volume d'eau distillée (\si{\milli\litre}) & \num{20.0}& \num{10.0} & \num{5.0} & \num{5.0} & \num{5.0}& \num{0} \\
+      $c$  & $\num{0.2}C$ & $\num{0.33}C$  & $\num{0.5}C$ & $\num{0.67}C$ & $\num{0.8}C$ & $C$ \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \item Choisir l'option \emph{acquisition manuelle}. Choisir une seule longueur d'onde $\lambda_\text{max}$ déterminée précédemment. La grandeur mesurée en abscisse est $c$ en \si{\mol\per\litre}.
+
+    \item Faire le blanc avec l'eau.
+
+  \item Faire les acquisitions manuelles pour chaque concentration. Avant chaque mesure, indiquer la concentration de la solution contenue dans la cuve, par exemple \texttt{4,8e-5} (avec une virgule comme séparateur décimal).
+
+  %\item Lorsque toutes les mesures sont faites, cliquer sur l'icône \emph{traitement des données} puis \emph{régression} et \emph{tracer}. La droite apparait.
+  \item Relever les coordonnées de chaque point, les reporter dans un script \texttt{python} pour faire une régression linéaire.
+
+  \item Revenir à la page précédente en cliquant sur \emph{affichage} puis \emph{spectro}.
+\end{itemize}
+
+\subsection{Détermination d'une concentration inconnue}%
+\label{sub:determination_d_une_concentration_inconnue}
+
+On dispose d'une solution $S$ obtenue par dillution de $S_6$, de concentration $c_S$ inconnue en BBT qu'on cherche à déterminer.
+
+\begin{itemize}
+  \item Faire une acquisition manuelle avec la solution $S$.
+  %\item À l'aide du pointeur, en déduire la concentration de la solution. Essayer de déterminer l'incertitude sur cette valeur.
+  \item Reporter ce point sur la droite tracée par régression linéaire et en déduire la valeur de $c_S$.
+\end{itemize}
+
+
+\end{document}
+

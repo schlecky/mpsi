@@ -1,0 +1,65 @@
+\documentclass[]{tp}
+\titre{TP5 : Tensions et courants en régime continu}  
+\begin{document}
+%\small
+
+L'objectif de ce TP est d'effectuer des mesures de tension et de courants dans des circuits fonctionnant en régime continu. On commencera par mesurer la caractéristique d'une alimentation de laboratoire puis nous chercherons à mesurer la résistance interne d'un voltmètre réel et celle d'un ampèremètre réel.
+
+\section{Caractéristique d'une alimentation continue}
+\label{sec:carac_alim_continue}
+
+Le boîtier utilisé comporte deux alimentations indépendantes, on n'en utilisera qu'une. L'alimentation dispose d'un réglage de la tension et d'un réglage de l'intensité. Les valeurs de tension et d'intensité définies par ces deux réglages doivent être vues comme des limites que l'alimentation ne dépassera jamais. 
+
+\begin{itemize}
+  \item Régler la tension sur \SI{5}{V} et l'intensité à \SI{50}{mA}. Pour faire le réglage d'intensité, il faut faire en sorte que la limite sur le courant débité par l'alimentation soit atteinte avant la limite sur la tension à ses bornes (comment ?). 
+\end{itemize}
+
+On cherche maintenant à mesurer la caractéristique de l'alimentation. En branchant une résistance variable aux bornes de l'alimentation, on peut faire varier l'intensité du courant qu'elle débite et noter la tension à ses bornes.
+
+\begin{itemize}
+  \item Tracer la caractéristique de l'alimentation stabilisée. 
+  \item Comment peut-on modéliser simplement cette caractéristique ?
+\end{itemize}
+
+\section{Résistances internes d'un multimètre}
+
+\subsection{Résistance interne du voltmètre}%
+\label{sub:resistance_d_entree_du_voltmetre}
+L'intensité du courant qui traverse un voltmètre idéal est nulle car le voltmètre ne doit pas modifier le comportement du circuit dans lequel il est branché. Un voltmètre réel est traversé par un courant qui dépend de la tension à ses bornes. On modélise donc un voltmètre réel par un voltmètre idéal en parallèle avec une résistance $R_V$.
+
+Pour mesurer la résistance $R_V$, on utilisera le montage suivant :
+
+\begin{center}
+%	\includegraphics[width=0.8\linewidth]{TP8_voltmetre.pdf}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) to[V,v_=$E$] (2,0) to[R,l_=$R$] (4,0) to[short] (4,2) to[short](3,2) to[short] (3,2.5) coordinate(B)  (1,2.5) coordinate(A) to[short] (1,2) to[short] (0,2) to[short] (0,0);
+\draw (3,2) to[short] (3,1.5) to[R=$R_V$] (1,1.5) to[short] (1,2);
+%\draw (voltmeter.center) node {\textbf{V}};
+\draw (A) to[rmeter, t=V, n=voltmeter] (B);
+\draw[dashed,rounded corners=3pt] (0.5,0.7) rectangle (3.5,3) (2,3) node[above]{Voltmètre réel};
+\end{circuitikz}
+
+\end{center}
+
+\begin{itemize}
+  \item Mesurer la tension affichée par le voltmètre lorsque la résistance $R$ est nulle. Cette mesure permet de déterminer la valeur de $E$. 
+  \item Ajouter une résistance $R$ de très grande valeur et mesurer à nouveau la tension $U$  affichée par le voltmètre.
+\end{itemize}
+
+La résistance interne du voltmètre est alors donnée par (le montrer) : 
+\[R_V = R \frac{U}{E-U}\]
+
+\begin{itemize}
+  \item Déterminer la résistance interne du voltmètre et estimer l'incertitude associée.
+\end{itemize}
+
+\subsection{Résistance interne de l'ampèremètre}%
+\label{sub:resistance_interne_de_l_amperemetre}
+
+La tension aux bornes d'un ampèremètre idéal est nulle car l'ampèremètre étant branché en série dans le circuit, il doit se comporter comme un fil pour ne pas en perturber le fonctionnement. Un ampèremètre réel a une tension à ses bornes qui dépend ud courant qui le traverse. On modélise un ampèremètre réel par un ampèremètre idéal en série avec une résistance $R_A$. 
+
+\begin{itemize}
+  \item Proposer et mettre en \oe{}uvre un protocole expérimental permettant de mesurer la résistance $R_A$. 
+\end{itemize}
+
+\end{document}

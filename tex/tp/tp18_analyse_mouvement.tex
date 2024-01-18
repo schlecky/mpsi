@@ -1,0 +1,48 @@
+\documentclass[a4paper]{tp}
+\titre{TP18 : Cinématique, analyse de mouvements}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+L'objectif de ce TP est de faire l'acquisition et l'analyse informatique d'un mouvement afin d'en analyser les caractéristiques (vitesse, accélération)
+
+\vspace{1em}
+\textit{Ne pas oublier qu'une mesure physique doit toujours être associée à une incertitude expérimentale. Penser à lire la notice des appareils pour connaître l'incertitude liée aux valeurs qu'ils fournissent.}
+
+\section{Principe de la méthode}
+On utilise un enregistrement vidéo du mouvement afin d'étudier le mouvement. 
+
+Pour faire des mesures quantitatives, il faut s'assurer que le mouvement se produit dans un plan perpendiculaire à la direction pointée par la caméra (pour que la distance entre la camera et l'objet varie peu).
+
+Il faut également placer dans le plan du mouvement un objet de dimension connue afin de pouvoir convertir les distances en pixels sur la vidéo en distances réelles en mètres.
+
+L'ensemble de l'acquisition et du traitement de la vidéo peut être fait à l'aide du logiciel \emph{Atelier scientifique}.
+
+\section{Analyse de mouvements sur une vidéo}
+Faire l'acquisition vidéo d'un mouvement de chute libre d'une balle de tennis dans l'air et analyser quantitativement ce mouvement pour montrer qu'il correspond à la trajectoire théorique prévue. On étudiera le cas où la balle est lâchée sans vitesse initiale (trajectoire rectiligne) et celui où la balle est lancée avec une vitesse initiale et suit une trajectoire courbe.
+
+On pourra notamment :
+\begin{itemize}
+\item Montrer les courbes représentant l'évolution temporelle des coordonnées $x(t)$ et $y(t)$ de la balle.
+\item Calculer la vitesse et l'accélération de la balle dans les directions $x$ et $y$.
+\item Représenter la trajectoire $y(x)$ de la balle.
+\item Comparer toutes les courbes présentées aux résultats théoriques. On pourra utiliser la fonction \texttt{np.polyfit} pour faire un ajustement de certaines données par une fonction parabolique. On pourra également déterminer numériquement les vecteurs vitesse et accélération au cours de la trajectoire.
+\item Utiliser les mesures faites pour estimer la valeur de l'accélération de la pesanteur $g$.
+
+Ne pas oublier d'associer des barres d'erreur aux données expérimentales et de les prendre en compte lors de la comparaison aux résultats théoriques.  
+\end{itemize}  
+
+\section{Table et mobile à coussin d'air}%
+\label{sec:table_et_mobile_a_coussin_d_air}
+
+Ce système est constitué d'une table sur laquelle peuvent glisser des mobiles autoporteurs équipés d'une soufflerie qui leur permet de se déplacer sur un coussin d'air et de réduire énormément les frottements.
+
+Les mobiles sont équipés d'éclateurs qui lorsqu'on leur applique une haute tension, produisent un arc électrique et provoquent l'apparition d'une marque sur la feuille sur laquelle ils se trouvent. Le système et reglé pour que les mobiles marquent la feuille à intervalles réguliers (réglables)
+
+\begin{itemize}
+  \item Faire l'acquisition du mouvement d'un mobile lorsque la table est parfaitement horizontale.
+  \item Faire l'acquisition du mouvement d'un mobile lorsque la table est légèrement inclinée (on placera une cale sous l'un des pieds de la table).
+  \item Pour les deux acquisitions, déterminer en chaque point le vecteur vitesse et le vecteur accélération. Comparer aux mouvements théoriquement attendus.
+\end{itemize}
+
+\end{document}

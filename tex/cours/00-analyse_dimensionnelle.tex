@@ -1,0 +1,93 @@
+\documentclass[MPSI]{tp}
+\usetikzlibrary{decorations.text}
+\usepackage{wrapfig}
+\usepackage{pgfplots}
+\usepackage[version=3]{mhchem}
+\titre{Analyse dimensionnelle}
+\begin{document}
+%\pagestyle{empty}
+\newcommand{\ex}{Ex : }
+\newcommand{\Ex}[1]{\\ Ex : #1\\}
+\newcommand{\exemple}[1]{\\ Ex : #1\\}
+\newcommand{\ie}{c.-à-d.}
+\newcommand{\rem}{Remarque : }
+
+
+\section{Le Système International d'Unités (S.I.)}
+
+\subsection{Distinction entre grandeur et unité}
+
+Une \emph{grandeur physique} est une caractéristique de certains corps, ou de certains phénomènes physiques ou chimiques. Par exemple la masse, la température, une force, une longueur, ...
+
+Au cours d'une expérience, on est amené à effectuer la \emph{mesure} de la valeur prise par les grandeurs physiques pertinentes pour le problème étudié, dans les circonstances de l'expérience. En pratique, effectuer une mesure consiste à choisir un étalon (une référence), et compter à combien d'étalons correspond la valeur prise par la grandeur dans les circonstances de l'expérience. Cet étalon constitue une \emph{unité} possible pour exprimer le résultat de la mesure ; pour chaque grandeur on dispose ainsi d'une infinité d'unités pour exprimer le résultat d'une mesure. Le choix de l'unité est \textit{a priori} arbitraire.
+Par exemple, pour une mesure de longueur, on peut exprimer le résultat en mètres (m), en nanomètres (nm), en années-lumières (a.l.), en yards (yd), en hauteurs de Tour Eiffel, ...
+
+
+\subsection{Grandeurs fondamentales et grandeurs dérivées}
+
+Dans l'état actuel de nos connaissances en Sciences Physiques, 7 \emph{grandeurs fondamentales} indépendantes permettent de déduire toutes les autres grandeurs, dites \emph{grandeurs dérivées}.
+
+À chaque grandeur on associe une \emph{dimension} qui simplifie les écritures lors de l'analyse dimensionnelle :
+
+\begin{center}
+ \begin{tabular}{@{}ccccccc@{}}
+\toprule
+masse & longueur & temps & quantité de matière & intensité électrique & température & intensité lumineuse \\ 
+M & L & T & N & I & $\Theta$ &J \\ 
+\bottomrule 
+  
+\end{tabular} 
+\end{center}
+
+
+Les grandeurs dérivées sont liées aux grandeurs fondamentales soit par une définition (\ex accélération), soit par une loi physique empirique (\ie déduite de l'expérience) (\ex force d'interaction gravitationnelle).
+
+
+\subsection{Unités et Système International}
+
+\indent Puisque le choix de l'étalon est arbitraire, chacun est libre de définir une unité à l'aide de ce qui est à sa disposition (\ex coudée de Chartres, coudée d'Amiens, ...) mais lorsqu'on souhaite travailler en équipe cela devient ingérable (\ex sonde Mars Climate Orbiter -- 120 millions de dollars -- perdue en 1999). D'où la nécessité du \emph{Système International d'Unités} (S.I.), initié à la Révolution par la mise en place à l'échelle de la France du système métrique.
+
+\indent Les grandeurs dérivées s'expriment soit :
+\begin{itemize}
+\item avec une unité usuelle (fixée par le système S.I.) (ex : volt (V), joule (J), newton (N))
+\item par une combinaison d'unités fondamentales(ex : m.s$^{-1}$, mol.m$^{-3}$)
+\item par une combinaison d'unités fondamentales et d'unités usuelles (ex : J.s$^{-1}$, Pa.m$^{-2}$)
+\end{itemize}
+
+
+\section{\'Equations aux dimensions (analyse dimensionnelle)}\label{Sec_Equations_dimensions}
+
+\subsection{Définitions}
+
+\indent Soit une grandeur physique $X$ ; on désigne par $\dim(X)$ sa dimension. $dim(X)$ s'exprime en fonction des dimensions des grandeurs fondamentales ; c'est ce qu'on appelle l'\emph{équation aux dimensions} pour la grandeur $X$ : 
+\begin{equation*}
+  \dim(X) = M^a.T^b.L^c.N^d.I^e.\theta^f.J^g
+\end{equation*}
+Trouver cette équation aux dimensions, c'est faire de l'\emph{analyse dimensionnelle}.\\
+\indent Ceci permet de déduire que l'unité S.I. $\xi$ de la grandeur $X$ s'exprime en fonction des unités S.I. fondamentales : 
+\begin{equation*}
+  \xi = [X] = \text{kg}^a.\text{s}^b.\text{m}^c.\text{mol}^d.\text{A}^e.\text{K}^f.\text{cd}^g
+\end{equation*}
+
+
+\subsection{Vérification de l'homogénéité}
+
+\indent Toute relation obtenue en Sciences Physiques doit être \emph{homogène}, c'est-à-dire satisfaire aux conditions suivantes :
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Expression} & \textbf{Homogène si ...}\\
+\midrule
+$X=Y$ & $\dim(X)=\dim(Y)$\\
+$X+Y$ & $\dim(X)=\dim(Y)$\\
+$\ln(X)$ & $\dim(X)=1$\\
+$\exp(X)$ & $\dim(X)=1$\\
+$\sin(X)$, $\cos(X)$, $\tan(X)$ & $\dim(X)=1$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\rem{Bien qu'un angle ait une unité, il s'agit d'une grandeur sans dimension car c'est défini comme le rapport de deux longueurs (longueur de l'arc de cercle intercepté divisée par la longueur du rayon du cercle).}
+
+
+
+\end{document}

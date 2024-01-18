@@ -1,0 +1,118 @@
+\documentclass{tp}
+\usepackage{pgfplots}
+\titre{TP7 : Tensions et courants en régime variable}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+Le but de ce TP est de mettre en \oe uvre des mesures de tensions et de courants variables dans un circuit électrique en mettant en évidence l'influence des résistances d'entrée des appareils de mesure et des résistances de sortie des générateurs.
+
+\vspace{1em}
+\textit{Ne pas oublier qu'une mesure physique doit toujours être associée à une incertitude expérimentale. Penser à lire la notice des appareils pour connaitre l'incertitude liée aux valeurs qu'ils fournissent.}
+
+\section{Mesures de tension}
+Pour mesurer une tension électrique, on peut utiliser un voltmètre (numérique ou analogique) ou un oscilloscope (numérique ou analogique). 
+
+On décompose la tension à mesurer en une partie continue $V_\text{DC}$ et une partie variable $V_\text{AC}(t)$ : $v(t)=V_\text{DC}+V_\text{AC}(t)$. Un voltmètre numérique possède plusieurs \emph{modes} : 
+\begin{itemize}
+	\item[$\bullet$] Un mode \textbf{DC} qui affiche la composante continue $V_\text{DC}$ de la tension, c'est aussi la valeur moyenne de la tension : $V_\text{DC}=\langle v(t) \rangle$ ;
+
+	\item[$\bullet$] Un mode \textbf{AC} qui affiche la \emph{valeur efficace} $V_\text{eff}$ de la composante variable de la tension : $V_\text{eff}=\sqrt{\langle V_\text{AC}(t)^2 \rangle}$ ;
+
+	\item[$\bullet$] Certains voltmètres possèdent un mode \textbf{AC+DC} qui affiche la \emph{valeur efficace} $V_\text{eff}$ de la tension : $V_\text{eff}=\sqrt{\langle v(t)^2 \rangle}$.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=3*2*pi,
+  ymin=-1.0,ymax=2,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$v(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:3*2*pi,samples=100,smooth,coul1,thick]{0.5+cos(deg(x)};
+  \draw[dotted] (axis cs:0,0.5) node[left] {$V_{DC}$} -- (axis cs:6*pi,0.5);
+\end{axis}
+\end{tikzpicture}
+%
+\begin{tikzpicture}
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=3*2*pi,
+  ymin=-1.5,ymax=1.5,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$V_{AC}(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:3*2*pi,samples=100,smooth,coul1,thick]{cos(deg(x)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+Avec un oscilloscope on peut mesurer en plus la valeur crête à crête (différence entre le maximum et le minimum) et l'amplitude $V_\text{max}$ du signal (en générale la moitié de la valeur crête à crête).
+
+La relation entre l'amplitude $V_\text{max}$ d'un signal et sa valeur efficace $V_\text{eff}$ dépend de la forme du signal :
+\begin{itemize}
+	\item[---] $V_\text{eff}=V_\text{max}$ pour un signal carré ;
+
+	\item[---] $V_\text{eff}=\dfrac{V_\text{max}}{\sqrt{2}}$ pour un signal sinusoïdal ;
+
+	\item[---] $V_\text{eff}=\dfrac{V_\text{max}}{\sqrt{3}}$ pour un signal triangulaire.
+\end{itemize}
+
+\begin{itemize}
+	\item Utiliser un GBF pour produire des signaux alternatifs (avec une composante continue) de différentes formes, mesurer $V_\text{max}$ à l'oscilloscope et $V_\text{eff}$ au voltmètre. Attention, les voltmètres numériques ne peuvent pas mesurer n'importe quelle fréquence en mode AC, ils faut consulter la notice pour connaitre la gamme de fréquences sur laquelle ils fonctionnent correctement.
+
+	\item Les relations ci-dessus sont-elles vérifiées ?
+
+	\item Mesurer également $V_\text{DC}$ à l'oscilloscope et au voltmètre et comparer les valeurs obtenues.
+\end{itemize}
+
+\section{Résistance de sortie du GBF}
+
+Un générateur de tension réel est modélisé par un générateur de tension idéal en série avec une résistance $R_g$ appelée résistance de sortie. 
+
+On souhaite mesurer la résistance de sortie d'un GBF.
+\begin{center}
+	%\includegraphics[width=0.8\linewidth]{TP8_generateur.pdf}
+    \begin{circuitikz}[european resistors]
+      \draw (0,0) to[V,v_=$E$] (2,0) to[R,l_=$R_g$] (4,0) to[short] (4,1.5) to[short](3,1.5) to[short] (3,2.5)coordinate(B) (1,2.5) coordinate(A) to[short] (1,1.5) to[short] (0,1.5) to[short] (0,0);
+\draw (3,1.5) to[R=$R$] (1,1.5);
+%\draw (voltmeter.center) node {\textbf{V}};
+\draw (A) to[rmeter, t=V, n=voltmeter]  (B);
+\draw[dashed,rounded corners=3pt] (0.3,-1) rectangle (3.7,0.7) (2,-1) node[below]{Générateur réel};
+\end{circuitikz}
+\end{center}
+
+\begin{itemize}
+	\item Brancher une résistance variable à la sortie d'un GBF et observer son influence sur la tension délivrée par celui-ci.
+
+	\item Montrer que lorsque la résistance $R$ est absente (infinie), la tension affichée par le voltmètre est la tension $E$.
+
+	\item Montrer que lorsque $R=R_g$ la tension aux bornes de $R$ est $U=E/2$.
+
+	\item En déduire une méthode permettant de mesurer la résistance interne du GBF.
+\end{itemize}
+
+\section{Résistance d'entrée de l'oscilloscope}
+En vous appuyant sur le TP5, élaborer et mettre en \oe{}uvre une méthode permettant de mesurer la résistance d'entrée de l'oscilloscope (qui n'est rien d'autre qu'un voltmètre)
+
+
+\end{document}

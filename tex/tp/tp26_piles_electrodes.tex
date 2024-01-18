@@ -1,0 +1,123 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{pgfplots}
+\usepackage{mhchem}
+\pgfplotsset{compat=1.17}
+\titre{TP26 : Piles et électrodes}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+L'objectif de ce tp est d'effectuer quelques réactions d'oxydoréduction, et de réaliser des piles pour mesurer les différences de potentiels entre les couples oxydant/réducteur. On étudiera enfin la loi de Nernst.
+
+\section{Réactions d'oxydoréduction}%
+\label{sec:reactions_d_oxydoreduction}
+
+\subsection{Réaction entre les ions permanganates et les ions fer (II) en milieu acide}%
+\label{sub:reaction_entre_les_ions_permanganates_et_les_ions_fer_ii_en_milieu_acide}
+
+\begin{itemize}
+  \item Dans un tube à essai, verser \SI{0.5}{\milli\litre} d'une solution de concentration \SI{0.1}{\mol\per\litre} de permanganate de potassium acidifié (\ce{K+ + MnO4-}). Noter la couleur de la solution. À quelle espèce chimique est due cette couleur ?
+
+  \item Ajouter progressivement une solution de sulfate ferreux (\ce{Fe^2+ + SO4^2-}) à \SI{0.1}{\mol\per\litre}.
+
+  \item Noter vos observations. Quelle réaction a lieu ? Déterminer l'oxydant et le réducteur. Pouvait-on s'attendre à observer cette réaction sachant qu'à \SI{25}{\celsius}, $E^0(\ce{MnO4- / Mn^2+})=\SI{1.51}{\volt}$ et $E^0(\ce{Fe^3+/Fe^2+})=\SI{0.77}{\volt}$ ?  
+\end{itemize}
+
+\subsection{Action du fer sur les ions cuivre (II)}%
+\label{sub:action_du_fer_sur_les_ions_cuivre_ii_}
+
+\begin{itemize}
+  \item Dans un tube à essai, placer un morceau de paille de fer.
+  \item Ajouter quelques millilitres de la solution de sulfate de cuivre (\ce{Cu^2+ + SO4^2-)} à \SI{0.1}{\mol\per\litre} et noter les observations.
+
+  \item Au bout d'une minute, prélever environ \SI{2}{\milli\litre} de la solution, les placer dans un tube à essai et y ajouter avec précaution quelques gouttes d'hydroxyde de sodium (\ce{Na+ + HO-}) à \SI{0.1}{\mol\per\litre}. D'après ce test, quels sont les produits de la première réaction. Écrire l'équation de la réaction qui a eu lieu entre le sulfate de cuivre et le fer, puis celle de la réaction avec la soude.
+
+  \item Justifier ces observations, sachant que $E^0(\ce{Cu^2+ / Cu}) = \SI{0.34}{\volt} $ et $E^0(\ce{Fe^2+ / Fe})=\SI{-0.44}{\volt} $  
+\end{itemize}
+
+\section{La pile Daniell}
+\label{sec:la_pile_daniell}
+
+\subsection{Mode opératoire}
+\label{sub:mode_operatoire}
+
+\begin{itemize}
+  \item Dans un petit bécher, mettre une solution de sulfate de cuivre à \SI{0.1}{\mol\per\litre} et tremper une lame de cuivre préalablement nettoyée à la toile émeri. C'est la première demi-pile.
+
+  \item Dans le seconde bécher, mettre une solution de sulfate de zinc de même concentration et tremper une lame de zinc également propre. C'est la seconde demi-pile.
+
+  \item Finalement, on ferme le circuit à l'aide d'un pont salin pour former la pile.
+\end{itemize}
+
+\begin{center}
+  \begin{tikzpicture}
+  %tikz redox
+    \fill[gray!20] (0,0) rectangle (2,2);
+    \draw (0,2.5) -- (0,0) -- node[above]{\footnotesize\ce{Cu^2+}}(2, 0) -- (2, 2.5);
+    \draw[fill=gray, rotate around={10:(0.5,1)}] (0.5,1) rectangle (1, 3) (0.75,2) node{\footnotesize Cu} (0.75, 3) coordinate(A);
+    \begin{scope}[xshift=4cm]
+    \fill[gray!20] (0,0) rectangle (2,2);
+    \draw (0,2.5) -- (0,0) -- node[above]{\footnotesize\ce{Zn^2+}}(2, 0) -- (2, 2.5);
+    \draw[fill=gray, rotate around={-10:(1,1)}] (1,1) rectangle (1.5, 3) (1.25,2) node{\footnotesize Zn}(1.25, 3) coordinate(B);
+    \end{scope}
+    \fill[gray!30] (1.5, 1.5) [rounded corners]-- (1.5, 3) -- (4.5, 3) [sharp corners]-- (4.5, 1.5) -- (4.2, 1.5) [rounded corners]-- (4.2, 2.7)-- (1.8, 2.7) --(1.8, 1.5);
+    \draw[rounded corners] (1.5, 1.5) -- (1.5, 3) --node[above]{\footnotesize pont salin} (4.5, 3) -- (4.5, 1.5);
+    \draw[rounded corners] (1.8, 1.5) -- (1.8, 2.7) -- (4.2, 2.7) -- (4.2, 1.5);
+    \coordinate (C) at (0,4);
+    \draw (A) -- (A|-C) to[rmeter, t=V, n=M] (B|-C) -- (B);
+    \draw (M.left) node[above left]{$+$};
+    \draw (M.right) node[above right]{Com};
+  \end{tikzpicture}
+  \captionof{figure}{Pile Daniell}
+\end{center}
+
+\subsection{Expériences}%
+\label{sub:experiences}
+
+\begin{itemize}
+  \item Fabriquer d'autres piles avec des solutions de nitrate de plomb et de nitrate d'argent, en gardant le cuivre comme première demi-pile. Noter les tensions mesurées.
+\end{itemize}
+
+\section{Loi de Nernst}%
+\label{sec:loi_de_nernst}
+
+\subsection{Objectif}%
+\label{sub:objectif}
+
+On cherche à montrer que le potentiel $E$ du couple \ce{Cu^2+ / Cu} s'écrit sous la forme
+\begin{equation}
+  E = E^0 + k \ln \left( \frac{[\ce{Cu^2+}]}{\cz} \right) 
+\end{equation}
+
+\subsection{Protocole}%
+\label{sub:protocole}
+
+\begin{itemize}
+  \item Préparer, par dilutions successives, une série de solutions de sulfate de cuivre de concentrations respectives \SI{e-1}{\mol\per\litre}, \SI{e-2}{\mol\per\litre}, \SI{e-3}{\mol\per\litre} et \SI{e-4}{\mol\per\litre}. Ces solutions seront mises dans des béchers de \SI{50}{\milli\litre} en attendant d'être utilisées.
+
+  \item Avec chaque bécher, constituer une pile : l'une des demi-piles est constituée par le couple \ce{Cu^2+ / Cu}, l'autre par une électrode de référence que l'on fera tremper dans la solution.
+
+  \item Pour chaque concentration, relever la différence de potentiels aux bornes de la pile constituée. Il faut commencer la série de mesures par la solution la moins concentrée (expliquer pourquoi).
+
+    Le pont ionique est intégré à l'électrode de référence. De plus, par construction, le potentiel de cette électrode est fixe et vaut $E_\text{ref}$. On mesure $U=E-E_\text{ref}$. 
+
+  \item Tracer le potentiel $E$ en fonction de $\log \left( \frac{c}{\cz} \right) $, où $c$ est la concentration de la solution de sulfate de cuivre. La théorie prévoit 
+    \begin{equation}
+      E = \num{0.34} + \num{0.03}\log\left( \frac{[\ce{Cu^2+}]}{\cz} \right) 
+    \end{equation}
+  Comparer cette expression aux valeurs expérimentales. Que vaut le potentiel standard du couple \ce{Cu^2+ / Cu} ?
+
+  \item Déterminer le potentiel standard des couples \ce{Ag+ / Ag }, \ce{Pb^2+ / Pb} et \ce{Zn^2+ / Zn}.
+\end{itemize}
+
+Les électrodes de référence possibles sont :
+\begin{itemize}
+  \item électrode au calomel (fil rouge) $E_\text{ref}=\SI{0.241}{\volt}$ ;
+  \item électrode d'argent (la plus probable) $E_\text{ref}=\SI{0.225}{\volt}$;
+  \item électrode au sulfate mercureux  (la moins probable) $E_\text{ref}=\SI{0.651}{\volt}$. 
+\end{itemize}
+
+\end{document}
+
+ 

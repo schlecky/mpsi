@@ -1,0 +1,110 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage[version=4]{mhchem}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{decorations.text}
+\titre{TP33 : Classification périodique}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+L'objectif de ce TP est d'étudier les propriétés chimiques de quelques éléments et de les relier à la position de l'élément dans la classification périodique.
+
+
+\section{Propriétés oxydo-réductrices de certains éléments}%
+\label{sec:proprietes_oxydo_reductrices_de_certains_elements}
+
+\subsection{Les alcalins}%
+\label{sub:les_alcalins}
+
+On remplit d'eau un grand cristallisoir et on ajoute quelques gouttes de phénolphtaléine (rose en milieu basique). On laisse tomber un petit morceau de sodium dans le cristallisoir et on place aussitôt dessus une grille de protection.
+
+\begin{itemize}
+  \item Décrire les observations que l'on peut faire au cours de l'expérience
+  \item Écrire les demi-équations redox, puis l'équation de la réaction chimique.
+  \item Interpréter les différentes observations.
+  \item Indiquer si le sodium (et les autres métaux alcalins) a un caractère oxydant ou réducteur.
+\end{itemize}
+
+\subsection{Les halogènes}%
+\label{sub:les_halogenes}
+
+Il est impensable de manipuler le difluor ; le dibrome est un liquide nécessite l'emploi de gants spéciaux et beaucoup de précautions. Le dichlore est un gaz toxique, et le diiode un solide. \ce{Cl2} et \ce{I2} sont très réactifs, mais ils peuvent être manipulés sous la hotte avec les protections habituelles (gants, lunettes). L'astate est radioactif.
+
+On peut diminuer la dangerosité des dihalogènes en les mettant en solution très diluée. Les expériences suivantes sont qualitatives pour déterminer quelques propriétés des dihalogènes. Les réactions seront faites en tubes à essais avec assez peu de réactif ($\approx \SI{1}{\milli\litre}$ (\SI{1}{\centi\meter} de haut).  
+
+\subsubsection{Le diiode}%
+\label{ssub:le_diiode}
+
+On dispose d'une solution de diiode qui fait partie du couple redox (\ce{I2}/\ce{I-}) et d'une solution de thiosulfate de sodium (\ce{2Na+ + SO4^2-} ) qui fait partie du couple redox (\ce{S4O6^2-}/\ce{S2O3^2-}).
+
+\begin{itemize}
+  \item Faire réagir les deux solutions.
+  \item Décrire les observations et écrire les demi-équations redox ainsi que l'équation de réaction. 
+  \item Proposer un test permettant de confirmer la réaction qui a eu lieu.
+\end{itemize}
+
+\subsubsection{Le dibrome}%
+\label{ssub:le_dibrome}
+
+\begin{itemize}
+  \item Faire réagir l'eau de brome (\ce{Br2(aq)}) qui fait partie du couple redox (\ce{Br2}/\ce{Br-}) avec de l'iodure de potassium (\ce{K+ + I-}).
+  \item Décrire les observations, écrire les demi-équations redox et l'équation de la réaction.
+  \item Proposer un test permettant de confirmer que la réaction a bien eu lieu.
+  \item La réaction inverse (eau de diiode avec du bromure de potassium) pourrait-elle avoir lieu ?
+\end{itemize}
+
+\subsubsection{Le dichlore}%
+\label{ssub:le_dichlore}
+
+L'eau de chlore est une solution aqueuse de dichlore. On peut alors considérer que le dichlore fait partie du couple \ce{Cl2}/\ce{Cl-}.
+
+\begin{itemize}
+  \item Faire réagir l'eau de chlore avec du bromure de potassium (\ce{K+ + Br-}).
+  \item Décrire les observations, écrire les demi-équations et l'équation de la réaction.
+\end{itemize}
+
+\subsubsection{Conclusion}%
+\label{ssub:conclusion}
+
+\begin{itemize}
+  \item À partir des observations sur les halogènes, indiquer si les dihalogènes ont un caractère oxydant ou réducteurs.
+  \item À partir de la réponse à la question précédente et des observations sur les alcalins, indiquer l'évolution du caractère oxydant sur une ligne de la classification périodique.
+  \item À partir des observations sur les halogènes, indiquer l'évolution du caractère oxydant sur une colonne de la classification périodique. Comparer à l'évolution de l'électronégativité.
+\end{itemize} 
+
+\section{Analogie des propriétés chimiques au sein d'une famille}%
+\label{sec:analogie_des_proprietes_chimiques_au_sein_d_une_famille}
+On a déjà vu les propriétés chimiques semblables des dihalogènes ; intéressons-nous à présent à la précipitation
+des ions halogénure.
+
+On caractérise en effet les ions halogénure \ce{X-} par leurs réactions de précipitation.
+
+\begin{itemize}
+  \item Dans trois tubes à essais contenant du chlorure, du bromure et de l'iodure de potassium, verser quelques gouttes de nitrate d'argent.
+
+  \item Faire un schéma avant/après pour chaque tube à essais.
+
+  \item Écrire les équations de réaction de précipitation.
+
+  \item Ajouter petit à petit une solution de \ce{NH3} (solution d'ammoniac) à \SI{1}{\mole\per\litre} dans le tube qui contenait \ce{Cl-} en agitant de temps en temps. Qu'observez-vous ? 
+
+  \item Ajouter la même quantité d'ammoniac dans les deux autres tubes.
+
+  \item Écrire les réactions correspondantes (on dit que l'ion argent se complexe avec deux molécules d'ammoniac et
+donne le complexe \ce{Ag(NH3)2^+}).
+
+  \item Interpréter vos observations à l'aide des données suivantes : $\chi(\ce{Cl})=\num{3.1}$, $\chi(\ce{Br})=\num{2.9}$, $\chi(\ce{I})=\num{2.6}$ et $\chi(\ce{Ag})=\num{1.9}$.
+
+  \item Dans trois tubes à essais contenant respectivement du chlorure, du bromure et de l'iodure de potassium, verser quelques gouttes de nitrate de plomb.
+
+  \item Faire un schéma avant/après pour les trois tubes.
+
+  \item Écrire les différentes réactions de précipitation.
+
+  \item Conclure sur les propriétés chimiques au sein d'une même famille.
+\end{itemize}
+\end{document}
+

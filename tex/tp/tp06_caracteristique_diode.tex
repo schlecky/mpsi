@@ -1,0 +1,71 @@
+\documentclass[]{tp}
+\usepackage{circuitikz}
+
+\titre{TP6 : caractéristique d'une diode}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+L'objectif de ce TP est de mesurer la caractéristique statique d'une diode (composant électronique à semi-conducteurs). Puis d'utiliser la diode comme capteur de température.
+
+\vspace{1em}
+\textit{Ne pas oublier qu'une mesure physique doit toujours être associée à une incertitude expérimentale. Penser à lire la notice des appareils pour connaître l'incertitude liée aux valeurs qu'ils fournissent.}
+
+\section{Caractéristique de la diode}
+Dans cette partie on souhaite tracer la caractéristique de la diode point par point en utilisant un voltmètre et un ampèremètre.
+Les deux circuits ci-dessous permettent de mesurer simultanément l'intensité du courant électrique qui traverse la diode et la tension à ses bornes.
+
+\begin{center}
+%\includegraphics[width=0.5\linewidth]{TP9_caract_voltamp}
+\begin{circuitikz}[baseline=0]
+\draw (0,0) to[V=E] (0,3) to[short] (2,3) to[Do,i=$i$] (2,0) to[short] (0,0);
+%\draw (0,1.5) node[right,xshift=9] {GBF};
+\draw[fill=white] (1,0) circle(0.4) node {A};
+\draw (2,3) -- (3,3) -- (3,0) -- (2,0);
+\draw[fill=white] (3,1.5) circle(0.4) node {V};
+\draw (1.5, -0.5) node[below] {Montage \emph{courte dérivation}};
+\end{circuitikz}
+\hspace{2cm}
+\begin{circuitikz}[baseline=0]
+\draw (0,0) to[V=E] (0,3) to[short] (2,3) to[Do,i=$i$] (2,1.5) to[short] (2,0) to[short] (0,0);
+%\draw (0,1.5) node[right,xshift=9] {GBF};
+\draw[fill=white] (2,0.75) circle(0.4) node {A};
+\draw (2,3) -- (3,3) -- (3,0) -- (2,0);
+\draw[fill=white] (3,1.5) circle(0.4) node {V};
+\draw (1.5, -0.5) node[below] {Montage \emph{longue dérivation}};
+%\draw (-1, 1.5) node[below] {Montage \emph{courte dérivation} };
+\end{circuitikz}
+\end{center}
+
+\begin{itemize}
+	\item En considérant que le voltmètre et l'ampèremètre ne sont pas idéaux, dans quelle situation doit-on utiliser chacun de ces montages ? Pour mesurer la caractéristique de la diode on utilisera le montage \emph{courte dérivation} et on vérifiera une fois les mesures faites si ce choix était justifié. 
+
+  \item Pour réaliser les mesures, il faudra faire attention à ne pas faire passer un courant trop important dans la diode pour ne pas la détruire. On réglera la limite d'intensité de l'alimentation stabilisée à \SI{200}{mA}. 
+
+  \item Réaliser le circuit et et mesurer les valeurs de $i$ et $u$. 
+
+	\item Tracer la caractéristique $i=f(u)$ de la diode. Choisir \emph{intelligemment} la répartition des points de mesure. Et ne pas oublier les barres d'erreurs. On pensera également à faire des mesures pour $u<0$. 
+
+	\item Utiliser la caractéristique de la diode pour proposer une application de ce composant.
+\end{itemize}
+
+\section{Utilisation en tant que sonde de température}
+\begin{itemize}
+
+\item Observer comment la caractéristique de la diode est modifiée lorsque la température varie. On pourra notamment observer l'évolution de l'intensité à proximité de la tension seuil de la diode.
+
+\item Comment utiliser ce phénomène pour fabriquer un capteur de température ?
+\end{itemize}
+
+\section{Caractéristique express}
+On peut tracer quasi instantanément la caractéristique d'un dipôle en utilisant un GBF et une interface d'acquisition informatique. Pour cela on règle le GBF pour qu'il délivre une rampe de tension (par exemple de -10~V à +10~V) et on enregistre simultanément la tension aux bornes du dipôle et l'intensité qui le traverse.
+
+Il ne reste plus qu'à tracer l'intensité en fonction de la tension pour obtenir la caractéristique du dipôle. 
+
+\begin{itemize}
+	\item \'Elaborer un montage permettant d'effectuer cette mesure.
+	\item Comment doit-on choisir la fréquence du GBF pour s'assurer de mesurer la caractéristique \emph{statique} du dipôle ? On pourra vérifier expérimentalement que la fréquence choisie convient, en diminuant la fréquence, la caractéristique ne doit pas changer.
+	\item Comparer les caractéristiques obtenues par les deux méthodes.
+\end{itemize}
+
+\end{document}

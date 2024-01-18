@@ -1,0 +1,340 @@
+\documentclass{cours}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{cases}
+\usepackage{amssymb}
+\usepackage{calc}
+%\usepackage{esvect}
+\usepackage{mhchem}
+\usetikzlibrary{patterns}
+\usetikzlibrary{decorations.text}
+\begin{document}
+
+\setcounter{chapter}{11}
+\chapter{Acides--bases et précipitation}
+
+\section{Réactions acide-base}
+\subsection{Définitions}%
+\label{sub:definitions_acidebase}
+\begin{definition}
+  Un acide est une espèce chimique capable de céder un proton \ce{H+} en donnant naissance à sa base conjuguée selon la réaction
+  \begin{equation}
+    \text{Acide} \ce{->} \text{Base} + \ce{H+}
+  \end{equation}
+\end{definition}
+
+Les  espèces pouvant être à la fois donneur et accepteur de proton sont appelées espèces amphotères ou ampholytes. Par exemple l'eau (\ce{H2O}) est une espèce amphotère, elle peut accepter ou céder un proton
+\begin{align}
+  & \ce{H2O + H+ -> H3O+} \quad \text{l'eau est une base}\\
+  & \ce{H2O -> HO- + H+} \quad \text{l'eau est un acide}
+\end{align}
+
+\subsection{Constante d'acidité}%
+\label{sub:constante_d_acidite}
+
+Lors de la mise en solution aqueuse d'un acide \ce{A}, il réagit avec l'eau qui se comporte comme une base. On a alors les deux couples acide--base suivants 
+\begin{align}
+  \ce{A(acide)} &\ce{<=>} \ce{B(base) + H+}\\
+  \ce{H2O(base) + H+} &\ce{<=>} \ce{H3O+ (acide)}\\
+\end{align}
+ce qui conduit à la réaction suivante :
+\begin{equation}
+  \ce{A + H2O  <=> B + H3O+}
+\end{equation}
+Cette réaction atteint un état d'équilibre chimique dont la constante d'équilibre $K_a$ est appelée \emph{constante d'acidité} de \ce{A}. 
+\begin{eqencadre}
+  K_a = \frac{[\ce{H3O+}][\ce{B}]}{c^\circ[\ce{A}]} 
+\end{eqencadre}
+\newcommand{\pKa}{\mathrm{p}K_a}
+on définit également $\pKa = -\log(K_a)$ 
+
+Lorsque l'on met une base \ce{B} en solution aqueuse, il se produit les demi-réactions acide--base 
+\begin{align}
+  \ce{H+ + B} &\ce{<=> A}\\
+  \ce{H2O} &\ce{<=> HO- + H+}
+\end{align}
+ce qui conduit à l'équation de réaction
+\begin{equation}
+  \ce{B + H2O <=> A + HO-}
+\end{equation}
+
+Remarque : l'eau est une espèce amphotère, elle donne lieu à la réaction acide-base
+\begin{equation}
+  \ce{2H2O <=> H3O+ + HO-}
+\end{equation}
+dont la constante de réaction est, à \SI{25}{\celsius} :  
+\begin{equation}
+  K_e = \frac{1}{\cz^2}[\ce{H3O+}][\ce{HO-}] = \num{e-14}
+  \label{eq:Ke}
+\end{equation}
+soit $\mathrm{p}Ke = 14$. La relation~\eqref{eq:Ke} sera toujours vraie en solution aqueuse, mais la valeur de $K_e$ dépend de la température. 
+
+\begin{definition}
+  On appelle \textbf{acide fort}, un acide dont la réaction avec l'eau est totale, l'acide ne peut pas exister dans l'eau, il n'y a pas de constante d'acidité.
+
+  On appelle \textbf{base forte}, une base dont la réaction avec l'eau est totale. 
+
+  Les acides et bases dont la réaction avec l'eau atteint un état d'équilibre sont qualifiés de \textbf{faibles}.
+\end{definition}
+
+\subsection{Domaines de prédominance}%
+\label{sub:domaines_de_predominance}
+
+\newcommand{\pH}{\mathrm{pH}}
+\begin{definition}
+  On définit le $\pH$ d'une solution aqueuse par
+  \begin{equation}
+    \pH = -\log(a_{\ce{H3O+}}) = - \log \left( \frac{[\ce{H3O+}]}{c^\circ} \right) 
+  \end{equation}
+\end{definition}
+La constante d'acidité d'un couple acide/base \ce{A}/\ce{B} est:
+\begin{equation}
+  K_a = \frac{[\ce{H3O+][\ce{B}]}}{c^\circ[\ce{A}]} \Leftrightarrow \pKa = -\log\left( \frac{[\ce{H3O+}]}{c^\circ}  \right) - \log\left( \frac{[\ce{B}]}{[\ce{A}]} \right) = \pH - \log\left( \frac{[\ce{B}]}{[\ce{A}]} \right) 
+\end{equation}
+On obtient alors la relation
+\begin{eqencadre}
+ \pH = \pKa + \log\left( \frac{[\ce{B}]}{[\ce{A}]}\right) 
+\end{eqencadre}
+On a alors :
+\begin{itemize}
+  \item lorsque $\pH<\pKa$, $[\ce{A}]>[\ce{B}]$, l'espèce acide \ce{A} est prédominante ;  
+  \item lorsque $\pH>\pKa$, $[\ce{B}]>[\ce{A}]$, l'espèce basique \ce{B} est prédominante ;
+  \item lorsque $\pH = \pKa$, $[\ce{A}] = [\ce{B}]$.   
+\end{itemize}
+On trace le \textbf{diagramme de prédominance} :
+\begin{center}
+  \begin{tikzpicture}
+    \draw[-stealth] (0,0) -- (10, 0) node[right]{$\pH$};
+    \draw[thick] (5, 1) -- (5, -0.2) node[below]{$\pKa$};
+    \draw (2.5, 0) node[above, align=center]{A prédomine\\$[\ce{A}]>[\ce{B}]$};
+    \draw (7.5, 0) node[above, align=center]{B prédomine\\$[\ce{B}]>[\ce{A}]$};
+  \end{tikzpicture}
+  \captionof{figure}{Diagramme de prédominance des deux espèces A et B d'un couple acide/base}
+\end{center}
+%
+Lorsqu'on trace les proportions de A ou B en fonction du $\pH$, on obtient une \textbf{courbe de distribution :}
+
+\begin{minipage}{\textwidth}
+\begin{center}
+  \begin{tikzpicture}
+  \begin{axis}[
+  xmin=0, xmax=14,
+  ymin=0,
+  ylabel=Proportion de l'espèce (\si{\percent}),
+  xlabel=$\pH$, 
+  extra x ticks = {5},
+  extra x tick labels = {$\pKa$},
+  ]
+    \addplot[no marks,domain=0:14, thick, smooth] {100*10^(x-5)/(1+10^(x-5))} node[pos=0.98, fill=white]{B};
+    \addplot[no marks,domain=0:14, thick, smooth, dashed] {100/(1+10^(x-5))} node[pos=0.02, fill=white]{A};
+    \draw[dashed] (axis cs:5,0) -- (axis cs:5, 120); 
+    \draw[dashed] (axis cs:0,50) -- (axis cs:14, 50); 
+  \end{axis}
+  \end{tikzpicture}
+
+  \captionof{figure}{Courbes de distribution des espèces acide (A) et basique (B) d'un couple acide/base en fonction du $\pH$.} 
+\end{center}
+\end{minipage}
+Les diagrammes de prédominance ou courbes de distribution permettent de déterminer quelles sont les espèces majoritaires présentes en solution à un $\pH$ donné.
+
+On peut aussi donner le diagramme de prédominance pour un \textbf{polyacide} (acide qui peut céder plusieurs protons). Par exemple \ce{H3PO4}, donne lieux aux équilibres suivants :
+\begin{align}
+  &\ce{H3PO4 + H2O <=> H2PO4- + H3O+} \quad  &{\pKa}_1 &= \num{2.15} \\
+  &\ce{H2PO4- + H2O <=> HPO4^{2-} + H3O+} \quad & {\pKa}_2 &= \num{7.2}\\
+  &\ce{HPO4^{2-} + H2O <=> PO4^{3-} + H3O+} \quad & {\pKa}_3 &= \num{12.42}
+\end{align}
+On a le diagramme de prédominance suivant :
+\begin{center}
+  \begin{tikzpicture}
+    \draw[-stealth] (0,0) -- (12, 0) node[right]{$\pH$};
+    \draw[thick] (3, 1) -- (3, -0.2) node[below]{${\pKa}_1$};
+    \draw[thick] (6, 1) -- (6, -0.2) node[below]{${\pKa}_2$};
+    \draw[thick] (9, 1) -- (9, -0.2) node[below]{${\pKa}_3$};
+    \draw (1.5, 0) node[above, align=center]{\ce{H3PO4}};
+    \draw (4.5, 0) node[above, align=center]{\ce{H2PO4-}};
+    \draw (7.5, 0) node[above, align=center]{\ce{HPO4^{2-}}};
+    \draw (10.5, 0) node[above, align=center]{\ce{PO4^{3-}}};
+  \end{tikzpicture}
+  \captionof{figure}{Diagramme de prédominance des espèces du polyacide \ce{H3PO4}.}
+\end{center}
+Lorsque le $\pH$ d'une solution se trouve \emph{assez loin} (plus de 1 de différence de $\pH$) d'une frontière du diagramme de prédominance, on pourra considérer que seule l'espèce prédominante est présente en solution.
+\subsection{Réactions acide--base}%
+\label{sub:combinaisons_de_reactions}
+Lorsqu'on met en solutions un acide et une base appartenant à deux couples différents, ils peuvent réagir pour donner la base et l'acide conjugués de chaque couple. Par exemple considérons les deux couples suivants :
+\begin{center}
+\begin{tabular}{lll}
+\toprule  
+Acide & Base & $\pKa$ \\
+\midrule
+acide acétique \ce{CH3COOH} & ion acétate \ce{CH3COO-} & \num{4.75} \\
+acide borique \ce{H3BO3} & ion borate \ce{H2BO3-} & \num{9.20}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Les deux équations de réaction avec l'eau sont :
+\begin{align}
+  &\ce{CH3COOH + H2O <=> CH3COO- + H3O+} & \quad & {K_a}_1 = \frac{[\ce{CH3COO-}][\ce{H3O+}]}{c^\circ[\ce{CH3COOH}]} \label{eq:ab1}\\
+  &\ce{H3BO3 + H2O <=> H2BO3- + H3O+}& \quad  & {K_a}_2 = \frac{[\ce{H2BO3-}][\ce{H3O+}]}{c^\circ[\ce{H3BO3}]}\label{eq:ab2}
+\end{align}
+
+Si on met en solution de l'acide acétique (\ce{CH3COOH}) et l'ion borate (\ce{H2BO3-}), il peut se produire la réaction :
+\begin{equation}
+  \ce{CH3COOH + H2BO3- <=> CH3COO- + H3BO3}\label{eq:abtot}
+\end{equation}
+dont la constante d'équilibre s'écrit :
+\begin{equation}
+  K = \frac{[\ce{CH3COO-}] [\ce{H3BO3}]}{[\ce{CH3COOH}][\ce{H2BO3-}]} = \frac{{K_a}_1}{{K_a}_2} = \frac{10^{-4,75}}{10^{-9,20}} = 10^{4,45}
+\end{equation}
+Formellement, on a \eqref{eq:abtot}=\eqref{eq:ab1}-\eqref{eq:ab2} et donc la constante d'équilibre de la réaction~\eqref{eq:abtot} est égale à la constante d'équilibre de l'équation~\eqref{eq:ab1} divisée par la constante d'équilibre de l'équation~\eqref{eq:ab2}.
+
+Lorsque plusieurs espèces acido-basiques sont introduites en solution, il peut se produire plusieurs réactions simultanément et le problème est difficile à résoudre exactement. En pratique il y a souvent une réaction qui se produit beaucoup plus que les autres et qui déterminer quasiment totalement l'état d'équilibre final, il s'agit de la \textbf{réaction prépondérante}. 
+
+La réaction prépondérante est celle qui a lieu entre l'acide le plus fort ($\pKa$ le plus faible) et la base la plus forte ($\pKa$  le plus élevé) parmi les espèces présentes en solution. Pour déterminer la réaction prépondérante, on dispose toutes les espèces présentes en solution sur une échelle de $\pKa$. 
+
+Par exemple, considérons une solution aqueuse dans laquelle on mélange de l'éthanoate de sodium (\ce{CH3COO- + Na+}), de l'acide chlorhydrique (\ce{H3O+ + Cl-}) et du nitrate d'amonium (\ce{NH4+ + NO3-}). On place les différents couples acide/base mis en jeux sur une échelle de $\pKa$ en indiquant les espèces majoritaires (introduites en solution)
+\begin{center}
+  \begin{tikzpicture}
+    \draw[-stealth] (0,0) -- (10, 0) node[right]{$\pKa$};
+    \def\h{0.1}
+    \draw (1,-\h) node[below, yshift=-0.3cm, draw, inner sep=2pt]{\ce{H2O}} -- ++(0, 2*\h) node[above]{0} node[above, yshift=0.8cm, draw, inner sep=2pt]{\ce{H3O+}};
+    \draw (3,-\h) node[below, yshift=-0.3cm, draw, inner sep=2pt]{\ce{CH3COO-}} -- ++(0, 2*\h)  node[above]{\num{4.8}} node[above, yshift=0.8cm]{\ce{CH3COOH}};
+    \draw (5,-\h) node[below, yshift=-0.3cm]{\ce{NH3}} -- ++(0, 2*\h) node[above]{\num{9.2}} node[above, yshift=0.8cm, draw, inner sep=2pt]{\ce{NH4+}};
+    \draw (7,-\h) node[below, yshift=-0.3cm]{\ce{HO-}} -- ++(0, 2*\h) node[above]{\num{14}} node[above, yshift=0.8cm, draw, inner sep=2pt]{\ce{H2O}};
+  \end{tikzpicture}
+\end{center}
+
+Dans ce cas, l'acide le plus fort est \ce{H3O+} et la base la plus forte est \ce{CH3COO-}, la réaction prépondérante sera donc
+\begin{equation}
+  \ce{H3O+ + CH3COO- <=> H2O + CH3COOH}
+\end{equation}
+Les autres réactions possibles ne modifieront que marginalement l'état d'équilibre final.
+\subsection{Quelques espèces à connaître}%
+\label{sub:quelques_couples_a_connaitre}
+On donne dans le tableau ci-dessous quelques acides et bases dont il faut connaître les noms, formules et s'il sont faibles ou forts.
+
+\begin{center}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Espèce &  Nature \\
+    \midrule
+    Acide sulfurique (\ce{H2SO4}) & Acide fort \\
+    Acide chlorhydrique (\ce{HCl})  & Acide fort \\
+    Acide nitrique (\ce{HNO3})  & Acide fort \\
+    Acide phosphorique (\ce{H3PO4})  & Acide faible ($\pKa=\num{2.15}$)  \\
+    Acide acétique (\ce{CH3COOH}) & Acide faible ($\pKa=\num{4.76}$)  \\
+    Soude (hydroxyde de sodium) (\ce{NaOH}) & Base forte  \\
+    Ion hydrogénocarbonate (\ce{HCO3-}) & Acide faible ($\pKa=\num{10.32}$ ) et base faible ($\pKa=\num{6.37}$ )  \\
+    Ammoniac (\ce{NH3}) & Base faible ($\pKa=\num{9.23}$)  \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\section{Dissolution et précipitation}%
+\label{sec:precipitation}
+
+\subsection{Définitions}%
+\label{sub:definitions}
+
+\begin{definition}
+  Une \textbf{dissolution} est une réaction au cours de laquelle, un solide ionique est incorporé à un solvant pour former une phase homogène. Les ions constituant le solide sont séparés au cours de la dissolution.
+  \begin{equation}
+    \ce{CA(s) <=> C+(aq) + A-(aq) }
+    \label{eq:dissolution}
+  \end{equation}
+\end{definition}
+La constante d'équilibre $K_S$ de la réaction de dissolution s'appelle le \textbf{produit de solubilité}. Dans le cas de l'équation~\eqref{eq:dissolution}, le produit de solubilité s'écrit 
+\begin{equation}
+  K_S = \frac{1}{{c^\circ}^2}[\ce{C+}][\ce{A-}]
+\end{equation}
+On donne aussi souvent $pK_S = -\log{K_S}$. En général, le produit de solubilité augmente avec la température. 
+
+\begin{definition}
+ Une \textbf{précipitation} est une réaction au cours de laquelle des espèces dissoutes réagissent pour former une espèce solide.  
+  \begin{equation}
+    \ce{ C+(aq) + A-(aq) <=> CA(s) }
+    \label{eq:precipitation}
+  \end{equation}
+\end{definition}
+C'est la réaction inverse de la dissolution. Sa constante d'équilibre est 
+\begin{equation}
+  K=\frac{{c^\circ}^2}{[\ce{C+}][\ce{A-}]} = \frac{1}{K_S}
+\end{equation}
+où $K_S$ est le produit de solubilité de l'équation de dissolution correspondante.
+
+\subsection{Condition de précipitation}%
+\label{sub:condition_de_precipitation}
+Considérons la réaction de dissolution du chlorure d'argent
+\begin{equation}
+  \ce{AgCl(s) <=> Ag+ + Cl-}
+\end{equation}
+de produit de solubilité $K_S$. Si on introduit dans l'eau uniquement des ions \ce{Ag+} et \ce{Cl-}, le quotient réactionnel s'écrit 
+\begin{equation}
+  Q = \frac{1}{{c^\circ}^2}[\ce{Ag+}][\ce{Cl-}]
+\end{equation}
+
+\begin{itemize}
+  \item Si $Q<K_S$, la réaction doit se produire dans le sens direct (\ce{->}), or il n'y a pas de \ce{AgCl(s)} en solution donc la réaction ne peut pas se produire, il ne se passe rien.
+  \item Si $Q>K_S$, la réaction se produit dans le sens indirect (\ce{<-}) et il va y avoir précipitation de \ce{AgCl(s)}.
+\end{itemize}
+
+Lorsque la réaction atteint un état d'équilibre entre l'espèce solide et les espèces dissoutes, on a $Q=K_S$, et on dit que la solution est \textbf{saturée} 
+
+\begin{application}
+  Le produit de solubilité du sel de cuisine (\ce{NaCl}) est $K_S=39$. Lorsqu'on introduit $\ce{NaCl(s)}$ dans l'eau, on a 
+  \begin{center}
+    \begin{tabular}{@{}lllll@{}}
+\toprule
+\ce{NaCl(s)} & \ce{<=>} & \ce{Na+(aq)} & \ce{+} & \ce{Cl-(aq)} \\
+\midrule
+$n_0$ & & $0$ & & $0$ \\
+$n_0-\xi$ & & $\xi$ & & $\xi$ \\
+\bottomrule
+    \end{tabular}
+  \end{center}
+  À l'équilibre, on a $\left( \frac{\xi}{c^\circ V} \right)^2 = K_S$. Et donc $\frac{\xi}{V} = c^\circ \sqrt{K_S} \approx{ \luaexec{SI(math.sqrt(39), 1, "\\mol\\per\\litre")}}$, ce qui correspond à la concentration de \ce{NaCl} dissoute à saturation. La masse molaire de \ce{NaCl} étant de $M=\SI{58.5}{\gram\per\mole}$, à saturation il y a $S=\luaexec{SI(math.sqrt(39)*58.5, 1, "\\gram\\per\\litre")}$ de sel dissout dans l'eau. $S$ est la \textbf{solubilité} de \ce{NaCl}.
+\end{application}
+
+
+\newcommand{\pKs}{\mathrm{p}K_S}
+\subsection{Domaine d'existence}%
+\label{sub:domaine_d_existence}
+On considère la réaction de dissolution 
+\begin{equation}
+  \ce{CA(s) <=> C+(aq) + A-(aq)}
+\end{equation}
+On ajoute dans une solution contenant uniquement des ions \ce{C+} (un anion n'intervenant pas dans la réaction) à la concentration $c_i$ une solution concentrée contenant des ions \ce{A-(aq)}. Un précipité apparait lorsque la concentration de \ce{A-} devient supérieure à une concentration limite $[\ce{A-}]_\text{lim}$ telle que : 
+\begin{equation}
+  \frac{1}{\cz^2}[\ce{A-}]_\text{lim}\underbrace{[\ce{C+}]}_{c_i} = K_S \Leftrightarrow
+  \log \left( \frac{[\ce{A-}]_\text{lim}}{\cz} \right)  + \log\left( \frac{c_i}{\cz} \right)  = \log(K_S) \Leftrightarrow
+  \mathrm{p}\ce{A}_\text{lim} = \pKs + \log\left( \frac{c_i}{\cz} \right) 
+\end{equation}
+%
+On peut alors tracer le diagramme d'existence du précipité \ce{CA(s)} :
+\begin{center}
+  \begin{tikzpicture}
+    \draw[-stealth] (0,0) -- (10, 0) node[right]{$\mathrm{pA}$};
+    \draw[thick] (5, 1) -- (5, -0.2) node[below]{$\mathrm{pA}_\text{lim}$};
+    \draw (2.5, 0) node[above, align=center]{Existence de\\$\ce{CA(s)}$};
+    \draw (7.5, 0) node[above, align=center]{Absence de\\$\ce{CA(s)}$};
+  \end{tikzpicture}
+  \captionof{figure}{Diagramme d'existence d'un précipité dans une solution donnée.}
+\end{center}
+
+Remarque : la valeur limite de $\mathrm{p}A$ dépend de la solution considérée, contrairement aux diagrammes de prédominance d'un couple acide/base où la position de la frontière dépend uniquement du couple acide/base.
+
+\subsection{Facteurs influençant la solubilité}%
+\label{sub:facteurs_influencant_la_solubilite}
+La solubilité d'une espèce solide dans une solution aqueuse peut dépendre de plusieurs facteurs :
+\begin{itemize}
+  \item En générale, la solubilité d'une espèce augmente avec la température, c'est à dire que le produit de solubilité augmente avec la température.
+
+  \item Si la solution contient initialement des ions qui composent une espèce solide, la solubilité du solide en question est réduite. Par exemple la solubilité de \ce{NaCl(s)} sera moins importante dans une solution de soude (\ce{Na+ + HO-}) que dans une solution d'hydroxyde de potassium (\ce{K+ + HO-}).
+
+  \item Si l'un des ions constituant l'espèce solide a des propriétés acido-basiques, la solubilité de l'espèce dépend du $\pH$ de la solution. 
+\end{itemize}
+
+
+
+
+\end{document}

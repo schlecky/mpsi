@@ -1,0 +1,164 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{decorations.text}
+\titre{TP32 : Magnétisme}
+\begin{document}
+%\small
+
+
+\section{Objectif du TP}
+L'objectif de ce TP est de mettre en \oe{}uvre différentes méthodes de mesure de champs magnétiques, puis de produire un champ magnétique tournant afin de mettre en évidence son effet moteur sur un moment magnétique.
+
+\section{Mesure du champ magnétique terrestre}%
+\label{sec:mesure_du_champ_magnetique_terrestre}
+
+Nous allons mesurer la composante horizontale du champ magnétique terrestre par la méthode des tangentes. 
+
+On commence par placer une boussole horizontalement et on laisse sont aiguille s'orienter selon la composante horizontale $\vv*{B}{h}$ du champ magnétique terrestre local. On place ensuite une bobine plate centrée sur la bobine et dont l'axe est orienté perpendiculairement à $\vv*{B}{h}$.
+
+On appelle $\alpha$ l'angle dont a tourné l'aiguille de la boussole lorsqu'on fait passer un courant $I$ dans la spire. On donne le champ magnétique créé au centre d'une bobine plate de rayon $R$ comportant $N$ spires et parcourue par un courant $I$ :
+\begin{equation}
+  \vv*{B}{b} = \frac{\mu_0 N I }{2R}\vv{n}
+\end{equation}
+où $\vv{n}$ est le vecteur unitaire normal au plan de la bobine, orienté par $I$. 
+
+\begin{itemize}
+  \item Mesurer l'angle $\alpha$ pour $I$ allant de \num{-5} à \SI{5}{\ampere}.
+  \item Tracer la courbe $I = f(\tan(\alpha))$. En déduire une première valeur de $B_h$. 
+  \item Mesurer l'angle $\alpha$ pour $N=1$ et $I=\SI{2}{\ampere}$ en fonction de $R$.  En déduire une seconde estimation de la valeur de $B_h$. 
+  \item Sachant qu'en France, le champ magnétique terrestre a une inclinaison d'environ \SI{60}{\degree} avec l'horizontale, déterminer une estimation de la norme du champ magnétique terrestre total.
+\end{itemize}
+
+\section{Mesure du champ produit sur l'axe d'une bobine}%
+\label{sec:mesure_du_champ_produit_sur_l_axe_d_une_bobine}
+
+\subsection{Principe d'un teslamètre à effet Hall}%
+\label{sub:principe_d_un_teslametre_a_effet_hall}
+
+La sonde à effet Hall est une plaquette de semi-conducteur parcouru par un courant $I$. 
+
+On s'intéresse au champ magnétique perpendiculaire à la plaquette. Les porteurs de charge sont soumis à une force de Lorentz $\vv{F} = q\vv{E} + q\vv{v}\wedge \vv{B}$, $\vv{v}$ étant la vitesse moyenne des porteurs de charge. Des charges s'accumulent sur les surfaces du conducteur (voir schéma) et à l'équilibre, elles ont un mouvement rectiligne uniforme, donc 
+\begin{equation}
+  \vv{F}=\vv{0} \Leftrightarrow \vv{E} = - \vv{v}\wedge \vv{B}
+\end{equation}
+Il existe donc une tension $U_H$ entre les deux faces chargées du semi-conducteur
+\begin{equation}
+  U_H = \int_1^2 \vv{v}\wedge \vv{B}\cdot \vv{\D \ell} = dvB
+\end{equation} 
+Si on note $h$ l'épaisseur du semi-conducteur et $n$ le nombre de porteurs de charge mobile par unité de volume, 
+\begin{equation}
+  I = nqvdh \quad \text{donc} \quad U_H = \frac{IB}{nqh}
+\end{equation}
+On remarque que $U_H$ est inversement proportionnel à $n$, c'est pour cette raison que l'effet Hall est plus visible dans un semi-conducteur.
+
+\begin{center}
+  \begin{tikzpicture}
+    \def\d{3}
+    \def\h{1}
+    \def\l{4}
+    \coordinate (A) at (0, \h/2, -\d/2);
+    \coordinate (B) at (\l, \h/2, -\d/2);
+    \coordinate (C) at (\l, \h/2, +\d/2);
+    \coordinate (D) at (0, \h/2, +\d/2);
+    \coordinate (E) at (0, -\h/2, -\d/2);
+    \coordinate (F) at (\l, -\h/2, -\d/2);
+    \coordinate (G) at (\l, -\h/2, +\d/2);
+    \coordinate (H) at (0, -\h/2, +\d/2);
+    \draw[dashed] (A) -- (E);
+    \draw[] (B) -- (F);
+    \draw[] (C) -- (G);
+    \draw[] (D) -- (H);
+    \draw[thick, postaction=decorate, decoration={markings, mark=at position 0.5 with {\arrow{latex}}}] (-2, 0,0) -- (0,0,0) node[midway, above]{$I$};
+    \fill[white, fill opacity=0.8] (A) -- (E) -- (H) -- (D) -- cycle;
+    \draw (A) -- (B)-- (C) -- (D) -- cycle;
+    \draw[dashed](H) -- (E) --(F);
+    \draw (F) -- (G) -- (H);
+    \def\n{5}
+    \fill[white, fill opacity=0.8] (C) -- (D) -- (H) -- (G) -- cycle;
+    \draw (G) node[above left]{\small 1};
+    \foreach \i in {1,2,...,\n}{
+      \node[circle, draw, inner sep=2pt, fill=white] at ({\i*\l/(\n+1)}, 0, \d/2) {$+$};
+      \node[circle, draw, inner sep=2pt, ] at ({\i*\l/(\n+1)}, 0, -\d/2) {$-$};
+    }
+    \draw[dashed] (A) -- ++(-2,0) coordinate (d1);
+    \draw[dashed] (D) -- ++(-2,0) coordinate (d2);
+    \draw[latex-latex] (d1) -- (d2) node[midway, fill=white,]{$d$}; 
+    \draw[dashed] (B) -- ++(1,0) coordinate (h1);
+    \draw[dashed] (F) -- ++(1,0) coordinate (h2);
+    \draw[latex-latex] (h1) -- (h2) node[midway, fill=white,]{$h$}; 
+
+    \fill[white, fill opacity=0.8] (B) -- (F) -- (G) -- (C) -- cycle;
+    \draw[thick, postaction=decorate, decoration={markings, mark=at position 0.5 with {\arrow{latex}}}] (\l, 0,0) -- ++(2,0,0) node[midway, below]{$I$};
+    \draw (E) node[above right]{\small 2};
+
+
+    \draw[-latex, thick] (\l+4, -0.5, 0) -- ++(0, 1, 0) node[midway, right]{$\vv{B}$};
+  \end{tikzpicture}
+\end{center}
+\subsection{Champ magnétique sur l'axe d'une bobine ou d'un solénoïde}%
+\label{sub:champ_magnetique_sur_l_axe_d_une_bobine_ou_d_un_solenoide}
+
+L'expression du champ d'un solénoïde d'axe $(Ox)$ ($O$ situé au milieu du solénoïde), de longueur $L$, comportant $n$ spires par unité de longueur parcouru par un courant $I$ s'écrit en un point $M$ de l'axe
+\begin{equation}
+  \vv{B}(M) = \frac{\mu_0 n I}{2}\left( \cos(\alpha_2) - \cos(\alpha_1) \right) \vex \quad \text{avec} \quad \cos(\alpha_2) = \frac{x+L/2}{\sqrt{(x+L/2)^2 +R^2}} \quad \text{et} \quad \cos(\alpha_1) = \frac{x-L/2}{\sqrt{(x-L/2)^2 +R^2}}
+\end{equation}
+\begin{center}
+  \begin{tikzpicture}
+  %tikz magnetisme
+    \def\R{1.5}
+    \def\L{6}
+    \def\r{0.3}
+    \draw (0, \R) coordinate(A) arc[start angle=90, end angle=270, x radius=\r, y radius=\R] coordinate (D);
+    \draw[dashed] (0, -\R) arc[start angle=-90, end angle=90, x radius=\r, y radius=\R];
+    \draw (A) -- ++(\L, 0) coordinate (B);
+    \draw (\L, 0) ellipse[x radius=\r, y radius=\R];
+    \draw (D) -- ++(\L, 0) coordinate (C);
+    \draw[thick, postaction={decorate, decoration={markings, mark=at position 0.5 with{\arrow{latex};\node[left]{$I$};}}}] (\L/2, \R) arc[start angle=90, end angle=270, x radius=\r, y radius=\R] coordinate (D);
+    \draw[dashed, thick] (\L/2, -\R) arc[start angle=-90, end angle=90, x radius=\r, y radius=\R];
+    \draw[-latex] (0,0) -- (\L+4,0) node[right]{$x$ }; 
+    \fill (\L+2, 0) circle(2pt) coordinate (M) node[above, yshift=2pt]{$M$ };
+    \draw[dotted](M) -- (C);
+    \draw[dotted](M) -- (A);
+    \draw (\L+1, 0) arc (180:{180+atan(\R/2)}:1) node[midway, left]{$\alpha_1$ };
+    \draw (\L-1, 0) arc (180:{180-atan(\R/(\L+2))}:3) node[midway, left]{$\alpha_2$ };
+  \end{tikzpicture}
+\end{center}
+\begin{itemize}
+  \item Faire les mesures pour \num{100} puis \num{200} spires. Tracer alors la courbe $B=f(x)$ et comparer à la théorie.
+\end{itemize}
+%\section{Champ magnétique tournant}%
+%\label{sec:champ_magnetique_tournant}
+
+%Nous allons maintenant créer un champ magnétique tournant à l'aide de deux bobines et mettre en rotation une aiguille aimantée. 
+
+%\begin{itemize}
+  %\item Réaliser le montage ci-dessous. Le GBF utilisé pour générer la tension sinusoïdale $u$ est le GF~467AF : utiliser la sortie "SORTIE AMPLI \SI{0.5}{\ohm}". Pour avoir un champ magnétique le plus intense possible, positionner les bobines très proches l'une de l'autre (quasiment accolées) perpendiculairement l'une à l'autre. On prendra pour $C$ la plus grande valeur possible avec les condensateurs fournis ($C=\SI{15.5}{\micro\farad}$). Le nombre de spires doit être le même pour les deux bobines.
+
+  %\begin{center}
+    %\begin{tikzpicture}
+      %\draw (0,0) -- (0, 4) to[L=bobine 1] (2, 4) -- (2, 0);
+      %\draw (0,1) to[short,*-] (2,1) to[C,l_=$C$ ] (4, 1) to[L, l_=bobine 2, mirror] (4, 3) to[short, -*] (2,3);
+      %\draw[-latex] (0.2, 0) -- (1.8, 0) node[midway, below]{$u$};
+    %\end{tikzpicture}
+  %\end{center}
+
+  %\item Avant d'allumer le GBF, vérifier que tous les potentiomètres sont au minimum. Alimenter alors les deux bobines par une tension sinusoïdale $u$. Régler la fréquence sur quelques \si{\hertz}.
+
+  %\item Placer une aiguille aimantée (boussole) sur la cale en bois, au niveau du point $O$.  Qu'observez-vous ? Si elle n'arrive pas à accrocher le champ, augmenter légèrement la fréquence.
+
+  %\item Faire varier significativement la fréquence $f$ d'alimentation du GBF. Qu'observez-vous ?
+
+  %\item Revenir à une fréquence $f$ permettant de voir l'aiguille tourner de façon régulière.
+%\end{itemize}
+%Pour mesurer la fréquence de rotation de l'aiguille, nous allons utiliser un stroboscope. 
+%\begin{itemize}
+  %\item Brancher le stroboscope à la sortie d'un second GBF, et l'utiliser pour mesurer la fréquence de rotation de l'aiguille. La comparer à $f$. 
+
+  %\item Supprimer la bobine 2. Les résultats obtenus sont-ils très différents ? 
+
+  %\item Estimer l'impédance du condensateur à la fréquence utilisée pour faire ce montage. Le courant qui circule dans la bobine 2 est-il suffisant pour que le champ magnétique puisse réellement être considéré comme \textit{tournant} ?
+%\end{itemize}
+\end{document}
+

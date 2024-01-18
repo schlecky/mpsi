@@ -1,0 +1,842 @@
+\documentclass{cours}
+\usepackage{pgfplots}
+\usepackage{calc}
+\begin{document}
+\setcounter{chapter}{4}
+\chapter{Oscillateurs}
+
+\section{L'oscillateur harmonique}
+\subsection{Position du problème}
+On retrouve l'oscillateur harmonique dans une grande diversité de domaines de la physique, nous allons en étudier deux exemples caractéristiques.
+
+\subsubsection{Oscillateur mécanique}%
+\label{ssub:oscillateur_mecanique}
+
+\begin{center}
+\begin{tikzpicture}
+%tikz meca
+%mur
+\draw (0,-1) -- (0,1);
+\foreach \h in {-1,-0.8,...,1} {
+  \draw (0,\h) -- ($(-0.3,\h-0.3)$);
+}
+%axe
+\draw[->] (0,-0.5) -- (10,-0.5) node[above] {$\vec{e}_x$};
+\draw[decorate,decoration={zigzag,amplitude=0.3cm,pre length=0.5cm,post length=0.5cm}] (0,0.1) -- (5,0.1);
+
+\draw[thick,rounded corners=1mm] (5,0.7) rectangle (6.2,-0.45) node[midway] {$m$};
+\draw[dotted] (5.6,-0.45) -- (5.6,-1);
+\draw[dotted] (4,0.5) -- (4,-1);
+\draw[->] (4,-1) -- (5.6,-1) node[midway,fill=white] {$x$};
+\draw[->,coul1,thick] (5,0.1) -- (3.5,0.1) node[above,fill=white,opacity=0.6,text opacity=1,yshift=3] {$\vec{F}$};
+\draw (2,1) node[align=center] {Ressort de \\raideur $k$};
+\draw[<-] (4,-1) to[bend left] (3.5,-1.2) node[left,align=center] {Position \\d'équilibre};
+\end{tikzpicture}
+\end{center}
+On accroche une masse $m$ à un ressort de raideur $k$. La masse se déplace sans frottement sur un plan horizontal. On note $x$ l'allongement du ressort par rapport à la position d'équilibre. On cherche à déterminer le mouvement de la masse, donc l'expression de $x(t)$.
+
+\subsubsection{Oscillateur électrique}%
+\label{ssub:oscillateur_electrique}
+
+
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) to[C,l_=$C$] (0,2) to[short,i<=$i$] (1.5,2) to[L=$L$] (1.5,0) to[short] (0,0); 
+\draw[->] (-0.5,0) -- (-0.5,2) node[midway,left] {$u$}; 
+\end{tikzpicture}
+\end{center}
+On place une bobine et un condensateur en parallèle, le condensateur étant initialement chargé. On cherche à déterminer l'équation différentielle de la tension aux bornes de $C$. 
+
+\subsection{Équation différentielle}%
+\label{sub:equation_differentielle}
+\subsubsection{Oscillateur mécanique}%
+\label{ssub:oscillateur_mecanique}
+
+
+La masse subit une force $\vec{F}=-k\cdot x \vec{e}_x$. Le principe fondamental de la dynamique appliqué dans le référentiel du laboratoire considéré comme galiléen donne :
+
+\begin{equation}
+  \vec F  = m \vec a \Leftrightarrow -kx\vex = m\ddot x \vex 
+\end{equation}
+
+en projetant sur l'axe $\vec{e}_x$, on obtient l'équation différentielle :
+\begin{equation*}
+m\ddot{x} = -kx \Leftrightarrow \ddot{x} + \frac{k}{m}x = 0
+\end{equation*} 
+On pose $\omega_0=\sqrt{\dfrac{k}{m}}$ la \emph{pulsation propre} du système, on obtient l'équation différentielle :
+\begin{eqencadre}
+\ddot{x}+\omega_0^2x=0
+\end{eqencadre}
+
+C'est l'équation d'un oscillateur harmonique lorsque $x$ est le déplacement par rapport à la position d'équilibre. (sinon on peut avoir un second membre constant)
+
+\subsubsection{Oscillateur électrique}%
+\label{ssub:oscillateur_electrique}
+On peut écrire les équations suivantes :
+
+\begin{itemize}
+\item Aux bornes de $L$ : $u=-L \dt{i}$
+\item aux bornes de $C$ : $i=C \dt{u}$
+\end{itemize} 
+
+En combinant les deux équations, on obtient $u=-LC \ddt{u}$, soit en notant $\omega_0^2=\dfrac{1}{LC}$
+
+\begin{eqencadre}
+\ddt{u}+\omega_0^2u=0
+\end{eqencadre}
+
+On remarque que l'on obtient exactement la même équation que dans le cas de l'oscillateur mécanique. C'est l'équation différentielle de l'oscillateur harmonique.
+
+\subsection{Résolution}
+Nous allons résoudre l'équation de l'oscillateur harmonique en nous référant à l'oscillateur électrique, mais il faut garder à l'esprit que la méthode est strictement identique en ce qui concerne l'oscillateur mécanique.
+
+La solution de l'équation différentielle $\ddt{u}+\omega_0^2u=0$ est de la forme :
+\begin{eqencadre}
+  u(t) = A\sin(\omega_0t+\varphi)
+\end{eqencadre}
+où l'\emph{amplitude} $A$ et la \emph{phase à l'origine} $\varphi$ sont des constantes déterminées par les conditions initiales $u(t=0)$ et $\dt{u}(t=0)$. 
+
+
+
+\paragraph{Cas simple : } à $t=0$ le condensateur est chargé sous une tension $u(0)=u_0$ et l'intensité du courant qui circule dans le circuit est nulle $i(0)=0$.
+
+La solution de l'équation différentielle est $u(t)=A\sin(\omega_0t+\varphi)$ et on a $\dt{u}(t)=A\omega_0\cos(\omega_0t+\varphi)$. L'intensité nulle à l'origine impose
+
+\begin{equation}
+ i(0) = C \dt{u}(0) = 0\Leftrightarrow CA\omega_0\cos(\varphi)=0\Leftrightarrow\cos(\varphi)=0\Leftrightarrow \varphi=\pi/2+n\pi \quad n\in \mathbb{Z}
+\end{equation}
+donc $u(t) = A\sin(\omega_0t+\pi/2)=A\cos(\omega_0t)$
+
+La charge du condensateur à l'origine impose :
+\begin{equation}
+u(0)=u_0=A\cos(0)=A \quad \text{donc} \quad A=u_0
+\end{equation}
+finalement
+\begin{eqencadre}
+  u(t) = u_0\cos(\omega_0t)
+\end{eqencadre}
+
+\paragraph{Cas général :} $u(0) = u_0$ et $i(0)=i_0$ (un courant circule dans le circuit à l'instant initial).  
+
+Les conditions initiales deviennent :
+\begin{equation}
+  u(0) = A\sin(\varphi) = u_0 \quad \text{et} \quad C\dt{u}(0) = AC\omega_0 \cos(\varphi) = i_0
+\end{equation}
+
+Pour trouver $A$, on multiplie la première équation par $C\omega_0$ et on utilise la relation $\cos^2 + \sin^2 = 1$ pour trouver
+\begin{equation}
+  A = \sqrt{u_0^2 + \left(\frac{i_0}{C\omega_0}\right)^2}
+  \label{eq:A}
+\end{equation}
+
+En divisant la première équation par la seconde, on obtient : 
+\begin{eqencadre}
+ \tan(\varphi) = \frac{u_0 C\omega_0}{i_0} \quad \text{donc} \quad \varphi=
+ \begin{cases}
+   \arctan \left(\frac{x_0 C\omega_0}{i_0}\right) \quad \text{si} \quad -\frac{\pi}{2} < \varphi < \frac{\pi}{2} \quad  \text{donc si} \quad i_0> 0\\
+   \pi + \arctan \left(\frac{u_0 C\omega_0}{i_0}\right) \quad  \text{sinon}\\
+ \end{cases}
+\end{eqencadre}
+
+\subsection{Évolution du système}
+La tension aux bornes du condensateur est donnée par : $u(t)=A\sin(\omega_0t + \varphi)$ avec $\omega_0=\frac{1}{\sqrt{LC}}$ . La tension oscille autour de sa valeur d'équilibre (nulle) à la \emph{pulsation} $\omega_0$.
+\begin{center}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=3*2*pi,
+  ymin=-1.5,ymax=1.5,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$u(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:3*2*pi,samples=100,smooth,coul1,thick]{cos(deg(x)};
+\draw[dotted] (axis cs:0,1) node[left] {$A$} -- (axis cs:6*pi,1);
+\draw[dotted] (axis cs:0,-1) node[left] {$-A$} -- (axis cs:6*pi,-1);
+\draw[<->] (axis cs:2*pi,1.2) -- (axis cs:4*pi,1.2) node[midway, above]{T};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+La \emph{période} $T$ des oscillations est $T=\frac{2\pi}{\omega_0}=2\pi \sqrt{\frac{\omega_0}{k}}$. La \emph{fréquence} est  $f=\frac{1}{T}=\frac{\omega_0}{2\pi}$. $\varphi$ est la \emph{phase à l'origine} des oscillations.  
+
+
+Le \textbf{portrait de phase} du système correspond au graphique représentant l'ensemble des points $(u(t),\dt{u}(t))$ parcourus par le système au cours de son évolution.
+
+Dans le cas de l'oscillateur harmonique, on a :
+\begin{align}
+  u(t) &= A\sin(\omega_0 t + \varphi)\\
+  \dt{u}(t) &= A\omega_0\cos(\omega_0 t+\varphi)
+\end{align}
+le portrait de phase est une ellipse :
+\begin{center}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=5cm,
+  xmin=-1.5,xmax=1.5,
+  ymin=-1.5,ymax=1.5,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$u(t)$,
+  ylabel=$\dt{u}(t)$,
+  xlabel style = {anchor=west},
+  ylabel style = {anchor=south},
+  ]
+%\addplot[domain=0:2*pi,samples=100,smooth,coul1,thick,%
+\addplot[coul1,thick,samples=100,domain=0:2*pi,
+postaction={decorate},% ------
+decoration={markings, % ------
+mark=at position 0.2 with {\arrow{stealth}}}
+]
+({cos(deg(x))}, {-sin(deg(x))});
+\end{axis}
+\end{tikzpicture}
+ \\
+\end{center}
+
+L'énergie totale stockée dans le circuit :
+\begin{equation*}
+E=E_C+E_{L} = \underbrace{\frac{1}{2}Cu^2}_{E_C} + \underbrace{\frac{1}{2}Li^2}_{E_{L}}
+\end{equation*} 
+avec $i=C\dt{u} = AC\omega_0\cos(\omega_0t + \varphi)$ on obtient:
+\begin{equation*}
+E=\frac{1}{2}L\omega_0^2C^2A^2\cos^2(\omega_0t+\varphi) + \frac{1}{2}CA^2\sin^2(\omega_0t+\varphi) = \frac{1}{2}CA^2 \underbrace{\left( \cos^2(\omega_0t+\varphi) + \sin^2(\omega_0t+\varphi) \right)}_{=1}=\frac{1}{2}CA^2
+\end{equation*}
+En reprenant l'expression de $A$ obtenue en \eqref{eq:A}, on montre facilement que
+\begin{eqencadre}
+  E(t)=\frac{1}{2}kA^2 = \frac{1}{2}Cu_0^2 + \frac{1}{2}Li_0^2 = E(0) = \text{constante}.
+\end{eqencadre}
+Comme on pouvait s'y attendre, l'énergie du système reste constante au cours du temps.
+
+
+\section{Oscillateur harmonique ammorti}
+
+\subsection{Exemples}
+\subsubsection{Masse + ressort + frottement visqueux :}
+\begin{center}
+\begin{tikzpicture}
+%mur
+\draw (0,-1) -- (0,1);
+\foreach \h in {-1,-0.8,...,1} {
+  \draw (0,\h) -- ($(-0.3,\h-0.3)$);
+}
+%axe
+\draw[->] (0,-0.5) -- (10,-0.5) node[above] {$\vec{e}_x$};
+\draw[decorate,decoration={zigzag,amplitude=0.3cm,pre length=0.5cm,post length=0.5cm}] (0,0.1) -- (5,0.1);
+
+\draw[thick,rounded corners=1mm] (5,0.7) rectangle (6.2,-0.45) node[midway] {$m$};
+\draw[dotted] (5.6,-0.45) -- (5.6,-1);
+\draw[dotted] (4,0.5) -- (4,-1);
+\draw[->] (4,-1) -- (5.6,-1) node[midway,fill=white] {$x$};
+%\draw[->,coul1,thick] (5,0.1) -- (3.5,0.1) node[above,fill=white,opacity=0.6,text opacity=1,yshift=3] {$\vec{F}$};
+\draw (2,1) node[align=center] {$k$};
+%\draw[<-] (4,-1) to[bend left] (3.5,-1.2) node[left,align=center] {Position \\d'équilibre};
+\end{tikzpicture}
+\end{center}
+On ajoute une force de frottement visqueux : $\vec{f} = -\gamma \vec{v}$.
+
+Le PFD $\sum \vec{F}=m \vec{a}$ donne lorsqu'on le projette sur l'axe $\vec{e}_x$ : 
+\begin{equation}
+-kx-\gamma \dot{x} = m \ddot{x}
+\end{equation} 
+Ce qui permet d'obtenir l'équation différentielle :
+\begin{equation}
+\ddot{x} + \underbrace{\frac{\gamma}{m}}_{\omega_0/Q}\dot{x} + \underbrace{\frac{k}{m}}_{\omega_0^2}x = 0 
+\end{equation}
+soit
+\begin{eqencadre}
+  \ddot{x} + \frac{\omega_0}{Q}\dot{x} + \omega_0^2x = 0
+\end{eqencadre}
+où $Q=\frac{\sqrt{km}}{\gamma}$ est appelé \textbf{facteur de qualité} de l'oscillateur. 
+
+\subsubsection{Circuit RLC série:}
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) to[L=$L$,i=$i$] (4,0) to[short] (4,2) to[C=$C$] (2,2) to[european resistor=$R$] (0,2) to[short] (0,0); 
+\draw[->] (0.2,2.5) -- (1.8,2.5) node[midway,above]{$u_R$};
+\draw[->] (2.2,2.5) -- (3.8,2.5) node[midway,above]{$u_C$};
+\draw[->] (3.4,-0.5) -- (0.6,-0.5) node[midway,below]{$u_L$};
+\end{tikzpicture}
+\captionof{figure}{Circuit $RLC$ en régime libre.}
+\label{fig:RLC}
+\end{center}
+\begin{itemize}
+\item Loi des mailles : $u_R+u_C+u_L=0$ donc $\dt{u_R}+\dt{u_C}+\dt{u_L}=0$;
+\item Loi d'Ohm : $u_R=Ri$ donc $\dt{u_R}=R\dt{i}$;
+\item Bobine : $u_L=L\dt{i}$ donc $\dt{u_L}=L\ddt{i}$;
+\item Condensateur : $\dt{u_C}=\frac{i}{C}$.
+\end{itemize}
+On obtient alors l'équation : $L\ddt{i}+R\dt{i}+\frac{i}{C}=0$ soit :
+\begin{equation}
+\ddt{i}+\underbrace{\frac{R}{L}}_{\omega_0/Q}\dt{i}+\underbrace{\frac{1}{LC}}_{\omega_0^2}i=0
+\end{equation}
+soit
+\begin{eqencadre}
+  \ddt{i}+\frac{\omega_0}{Q}\dt{i}+\omega_0^2i=0
+\end{eqencadre}
+où $Q=\dfrac{1}{R}\sqrt{\dfrac{L}{C}}$ est le facteur de qualité de l'oscillateur.
+
+\subsection{Analyse qualitative} 
+L'amortissement correspond à une dissipation d'énergie. L'énergie du système diminue donc au cours du temps, il tend à retourner vers sa position d'équilibre stable.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=3*2*pi,
+  ymin=-1.5,ymax=1.5,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$x(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:3*2*pi,samples=100,smooth,coul1,thick]{exp(-x/5)*cos(deg(x)};
+\node[align=center] at (axis description cs:0.5,-0.2) {\'Evolution temporelle};
+\end{axis}
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=5cm,
+  xmin=-1.5,xmax=1.5,
+  ymin=-1,ymax=1,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$x(t)$,
+  ylabel=$\dot{x}(t)$,
+  xlabel style = {anchor=west},
+  ylabel style = {anchor=south},
+  ]
+%\addplot[domain=0:2*pi,samples=100,smooth,coul1,thick,%
+\addplot[coul1,thick,samples=100,smooth,domain=0:4*2*pi,
+postaction={decorate},% ------
+decoration={markings, % ------
+mark=at position 0.2 with {\arrow{stealth}}}
+]
+({exp(-x/5)*cos(deg(x))}, {-exp(-x/5)*sin(deg(x))});
+\node[align=center] at (axis description cs:0.5,-0.2) {Portrait de phase};
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Solution exacte}
+L'équation de l'oscillateur harmonique amorti est  : 
+\begin{equation*}
+\ddot{x} + \frac{\omega_0}{Q}\dot{x} + \omega_0^2x = 0
+\end{equation*}
+
+L'équation caractéristique associée 
+\begin{equation*}
+r^2+\frac{\omega_0}{Q}r+\omega_0^2=0 
+\end{equation*}
+Le discriminant est $\Delta=\frac{\omega_0^2}{Q^2}-4\omega_0^2=\omega_0^2 \left( \frac{1}{Q^2} - 4 \right)$.
+On distingue trois cas, selon la valeur de $\Delta$ : 
+\begin{itemize}
+\item Si $\Delta>0 \Leftrightarrow Q<1/2$, l'équation caractéristique a 2 solutions réelles $r_1$ et $r_2$ :
+\begin{equation*}
+r_{1,2}=\frac{1}{2} \left( -\frac{\omega_0}{Q} \pm \sqrt{\Delta} \right)
+\end{equation*} 
+et on a $x(t)=A\mathrm{e}^{r_1t}+B\mathrm{e}^{r_2t}$. C'est le \textbf{régime apériodique}, il n'y a pas d'oscillations.
+\begin{center}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=3*2*pi,
+  ymin=0,ymax=1.2,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$x(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:3*2*pi,samples=100,smooth,coul1,thick]{{exp(-x*0.27)-0.072*exp(-x*3.73)}};
+\draw[<->] (axis cs:0,1) -- (axis cs:2*pi,1) node[midway,above]{$\simeq \frac{1}{Q\omega_0}$};
+\node[align=center] at (axis description cs:0.5,-0.2) {\'Evolution temporelle};
+\end{axis}
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=5cm,
+  xmin=-1.5,xmax=1.2,
+  ymin=-0.4,ymax=0.4,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$x(t)$,
+  ylabel=$\dot{x}(t)$,
+  xlabel style = {anchor=west},
+  ylabel style = {anchor=south},
+  ]
+%\addplot[domain=0:2*pi,samples=100,smooth,coul1,thick,%
+\addplot[coul1,thick,samples=100,domain=0:4*2*pi,
+postaction={decorate},% ------
+decoration={markings, % ------ 
+mark=at position 0.7 with {\arrow{stealth}}}
+]
+({exp(-x*0.27)-0.072*exp(-x*3.73)}, {-0.27*exp(-x*0.27)+0.27*exp(-x*3.73)});
+\node[align=center] at (axis description cs:0.5,-0.2) {Portrait de phase};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Lorsque $Q \ll \frac{1}{2}$, on a $x(t)\simeq A\exp(-t/\tau)$. Le temps de retour à l'équilibre est de l'ordre de : 
+\begin{eqencadre}
+\tau=\dfrac{1}{Q\omega_0}
+\end{eqencadre}
+
+\item Si $\Delta=0 \Leftrightarrow Q=\frac{1}{2}$, l'équation caractéristique a une racine double :
+\begin{equation}
+r=-\omega_0
+\end{equation}
+et on a $x(t)=(A+Bt)\mathrm{e}^{-\omega_0t}$. C'est le \textbf{régime critique}. Il n'y a pas d'oscillations.
+\begin{center}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=3*2*pi,
+  ymin=0,ymax=1.2,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$x(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:3*2*pi,samples=100,smooth,coul1,thick]{{(1+0.5*x)*exp(-x*0.5)}};
+\draw[<->] (axis cs:0,1) -- (axis cs:2*pi,1) node[midway,above]{$\simeq \frac{1}{\omega_0}$};
+\node[align=center] at (axis description cs:0.5,-0.2) {\'Evolution temporelle};
+\end{axis}
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=5cm,
+  xmin=-1.5,xmax=1.2,
+  ymin=-0.4,ymax=0.4,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$x(t)$,
+  ylabel=$\dot{x}(t)$,
+  xlabel style = {anchor=west},
+  ylabel style = {anchor=south},
+  ]
+%\addplot[domain=0:2*pi,samples=100,smooth,coul1,thick,%
+\addplot[coul1,thick,samples=100,domain=0:4*2*pi,
+postaction={decorate},% ------
+decoration={markings, % ------ 
+mark=at position 0.7 with {\arrow{stealth}}}
+]
+({(1+0.5*x)*exp(-x*0.5)}, {-0.25*x*exp(-x*0.5)});
+\node[align=center] at (axis description cs:0.5,-0.2) {Portrait de phase};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Le temps de retour à l'équilibre est de l'ordre de:
+\begin{eqencadre}
+\tau\simeq \frac{1}{\omega_0}
+\end{eqencadre}
+C'est le régime pour lequel le retour à l'équilibre se fait le plus rapidement.
+
+\item Si $\Delta<0 \Leftrightarrow Q>\frac{1}{2}$, l'équation caractéristique a deux solutions complexes : 
+\begin{equation}
+r_{1,2}=\frac{1}{2}\left(-\frac{\omega_0}{Q}\pm i\sqrt{-\Delta}\right) = -\underbrace{\frac{\omega_0}{2Q}}_{\frac{1}{\tau}} \pm i\underbrace{\omega_0 \sqrt{1-\frac{1}{4Q^2}}}_{\omega}
+\end{equation}
+on a alors $x(t)=A\mathrm{e}^{-t/\tau}\cos(\omega t + \varphi)$. C'est le régime \textbf{pseudo-périodique}.
+\begin{center}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=3*2*pi,
+  ymin=-1.2,ymax=1.2,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$x(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:3*2*pi,samples=100,smooth,coul1,thick]{exp(-0.3*x)*(cos(deg(2*x))+1/6*sin(deg(2*x)))};
+\addplot[domain=0:3*2*pi,samples=100,smooth,gray,thick]{exp(-0.3*x)};
+\draw[<->] (axis cs:3.14,0.5) -- (axis cs:6.28,0.5) node[midway,above]{$T$};
+
+\node[align=center] at (axis description cs:0.5,-0.2) {\'Evolution temporelle};
+\end{axis}
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=5cm,
+  xmin=-1.5,xmax=1.5,
+  ymin=-1,ymax=1,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$x(t)$,
+  ylabel=$\dot{x}(t)$,
+  xlabel style = {anchor=west},
+  ylabel style = {anchor=south},
+  ]
+%\addplot[domain=0:2*pi,samples=100,smooth,coul1,thick,%
+\addplot[coul1,thick,samples=100,smooth,domain=0:3*2*pi,
+postaction={decorate},% ------
+decoration={markings, % ------
+mark=at position 0.2 with {\arrow{stealth}}}
+]
+({exp(-0.3*x)*(cos(deg(2*x))+1/6*sin(deg(2*x)))}, {-exp(-0.3*x)*sin(deg(2*x))});
+\node[align=center] at (axis description cs:0.5,-0.2) {Portrait de phase};
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+La pseudo-période $T$ du signal est :
+\begin{equation}
+T=\dfrac{2\pi}{\omega}=\underbrace{\frac{2\pi}{\omega_0}}_{T_0}\dfrac{1}{\sqrt{1-1/(4Q^2)}}
+\end{equation}
+$T_0$ est la période propre de l'oscillateur (la période d'oscillation en l'absence d'amortissement). Avec amortissement, on a $T>T_0$. Le temps de retour à l'équilibre est de l'ordre de :
+\begin{eqencadre}
+\tau=\frac{2Q}{\omega_0}
+\end{eqencadre}
+
+En régime pseudo-périodique, on peut déterminer graphiquement la valeur de $Q$ en comptant le nombre d'oscillations avant que l'amplitude ne passe sous une valeur limite que nous allons déterminer.
+
+L'amplitude des oscillations est $A(t)=A\exp(-\omega_0t/2Q)=A\exp(-\pi/Q*t/T_0)$ après $n$ oscillations, on a $t=nT_0$ et $A(t)=\exp(-n\pi/Q)$. Si $n=Q$ l'amplitude est $A(t)=A\exp(-\pi)\simeq A/20$. Donc après $Q$
+ oscillations, l'amplitude des oscillations est divisée par 20.
+
+On obtient la règle suivante : $Q=$nombre d'oscillations avant que l'amplitude ne soit divisée par 20.
+\end{itemize}
+
+\subsection{Bilan d'énergie}
+Considérons le circuit $RLC$ de la figure~\ref{fig:RLC} en régime libre. La loi des mailles s'écrit $u_R + u_C + u_L = 0$. On peut multiplier cette équation par $i$ pour obtenir :
+\begin{equation}
+  \underbrace{u_Ri}_{P_R} + \underbrace{u_Ci}_{P_C} + \underbrace{u_Li}_{P_L} = 0
+\end{equation}
+
+Et on a un bilan de puissance sur le circuit. Lorsque l'on intègre cette relation entre $0$ et $+\infty$, on obtient un bilan d'énergie sur le fonctionnement du circuit. On a alors :
+\begin{align}
+  &\int_0^\infty Ri(t)^2 \, \D t + \int_0^\infty u_C(t) \dt{u_C}(t)\,  \D t + \int_0^\infty L \dt{i}(t) i(t)\,  \D t = 0 \\
+  & \int_0^\infty Ri^2(t) \D t + \frac{1}{2}C\left(u(\infty)^2 - u(0)^2  \right) + \frac{1}{2}L(i(\infty)^2-i(0)^2) =0 \\
+  & \underbrace{\int_0^\infty Ri^2(t) \D t}_{\substack{\text{Énergie dissipée par}\\ \text{effet Joule dans $R$ }}} =  \underbrace{\frac{1}{2}Cu(0)^2 + \frac{1}{2}Li(0)^2}_{\substack{\text{Énergie initialement}\\ \text{présente dans le circuit}}}
+\end{align}
+
+\section{Régime sinusoïdal forcé}
+\subsection{Position du problème}
+Un système dynamique (électrique, mecanique, ...) est soumis à une excitation sinusoïdale de pulsation $\omega$.
+
+\paragraph{exemples :}
+\begin{center}
+\begin{tikzpicture}
+%tikz elec
+\draw (0,0) to[L=$L$] (4,0) to[short] (4,2) to[C=$C$] (2,2) to[european resistor=$R$] (0,2) to[V] (0,0);
+\draw[->] (-0.5,0.2) -- (-0.5,1.8) node[left,midway] {$e(t)=E_0\cos(\omega t)$};
+\node[below,align=center] at (2,-0.5) {Circuit RLC soumis à\\une tension sinusoïdale};
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}
+%mur
+\draw (0,-1) -- (0,1);
+\foreach \h in {-1,-0.8,...,1} {
+  \draw (0,\h) -- ($(-0.3,\h-0.3)$);
+}
+%axe
+\draw[decorate,decoration={zigzag,amplitude=0.3cm,pre length=0.5cm,post length=0.5cm}] (0,0.1) -- (5,0.1);
+
+\draw[thick,rounded corners=1mm] (5,0.7) rectangle (6.2,-0.45) node[midway] {$m$};
+
+\draw[->] (0,-1.2) -- (2,-1.2) node[midway,below] {$x_0(t)=A\cos(\omega t)$};
+
+\node[align=center,below] at (3.1,-1.6) {Extrémité du \\ ressort qui oscille};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Régime transitoire et régime permanent}
+Lorsqu'un système linéaire est soumis à une excitation sinusoïdale de pulsation $\omega$ on distingue deux régimes :
+\begin{itemize}
+\item Le régime transitoire au cours duquel l'amplitude des oscillations varie
+\item Le régime permanent au cours duquel toutes les grandeurs oscillent à la pulsation $\omega$ avec une amplitude constante.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=8cm,
+  xmin=-1,xmax=3*2*pi,
+  ymin=-1.5,ymax=1.5,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$x(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:3*2*pi,samples=200,smooth,coul1]{(1-exp(-x/3))*cos(10*deg(x)};
+\draw[dotted] (axis cs:6.28,1.5) -- (axis cs:6.28,-1.5);
+\node[below,align=center] at (axis cs:3.14,-1.5) {Régime\\ transitoire};
+\node[below,align=center] at (axis cs:12.5,-1.5) {Régime\\ permanent};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+La durée du régime transitoire est identique à celle du régime transitoire de l'oscillateur libre (elle dépend de $Q$ et de $\omega_0$).
+
+\subsection{\'Etude du régime permanent -- méthode des complexes}
+En régime permanent, toutes les grandeurs oscillent à la pulsation $\omega$. On peut les représenter par une amplitude et une phase, c'est à dire un nombre complexe.
+\begin{equation}
+\underline{x}(t) = X\mathrm{e}^{j(\omega t+\varphi)} \quad \text{avec} \quad j^2=-1
+\end{equation}
+
+La grandeur réelle (celle qui a une signification physique) est la partie réelle de la grandeur complexe : $x(t)=\Re(\underline{x})= X\cos(\omega t+\varphi)$.
+
+La dérivation devient une opération très simple : 
+\begin{equation}
+\dt{\underline{x}(t)} = \dt{}(X\e^{j(\omega t+\varphi)}) = Xj\omega\e^{j(\omega t+\varphi)}=j\omega \underline{x}(t)
+\end{equation}
+Donc :
+\begin{eqencadre}
+\dt{\underline{x}(t)}=j\omega \underline{x}(t)
+\end{eqencadre}
+Cela permet de transformer toutes les équations différentielles en équations algébriques.
+
+\paragraph{Application au circuit RLC en régime forcé } : On cherche à déterminer la tension $u_L(t)$ en régime permanent dans le circuit suivant :
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) to[L=$L$,i<=$i$] (4,0) to[short] (4,2) to[C=$C$] (2,2) to[european resistor=$R$] (0,2) to[V] (0,0);
+\draw[->] (-0.5,0.2) -- (-0.5,1.8) node[left,midway] {$e(t)=E_0\cos(\omega t)$};
+\draw[->] (1.2, -0.5) -- (2.8,-0.5) node[midway,below] {$u_L$};
+\draw[<-] (0.2, 2.5) -- (1.8,2.5) node[midway,above] {$u_R$};
+\draw[<-] (2.2, 2.5) -- (3.8,2.5) node[midway,above] {$u_C$};
+\end{tikzpicture}
+\end{center}
+
+On remplace les valeurs réelles par leur représentation complexe : $\underline{i}(t)$, $\underline{e}(t)$, $\underline{u}_R(t)$, $\underline{u}_C(t)$ et $\underline{u}_L(t)$.
+
+Les différentes lois du circuit s'écrivent :
+\begin{itemize}
+\item Mailles : $\underline{e}=\underline{u}_R+\underline{u}_L+\underline{u}_C$
+\item Ohm : $\underline{u}_R=R\underline{i}$
+\item Condensateur : $\underline{i}=C\dt{\underline{u}_C}=jC\omega \underline{u}_C$
+\item Bobine : $\underline{u}_L=L\dt{\underline{i}}=jL\omega\underline{i}$
+\end{itemize}
+On obtient finalement 
+\begin{equation*}
+\underline{u}_L=\frac{jL\omega}{R+j \left(  L\omega - \frac{1}{C\omega}\right)} \underline{e}
+\end{equation*}
+que l'on peut écrire sous la forme :
+\begin{equation*}
+\underline{u}_L=\frac{jQ \frac{\omega}{\omega_0}}{1+jQ \left( \frac{\omega}{\omega_0}-\frac{\omega_0}{\omega} \right)}\underline{e}
+\end{equation*}
+en faisant intervenir la pulsation propre $\omega_0=\frac{1}{\sqrt{LC}}$ et le facteur de qualité $Q=\frac{1}{R}\sqrt{\frac{L}{C}}$ de l'oscillateur.
+
+L'amplitude de la tension aux bornes de la bobine est donnée par le module de $\underline{u}_L$: 
+\begin{equation}
+|\underline{u}_L|=\frac{Q \frac{\omega}{\omega_0}}{\sqrt{1+Q^2 \left( \frac{\omega}{\omega_0}-\frac{\omega_0}{\omega} \right)^2}} |\underline{e}|
+\end{equation}
+
+On représente sur le graphique ci-dessous l'amplitude de la tension aux bornes de la bobine en fonction de la pulsation $\omega$ pour plusieurs valeurs du facteur de qualité $Q$:
+
+\begin{center}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=6cm,
+  width=10cm,
+  xmin=0,xmax=4,
+  ymin=0,ymax=4,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$\omega$,
+  ylabel=$|\underline{u}_L(\omega)|$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0:4,samples=100,smooth,coul1,thick]{0.5*x/(sqrt(1+0.25*(x-1/x)^2)};
+\addplot[domain=0:4,samples=100,smooth,coul1,thick]{x/(sqrt(1+(x-1/x)^2)};
+\addplot[domain=0:4,samples=100,smooth,coul1,thick]{3.5*x/(sqrt(1+3.5^2*(x-1/x)^2)};
+
+\draw[dotted] (axis cs:1,4) -- (axis cs:1,0) node[below] {$\omega_0$}; 
+\draw[dotted] (axis cs:4,1) -- (axis cs:0,1) node[left] {$|\underline{e}|$};
+\draw (axis cs: 0.9,3) node[left] {$Q=3$}; 
+\draw (axis cs:1.25,1.1) node[above] {$Q=1$};
+\draw (axis cs:1.1,0.3) node[right] {$Q=0.5$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+On remarque que lorsque le facteur de qualité est grand (>1), la tension aux bornes de la bobine peut être supérieurs à la tension d'alimentation du circuit. On dit qu'il y a \textbf{résonance}.
+
+Plus le facteur de qualité est élevé, plus le pic de résonance est haut et étroit. Si $\Delta\omega$ est la largeur du pic de résonance, on peut montrer que l'on a 
+\begin{eqencadre}
+\frac{\omega_0}{\Delta\omega} \approx Q
+\end{eqencadre}
+Dès que $Q$ est suffisamment grand (le pic de résonance est assez étroit). La relation est exacte pour la résonance en intensité dans un circuit RLC série.
+
+On peut également s'intéresser au déphasage $\varphi$ entre la tension d'alimentation et la tension aux bornes de la bobine. Pour cela on doit calculer l'argument de $\underline{u}_L$, on trouve:
+\begin{equation*}
+\arg(\underline{u}_L)=\arg(\underline{e})+\frac{\pi}{2}-\arctan\left(Q \left( \frac{\omega}{\omega_0} - \frac{\omega_0}{\omega} \right)\right)
+\end{equation*}
+
+Le graphique ci-dessous représente $\arg(\underline{u}_L)-\arg(\underline{e})$ en fonction de $\omega$, il s'agit donc du déphasage entre les deux grandeurs.
+\begin{center}
+\begin{tikzpicture}
+  %%tikz elec
+\begin{axis}[
+  height=6cm,
+  width=10cm,
+  xmin=0,xmax=4,
+  ymin=0,ymax=4,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$\omega$,
+  ylabel=$\arg(\underline{u}_L(\omega))-\arg(\underline{e})$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0.01:4,samples=100,smooth,coul1,thick]{pi/2-rad(atan(0.5*(x-1/x))};
+\addplot[domain=0.01:4,samples=100,smooth,coul1,thick]{pi/2-rad(atan(1*(x-1/x)))};
+\addplot[domain=0.01:4,samples=100,smooth,coul1,thick]{pi/2-rad(atan(3*(x-1/x)))};
+
+\draw (axis cs:0,pi) node[left] {$\pi$};
+\draw[dotted] (axis cs:4,pi/2) -- (axis cs:0,pi/2) node[left] {$\frac{\pi}{2}$}; 
+\draw[dotted] (axis cs:1,4) -- (axis cs:1,0) node[below] {$\omega_0$}; 
+%\draw[dotted] (axis cs:4,1) -- (axis cs:0,1) node[left] {$|\underline{e}|$};
+\draw (axis cs: 0.35,3.2) node[right] {$Q=3$}; 
+\draw (axis cs:3,0.8) node[right] {$Q=0.5$};
+\draw[<-] (axis cs:2,0.6) -- (axis cs:2,2) node[above,fill=white] {$Q=1$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\`A la résonance, il y a un déphasage de $\frac{\pi}{2}$ entre le signal et l'excitation.
+
+\subsection{Impédances complexes}
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) to[european resistor,i>_=$\underline{i}$] (2,0);
+\draw[<-] (0.2,0.5) -- (1.8,0.5) node[midway, above] {$\underline{u}$};
+\end{tikzpicture}
+ \\
+\end{center}
+
+Dans un circuit électrique en régime sinusoïdal forcé, on peut définir \textbf{l'impédance complexe} $\underline{Z}$ d'un dipôle (équivalente à la résistance en régime continu) telle que 
+\begin{equation}
+\underline{u}=\underline{Z}\underline{i}
+\end{equation}
+
+\begin{description}
+\item[Pour une résistance :] $\underline{u}=R \underline{i}$ donc 
+\begin{eqencadre}
+\underline{Z}_R=R
+\end{eqencadre} 
+L'impédance est réelle.
+
+\item[Pour une bobine :] $u_L=L\dt{i}$ donc $\underline{u}=jL\omega \underline{i}$ et :
+\begin{eqencadre}
+\underline{Z}_L=jL\omega
+\end{eqencadre} 
+L'impédance est imaginaire pure et dépend de $\omega$.
+
+Lorsque $\omega=0$, $|\underline{Z}_L|=0$, à basses fréquences la bobine se comporte comme un fil.
+
+Lorsque $\omega\rightarrow\infty$, $|\underline{Z}_L|\rightarrow\infty$, donc à hautes fréquences, la bobine se comporte comme un interrupteur ouvert.
+
+\item[Pour un condensateur :] $i=C\dt{u}$ donc $\underline{i} = jC\omega \underline{u}$ et :
+\begin{eqencadre}
+\underline{Z}_C=\frac{1}{jC\omega}
+\end{eqencadre}
+L'impédance est imaginaire pure et dépend de $\omega$.
+
+Lorsque $\omega\rightarrow 0$, $|\underline{Z}_C|\rightarrow\infty$, à basses fréquences le condensateur se comporte comme un interrupteur ouvert.
+
+Lorsque $\omega\rightarrow\infty$, $|\underline{Z}_C|\rightarrow 0$, donc à hautes fréquences, le condensateur se comporte comme un fil.
+
+
+\item[Associations d'impédances :]Les règles sont les mêmes que pour des associations de résistances
+
+En série : 
+\begin{tikzpicture}[baseline=-0.25em]
+\draw (0,0) to[european resistor,l=$\underline{Z}_1$] (2,0) to[european resistor,l=$\underline{Z}_2$] (4,0);
+\end{tikzpicture}
+$\Leftrightarrow$
+\begin{tikzpicture}[baseline=-0.25em]
+\draw (0,0) to[european resistor, l=$\underline{Z}_{eq}$] (2,0);
+\end{tikzpicture}
+\hspace{1cm} $\underline{Z}_{eq}=\underline{Z}_1+\underline{Z}_2$
+
+En parallèle : 
+\begin{tikzpicture}[baseline=-0.25em]
+\draw(0,0) -- (1,0) -- (1,0.5) to[european resistor,l=$\underline{Z}_1$] (3,0.5) -- (3,0) -- (4,0);
+\draw (1,0) -- (1,-0.5) to[european resistor,l=$\underline{Z}_2$] (3,-0.5) -- (3,0);
+\end{tikzpicture}
+$\Leftrightarrow$
+\begin{tikzpicture}[baseline=-0.25em]
+\draw (0,0) to[european resistor, l=$\underline{Z}_{eq}$] (2,0);
+\end{tikzpicture}
+\hspace{1cm} $\dfrac{1}{\underline{Z}_{eq}}=\dfrac{1}{\underline{Z}_1}+\dfrac{1}{\underline{Z}_2}$
+\end{description}
+
+\end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% LaTeX-command: "latex -shell-escape"
+%%% End: 

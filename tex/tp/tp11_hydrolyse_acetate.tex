@@ -1,0 +1,226 @@
+\documentclass{tp}
+\usepackage{mhchem}
+\titre{TP11 : Suivi de l'hydrolyse de l'acétate d'éthyle par conductimétrie}
+
+\begin{document}
+
+\section{Généralités sur la conductimétrie}
+
+\subsection{Introduction}
+
+ La conductimétrie est une méthode physique utilisée fréquemment en chimie. Elle repose sur les propriétés électriques des solutions ioniques :
+
+\begin{itemize}
+\item dans une solution, seuls les ions peuvent transporter le courant électrique
+\item les contributions de tous les ions s'ajoutent
+\end{itemize}
+
+
+La conductivité se mesure en faisant passer un courant alternatif dans la solution. Le courant alternatif permet d'éviter l'accumulation d'ions près des électrodes qui induirait une polarisation de celles-ci et fausserait la mesure. On évite aussi les phénomènes d'électrolyse et les transformations chimiques dans la solution.
+
+
+\subsection{Schéma électrique équivalent}
+
+ Un conductimètre est composé de deux plaques parallèles de surface~$S$, distante de~$\ell$. Ces deux plaques forment la \textbf{cellule} de conductimétrie. Électriquement, la portion de solution comprise entre ces deux plaques est équivalente à une résistance.
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[fill=gray!20] (0,0,0) -- (0,0,2) -- (0, -2, 2) -- (0,-2, 0) --cycle;
+    \draw (1.5, -1, 1) node[]{Solution};
+    \draw[dashed] (0,0,0) -- (3,0,0);
+    \draw[dashed] (0,-2,0) -- (3,-2,0);
+    \draw[dashed] (0,0,2) -- (3,0,2);
+    \draw[dashed] (0,-2,2) -- (3,-2,2);
+    \draw[fill=gray!20] (3,0,0) -- (3,0,2) -- (3, -2, 2) -- (3,-2, 0) --cycle;
+    \draw[Stealth-Stealth](0, 0.3, 0) -- (3, 0.3, 0) node[midway, above]{$\ell$};
+    \draw (3, -1, 1) node[]{$S$};
+    \node at (5, -1, 1) {\Large $\Leftrightarrow$};
+    \draw (7,-1, 1) to[R=$R$, v=$u$] ++(2,0);
+  \end{tikzpicture}
+\end{center}
+%\begin{figure}[!h]
+%\begin{center}
+%\centrefigure{PS/tp_conductimetrie}
+%\end{center}
+%\end{figure}\\
+
+Le conductimètre mesure la conductance (l'inverse de la résistance) de la portion de solution contenue dans la cellule.
+
+\subsection{Relation entre la conductance et la conductivité}
+
+On peut montrer que la résistance d'un cylindre conducteur homogène de longueur~$\ell$ et de section~$S$ vaut $R = \frac{\rho \ell}{S}$ où $\rho$ est la \textbf{résistivité} du matériau en \si{\ohm\meter}.
+
+Cette relation est aussi valable pour une portion parallélépipédique d'une solution ionique : $G = \frac{\sigma S}{\ell}$, où $\sigma=\frac{1}{\rho}$ est la conductivité de la solution en $\si{\siemens\per\meter}$, $G$ la conductance de la portion de solution en S, $S$ la surface d'une plaque de la cellule en $\si{\meter^2}$ et $\ell$ la longueur de la cellule en \si{\meter}.
+
+\subsection{La constante de cellule}
+
+On cherche à séparer les natures des contributions à la valeur mesurée en écrivant la conductance $G$ sous la forme :
+
+\begin{equation}
+  G = \text{caractéristique électrique} \times \text{caractéristiques géométriques}
+\end{equation}
+
+ Les caractéristiques géométriques sont données par $S$ et $\ell$. On choisit donc de définir la \textbf{constante de cellule} :
+\begin{equation}
+  K_\text{cell} = \frac{\ell}{S} \qquad \text{de manière à ce que} \qquad G = \sigma \times \frac{1}{K_\text{cell}}
+\end{equation}
+
+ Pour les conductimètres utilisés en TP, cette constante est de l'ordre du $\si{\per\centi\meter}$. On pourrait la déterminer en mesurant la cellule mais cette méthode est peu précise. C'est la raison pour laquelle on préfère utiliser une solution étalon (de conductivité connue).
+
+
+\subsection{Conductivité molaire limite}
+
+\subsubsection{Définition}
+
+ En définissant $\sigma = K_\text{cell} G$, on s'est affranchi des caractéristiques liées à la géométrie de la cellule. Il est pratique de
+se ramener à la \textbf{conductivité molaire} $\lambda$ en $\si{\siemens\per\square\meter\per\mol}$ telle que :
+  \begin{equation}
+    \sigma = \lambda  c
+  \end{equation}
+
+\noindent où $c$ est la concentration de la solution en l'ion considéré.
+
+
+ Ainsi pour une solution d'acide chlorhydrique : 
+\begin{equation}
+  \sigma = \lambda_{\ce{H+}} [\ce{H+}] + \lambda_{\ce{Cl-}}  [\ce{Cl-}]
+\end{equation}
+puisque comme on l'a dit en introduction, les conductivités des ions s'ajoutent.
+
+
+ Dans le cas général, la conductivité molaire dépend de la concentration. Elle est cependant constante pour des solutions diluées. C'est la raison pour laquelle on trouve dans les tables la \textbf{conductivité molaire limite} (pour des solutions infiniment diluées) : on la note $\lambda^0_{\text{X}_i}$, pour l'ion X$_i$.
+
+
+ Pour une solution diluée d'acide chlorhydrique, on écrira : 
+ \begin{equation}
+   \sigma = \lambda^0_{\ce{H+}}  [\ce{H+}] + \lambda^0_{\ce{Cl-}}  [\ce{Cl-}]
+ \end{equation}.
+
+\subsubsection{Conductivité molaire limite équivalente}
+
+ Certaines tables donnent, non pas la conductivité molaire limite, mais la \textbf{conductivité molaire limite équivalente}, qui correspond à la conductivité molaire limite pour une unité de charge de l'ion. Pour les ions monovalents, cela ne change rien. En revanche, il faut se méfier dans les autres cas.
+
+ Ainsi pour une solution de sulfate de calcium : 
+\begin{equation}
+  \sigma = \lambda^0_{\ce{Ca^2+}} [\ce{Ca^2+}] + \lambda^0_{\ce{SO4^2-}} [\ce{SO4^2-}]
+\end{equation}
+si on utilise la conductivité molaire limite des ions. Mais 
+\begin{equation}
+  \sigma = 2 \lambda^0_{\ce{Ca^2+}} [\ce{Ca^2+}] + 2 \lambda^0_{\ce{SO4^2-}}  [\ce{SO4^2-}]
+\end{equation}
+si $\lambda^0$ désigne la conductivité molaire limite équivalente (c-à-d. par unité de charge). Elle est parfois notée $\lambda^0_{\frac{1}{2}\ce{Ca^2+}}$ ou $\lambda^0_{\frac{1}{2}\ce{SO4^2-}}$ pour marquer la différence.
+
+\section{Partie théorique sur la cinétique}
+
+\subsection{Objectifs expérimentaux}
+
+\begin{itemize}
+\item Suivre la cinétique de la saponification de l'acétate d'éthyle (éthanoate d'éthyle en nomenclature officielle) par l'hydroxyde de sodium de constante de vitesse~$k$ :
+
+\begin{equation}
+  \ce{CH3COOC2H5(aq) + HO-(aq) -> CH3COO-(aq) + C2H5OH(aq)}
+\end{equation}
+
+\item Vérifier que cette réaction est d'ordre global égal à~$2$.
+\item Vérifier que chacun des ordres partiels est égal à~$1$.
+\item Déterminer la constante de vitesse.
+\end{itemize}
+
+\subsection{\'Etude quantitative}
+
+ On note $a$ la concentration initiale en ester et en ion hydroxyde, $x$ l'avancement volumique.
+
+\begin{itemize}
+
+\item  Grâce aux hypothèses sur les ordres partiels de la réaction, donner la relation entre $a$, $x$, $t$ et $k$.
+
+\end{itemize}
+
+ On rappelle que la conductivité de la solution est : 
+\begin{equation}
+  \sigma = \sum_i \lambda_i^0(M_i^{z_i +})  c_i
+\end{equation}
+avec $z_i$ un entier relatif, $\lambda_i^0(M_i^{z_i +})$ la conductivité molaire limite de l'ion $M_i^{z_i +}$, et $c_i$ sa concentration.
+
+\medskip
+
+ On note $\sigma_0$ et $\sigma_{\infty}$ respectivement les~conductivités initiale et finale.
+
+\begin{itemize}
+
+\item Après avoir recensé tous les ions en solution, montrer que l'on peut écrire la relation : 
+
+  \begin{equation}
+  \frac{\sigma_0-\sigma}{\sigma-\sigma_{\infty}} = kat  
+  \end{equation}
+
+\end{itemize}
+
+ Un mélange identique à celui que vous allez étudier a été préparé 24 heures auparavant. Sa conductivité a été mesurée à la température de la salle. On~considère donc $\sigma_{\infty}$ comme connue. En pratique, on pourra aussi déterminer la valeur de $\sigma_\infty$ en extrapolant les données mesurées. 
+
+\begin{itemize}
+
+\item En déduire la courbe à tracer pour obtenir le plus simplement possible les valeurs de $k$ et de $\sigma_0$.
+
+\end{itemize}
+
+\section{Partie expérimentale}
+
+Elle sera réalisée à l'aide du conductimètre que l'on n'oubliera pas d'étalonner. Une notice est à votre disposition sur votre paillasse. Les informations essentielles figurent en plus à la fin de cet énoncé.
+
+\subsection{Préliminaires}
+
+\begin{itemize}
+\item  Préparer la série de béchers suivante :
+  \begin{itemize}
+    \item	Bécher $1$ : environ $\SI{20}{\milli\litre}$ de KCl à \SI{e-1}{\mol\per\litre}, afin d'effectuer l'étalonnage du conductimètre (seulement si votre conductimètre nécessite un étalonnage)
+  \item	Bécher $2$ : \SI{20}{\milli\litre} d'acétate d'éthyle à \SI{5e-2}{\mol\per\litre}
+  \item	Bécher $3$ : \SI{20}{\milli\litre} d'hydroxyde de sodium à \SI{5e-2}{\mol\per\litre}
+  \item	Bécher $4$ : \SI{20}{\milli\litre} d'hydroxyde de sodium à \SI{5e-2}{\mol\per\litre} auquel on ajoute $\SI{20}{\milli\litre}$ d'eau distillée
+  \end{itemize}
+\end{itemize}
+	
+\subsection{Mesure}
+
+On utilisera Latispro en mode pas-à-pas pour enregistrer la conductivité au cours du temps.
+
+\subsubsection{Mesure au cours du temps}
+
+\begin{itemize}
+
+\item Mettre le bécher $2$ sur l'agitateur magnétique avec un barreau aimanté, rincer et essuyer l'extérieur de la sonde et
+l'introduire dans le bécher (On fera attention à ce que le barreau ne puisse pas cogner contre la cellule). L'agitation doit être suffisamment légère pour qu'il n'y ait pas de bulle d'air dans la solution.
+
+\item Lancer l'acquisition puis verser la solution d'hydroxyde de sodium (bécher $3$) dans le bécher $2$. Vérifier que la cellule trempe complètement dans le bécher sans que le barreau puisse cogner dessus, agiter doucement pendant la mesure (il ne faut pas que des bulles d'air perturbent la mesure).
+
+  \item Faire une mesure de conductivité toutes les 15-20 secondes pendant au moins 15 minutes.
+
+\item Relever la température du milieu réactionnel.
+\item Garder le milieu réactionnel afin de le laisser évoluer.
+\item Mesurer à la fin du TP, la valeur de $\sigma$.
+\end{itemize}
+
+\subsubsection{Exploitation}
+\begin{itemize}
+\item Comparer la valeur obtenue en fin de TP à celle de $\sigma_{\infty}$ obtenue au bout de $24 \si{h}$.
+\item Comparer le $\sigma_0$ obtenu à la conductivité du bécher $4$.
+\item Exporter les mesures vers Python (voir TP8), et valider l'ordre $2$, déterminer la constante de vitesse et $\sigma_0$.
+
+\end{itemize}
+
+
+\`A titre indicatif, on donne :
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{lllllllll}
+\toprule
+ion & $\ce{H3O+}$ & \ce{Na+} & \ce{K+} & \ce{Pb^2+}  & \ce{Cl-} & \ce{HO-} & \ce{CH3COO-} & \ce{SO4^2-}\\
+\midrule
+$\lambda^0 (\si{\milli\siemens\square\meter\per\mole})$ & \num{35.0} & \num{5.01} & \num{7.35} & \num{14.0} & \num{7.63} & \num{19.9} & \num{4.09} & \num{16} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\end{document}

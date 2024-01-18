@@ -1,0 +1,763 @@
+\documentclass{cours}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{pythontex}
+\usepackage{calc}
+\usetikzlibrary{patterns}
+\begin{document}
+\setcounter{chapter}{6}
+\shorthandoff{:!}
+\chapter{Filtrage linéaire}
+\section{Signaux périodiques}
+Un signal périodique $s(t)$ est composé d'un motif élémentaire de durée $T$ qui se répète indéfiniment au cours du temps.
+\begin{center}
+\begin{tikzpicture}
+    %tikz elec
+\begin{axis}[
+  height=4cm,
+  width=8cm,
+  xmin=-1,xmax=2*2*pi,
+  ymin=-1.5,ymax=1.5,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$s(t)$,
+  ylabel style = {anchor=south,at={(0,1)} },
+  xlabel style = {anchor=west},
+  ]
+
+\addplot[domain=0:2*2*pi,samples=200,smooth,coul1]{0.7*cos(3*deg(x))+0.5*cos(6*deg(x))};
+\addplot[domain=2*pi:2.66*pi,samples=200,smooth,coul2]{0.7*cos(3*deg(x))+0.5*cos(6*deg(x))};
+\draw[dotted] (axis cs:2*pi,1.5) -- (axis cs:2*pi,-1.5);
+\draw[dotted] (axis cs:2.66*pi,1.5) -- (axis cs:2.66*pi,-1.5);
+\draw[<->] (axis cs:2*pi,-1.5) -- (axis cs:2.66*pi,-1.5) node[midway,below]{$T$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+\item $T$ est la \textbf{période} du signal ;
+\item $f=\frac{1}{T}$ est sa fréquence.
+\end{itemize}
+On peut décomposer une fonction périodique en \textbf{série de Fourier} : 
+\begin{equation*}
+s(t) = a_0 + \sum_{n=1}^{\infty}a_n\cos(n\omega_0t) + b_n\sin(n\omega_0t)
+\end{equation*}
+avec 
+\begin{equation*}
+a_n=\frac{2}{T}\int_0^Ts(t)\cos(n\omega_0t)\,\D t \quad \text{et} \quad b_n = \frac{2}{T}\int_0^Ts(t)\sin(n\omega_0t)\,\D t.
+\end{equation*}
+$a_0$ est la valeur moyenne de $s(t)$ :
+\begin{equation*}
+a_0 = \frac{1}{T}\int_0^Ts(t)\D t
+\end{equation*}
+
+L'harmonique de rang $n$ est :
+\begin{equation*}
+H_n=a_n\cos(n\omega_0t) + b_n\sin(n\omega_0t) = c_n\cos(n\omega_0t+\varphi_n)
+\end{equation*}
+
+Un signal périodique se décompose en une somme d'une composante continue et d'harmoniques sinusoïdales de fréquences multiples de la fréquence du signal.
+
+\begin{center}
+\begin{tikzpicture}[baseline=0]
+\draw[->] (-1,0) -- (5,0) node[right] {$t$};
+\draw[->] (0,-1) -- (0,2) node[left]{$s(t)$};
+\foreach \x in {0,...,4} {
+  \draw[coul1] (\x,-0.5) --++ (0.7,1.5) --++ (0.3,-1.5);
+}
+\draw (2.5,-2.5) node[below]{Représentation temporelle};
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}[baseline=0]
+\draw[->] (-1,0) -- (5,0) node[right] {$f$};
+\draw[->] (0,-1) -- (0,1.5) node[left]{$A$};
+\draw[coul1,thick] (0,0) node[below left,black]{$0$}-- (0,0.6);
+\draw[coul1,thick] (1,0) node[below,black]{$f$}-- (1,1);
+\draw[coul1,thick] (2,0) node[below,black]{$2f$}-- (2,0.7);
+\draw[coul1,thick] (3,0) node[below,black]{$3f$}-- (3,0.4);
+\draw[coul1,thick] (4,0) node[below,black]{$4f$}-- (4,0.2);
+\draw (0,0) to[out=-90,in=180] (1,-1.5) node[right]{Composante continue};
+\draw (1,-0.5) to[out=-90,in=180] (1,-1) node[right]{Fondamentale};
+\draw[decorate, decoration=brace] (1,1.2) -- (4,1.2) node[midway,above] {Harmoniques};
+\draw (2.5,-2.5) node[below]{Spectre};
+\end{tikzpicture}
+\end{center}
+
+
+Le spectre du signal $s(t)$ est composé de l'ensemble des amplitudes des harmoniques (et de la composante continue).
+
+La valeur moyenne d'un signal $s(t)$ de période $T$ est : 
+\begin{equation*}
+<s(t)> = \frac{1}{T}\int_0^Ts(t)\, \D t
+\end{equation*}
+
+La valeur efficace $S$ d'un signal $s(t)$ de période $T$ est :
+\begin{equation*}
+S = \sqrt{\frac{1}{T}\int_0^Ts^2(t)\,\D t}
+\end{equation*}
+par exemple pour un signal sinusoïdal $s(t) = A\sin(\omega t)$ on a :
+\begin{equation}
+<s(t)> = \frac{A}{T}\int_0^T\sin(\omega t)\, \D t=0
+\end{equation}
+et 
+\begin{equation}
+S=\sqrt{\frac{1}{T}\int_0^TA^2\sin^2(\omega t)\, \D t}=\frac{A}{\sqrt{T}}\sqrt{\int_0^T \frac{1}{2}(1-\cos 2t)\, \D t}=\frac{A}{\sqrt{2}}
+\end{equation}
+
+\section{Filtres}
+Un filtre est un système linéaire qui transmet certaines fréquences et en atténue d'autres.
+
+Un filtre est caractérisé par sa \textbf{fonction de transfert harmonique} $\underline{H}(\omega)=\frac{\underline{s}(\omega)}{\underline{e}(\omega)}$ dont le module est le \textbf{gain} du filtre à la pulsation $\omega$.
+
+
+\paragraph{Filtres les plus courants :}
+\begin{itemize}
+\item Filtre passe-bas : laisse passer les basses fréquences ($\omega<\omega_c$) :
+\begin{center}
+\begin{tikzpicture}[baseline=0pt]
+\draw[->] (0,0) -- (0,1.5) node[above]{$|H(\omega)|$};
+\draw[->] (0,0) -- (3,0) node[right] {$\omega$};
+\draw[coul1] (0,1) -- (1.5,1) -- (1.5,0) -- (3,0);
+\draw[coul2] (0,1) edge[out=0,in=180] (3,0); 
+\draw (1.5,0) node[below]{$\omega_c$};
+\draw (0,1) node[left]{1};
+\draw (0.75,1) node[above,align=center]{idéal};
+\draw (2,0.5) node[right] {réel};
+\end{tikzpicture}
+\end{center}
+
+\item Filtre passe-haut : laisse passer les hautes fréquences ($\omega>\omega_c$) :
+\begin{center}
+\begin{tikzpicture}[baseline=0pt]
+\draw[->] (0,0) -- (0,1.5) node[above]{$|H(\omega)|$};
+\draw[->] (0,0) -- (3,0) node[right] {$\omega$};
+\draw[coul1] (0,0) -- (1.5,0) -- (1.5,1) -- (3,1);
+\draw[coul2] (0,0) edge[out=0,in=180] (3,1); 
+\draw (1.5,0) node[below]{$\omega_c$};
+\draw (0,1) node[left]{1};
+\draw (2.25,1) node[above,align=center]{idéal};
+\draw (1,0.5) node[left] {réel};
+\end{tikzpicture}
+\end{center}
+
+\item Filtre passe-bande : laisse passer les fréquences intermédiaires ($\omega_{c1}<\omega<\omega_{c2}$) :
+\begin{center}
+%\hspace{\stretch{1}}
+\begin{tikzpicture}[baseline=0pt]
+\draw[->] (0,0) -- (0,1.5) node[above]{$|H(\omega)|$};
+\draw[->] (0,0) -- (3,0) node[right] {$\omega$};
+\draw[coul1] (0,0) -- (1,0) -- (1,1) -- (2,1) -- (2,0) -- (3,0);
+\draw[coul2] (0,0) to[out=0,in=180] (1.5,1) to[out=0,in=180] (3,0); 
+\draw (1,0) node[below]{$\omega_{c1}$};
+\draw (2,0) node[below]{$\omega_{c2}$};
+\draw (0,1) node[left]{1};
+\draw (2,1) node[above right]{idéal};
+\draw (2.5,0.5) node[right] {réel};
+\end{tikzpicture}
+\end{center}
+\end{itemize}
+
+On définit le \textbf{gain} à la pulsation $\omega$ par $G(\omega)=|H(\omega)|$
+
+On définit le \textbf{gain en décibel} à la pulsation $\omega$ par $G_{dB}(\omega)=20\log(|H(\omega)|)$.
+
+\section{Exemple d'un filtre passe-bas d'ordre 1}
+On étudie le filtre suivant :
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) to[european resistor,l=$R$,i>^=$\underline{i}$] (3,0) to[C=$C$] (3,-2) to[short] (0,-2);
+\draw (3,0) to[short,i=\mbox{$i=0$}] (4,0);
+\draw (3,-2) -- (4,-2);
+\draw[->] (0,-1.9) -- (0,-0.1) node[midway,left]{$\underline{e}(\omega)$};
+\draw[->] (4,-1.9) -- (4,-0.1) node[midway,right]{$\underline{s}(\omega)$};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Analyse qualitative :}
+\begin{itemize}
+\item Lorsque $\omega\rightarrow\infty$ le condensateur se comporte comme un fil et $s(\omega)\rightarrow 0$.
+\item Lorsque $\omega\rightarrow 0 $ le condensateur se comporte comme un interrupteur ouvert et $s(\omega)\rightarrow e(\omega)$.
+\end{itemize}
+Ce filtre est donc un \textbf{filtre passe-bas}.
+
+\paragraph{Analyse quantitative :}
+La tension de sortie est $\underline{s}(\omega)=\dfrac{1/jC\omega}{R+1/jC\omega}\underline{e}(\omega)$ (pont diviseur de tension). Soit $\underline{s}(\omega)=\dfrac{1}{1+jRC\omega}\underline{e}(\omega)$. Donc la fonction de transfert du filtre est :
+\begin{equation*}
+\underline{H}(\omega)=\frac{1}{1+jRC\omega} = \frac{1}{1+j \frac{\omega}{\omega_0}}.
+\end{equation*}
+
+Le \textbf{gain} du filtre est :
+\begin{equation*}
+G=|\underline{H}(\omega)| = \frac{1}{\sqrt{1+(\omega/\omega_0)^2}}
+\end{equation*}
+
+Le \textbf{gain en décibel} est :
+\begin{equation*}
+G_{dB}=20\log(G) = -20\log\sqrt{1+(\omega/\omega_0)^2}
+\end{equation*}
+
+On trace $G_{dB}$ en fonction de $\log\left(\frac{\omega}{\omega_0}\right)$, c'est le \textbf{diagramme de Bode} du filtre.
+
+\begin{center}
+\begin{tikzpicture}
+    %tikz elec
+\begin{axis}[
+  height=4cm,
+  width=8cm,
+  xmin=0.1,xmax=100,
+  ymin=-40,ymax=5,
+  xmode=log,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$\log\left(\frac{\omega}{\omega_0}\right)$,
+  ylabel=$G_{dB}$,
+  ylabel style = {anchor=south,},
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0.05:100,samples=200,smooth,thick,coul1]{-20*ln(sqrt(1+x^2))/ln(10)};
+\addplot[domain=0.05:1, dashed, thick]{0};
+\addplot[domain=1:100, dashed, thick]{-20*log10(x)} node[pos=0.7, above, sloped]{\SI{-20}{dB/décade}};
+\draw (axis cs:1,0) node[above right] {$0$};
+\draw ($(axis cs:1,-3)+(-0.1, 0)$) node[below left]{\SI{-3}{dB}}--++ (0.2,0) ;
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Le diagramme de Bode fait apparaître des zones rectilignes. Cherchons les asymptotes en $\pm\infty$ (pour $\log(\omega)$) :
+\begin{itemize}
+\item $\omega\gg\omega_0$ : $G_{dB}=-20\log\sqrt{1+(\omega/\omega_0)^2}\simeq -20\log \frac{\omega}{\omega_0} \Leftrightarrow y=ax$
+
+L'asymptote en $+\infty$ est donc une doite de pente -20dB/décade, c'est à dire que lorsque l'on multiplie $\omega$ par 10, $G_{dB}$ diminue de 20\,dB.
+
+\item $\omega\ll\omega_0$ : $G_{dB}\rightarrow 0$ on a donc une asymptote horizontale lorsque $\omega\rightarrow 0$ (ou $\log\omega\rightarrow -\infty$).
+\end{itemize}
+
+La phase de la fonction de transfert est :
+\[\varphi = -\arctan\left(\frac{\omega}{\omega_0}\right) \]
+
+\begin{center}
+\begin{tikzpicture}
+    %tikz elec
+\begin{axis}[
+  height=4cm,
+  width=8cm,
+  xmin=0.05,xmax=100,
+  ymin=-pi/2,ymax=0.2,
+  xmode=log,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$\log\left(\frac{\omega}{\omega_0}\right)$,
+  ylabel=$\varphi$,
+  ylabel style = {anchor=south,},
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0.05:100,samples=200,smooth,thick,coul1]{rad(-atan(x))};
+\draw[thick, dashed] (axis cs:1, -pi/2) node[left]{$-\frac{\pi}{2}$} -- (axis cs:100, -pi/2);
+\draw[thick, dashed] (axis cs:1, -pi/4) node[right]{$-\frac{\pi}{4}$} ;
+\draw[thick, dashed] (axis cs:0.05, 0) -- (axis cs:1, 0);
+%\addplot[domain=0.05:1, dashed, thick]{0};
+%\addplot[domain=1:100, dashed, thick]{-20*log10(x)} node[pos=0.7, above, sloped]{\SI{-20}{dB/décade}};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Comportement intégrateur :}%
+\label{par:comportement_integrateur_}
+Intéressons-nous à ce qu'il se passe pour $\omega\gg\omega_0$. La fonction de transfert du filtre s'écrit :
+\[ \ul{H}(\omega) \approx \frac{1}{jRC\omega} \]
+
+et donc le signale de sortie est :
+\[ \ul{s}(\omega) = \frac{1}{RC} \frac{\ul{e}(\omega)}{j\omega}\]
+
+Or, $\frac{\ul{e}}{j\omega}$  correspond à la primitive de $\ul{e}(\omega)$. Dans ce domaine de fréquences, le filtre a un comportement d'intégrateur.
+
+\paragraph{Utilisation comme moyenneur}%
+\label{par:utilisation_comme_moyenneur}
+Si la fréquence de coupure $f_0 = \omega_0/2\pi$  du filtre passe-bas est très inférieure à la fréquence fondamentale d'un signal périodique non sinusoïdal, seule la composante continue (valeur moyenne) du signal sera transmise par le filtre. À la sortie du filtre, on retrouve la valeur moyenne du signal d'entrée, on a réalisé un \emph{moyenneur}.
+\begin{center}
+\begin{tikzpicture}[baseline=0]
+\draw[->] (-1,0) -- (5,0) node[right] {$f$};
+\draw[->] (0,-1) -- (0,1.5) node[left]{$A$};
+\draw[coul1,thick] (0,0) node[below left,black]{$0$}-- (0,0.6);
+\draw[coul1,thick] (1,0) node[below,black]{$f$}-- (1,1);
+\draw[coul1,thick] (2,0) node[below,black]{$2f$}-- (2,0.7);
+\draw[coul1,thick] (3,0) node[below,black]{$3f$}-- (3,0.4);
+\draw[coul1,thick] (4,0) node[below,black]{$4f$}-- (4,0.2);
+\draw[thick, dashed](0.2,0) node[below] {$f_0$ }-- (0.2,1.5) ;
+\draw (0,0) to[out=-90,in=180] (1,-1.5) node[right]{Valeur moyenne};
+\draw (1,-0.5) to[out=-90,in=180] (1,-1) node[right]{Fondamentale};
+\end{tikzpicture}
+\end{center}
+
+
+\section{Autres filtres passifs}
+\subsection{Filtre passe-haut d'ordre 1}
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) to[C=$C$,i>^=$\underline{i}$] (3,0) to[european resistor,l=$R$] (3,-2) to[short] (0,-2);
+\draw (3,0) to[short,i=\mbox{$i=0$}] (4,0);
+\draw (3,-2) -- (4,-2);
+\draw[->] (0,-1.9) -- (0,-0.1) node[midway,left]{$\underline{e}(\omega)$};
+\draw[->] (4,-1.9) -- (4,-0.1) node[midway,right]{$\underline{s}(\omega)$};
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+\item Lorsque $\omega \rightarrow 0$ le condensateur se comporte comme un interrupteur ouvert et $s(\omega)\rightarrow 0$
+\item Lorsque $\omega \rightarrow \infty$ le condensateur se comporte comme un fil et $s(\omega) \rightarrow e(\omega)$.
+\end{itemize}
+On construit donc bien un filtre passe-haut de cette manière.
+
+La fonction de transfert de ce filtre est (pont diviseur de tension):
+\begin{equation*}
+H(\omega)=\frac{s(\omega)}{e(\omega)} = \frac{R}{R+1/jC\omega} = \frac{1}{1+(jRC\omega)^{-1}} = \frac{1}{1-j \frac{\omega_0}{\omega}} \quad \text{avec} \quad \omega_0=\frac{1}{RC}
+\end{equation*}
+Le gain du filtre est $G=|H(\omega)| = \dfrac{1}{\sqrt{1+\left( \frac{\omega_0}{\omega} \right)^2}}$ et $G_{dB}=-20\log\sqrt{1+\left( \frac{\omega_0}{\omega} \right)^2}$
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  height=6cm,
+  width=8cm,
+  xmin=0.1,xmax=10,
+  ymin=-20,ymax=5,
+  xmode=log,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$\log(\frac{\omega}{\omega_0})$,
+  ylabel=$G_{dB}$,
+  ylabel style = {anchor=south,},
+  xlabel style = {anchor=west},
+  ]
+    %tikz elec
+\addplot[domain=0.1:10,samples=200,smooth,thick,coul1]{-20*ln(sqrt(1+(1/x)^2))/ln(10)};
+\addplot[domain=0.1:1,samples=200,smooth,thick, dashed]{20*log10(x)};
+\addplot[domain=1:10,samples=200,smooth,thick, dashed]{0};
+\draw (axis cs:1,0) node[above right] {$0$};
+\draw (axis cs:1,-3) --++ (0.2,0) node[right]{\SI{-3}{dB}};
+\draw (axis cs:0.2,-12) node[rotate=47] {20 dB/décade};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+La phase de la fonction de transfert est 
+\[
+\varphi = \arctan\left( \frac{\omega_0}{\omega} \right) 
+\]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  height=4cm,
+  width=8cm,
+  xmin=0.01,xmax=100,
+  ymin=0,ymax=pi/2+0.3,
+  xmode=log,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$\log\left(\frac{\omega}{\omega_0}\right)$,
+  ylabel=$\varphi$,
+  ylabel style = {anchor=south,},
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0.01:100,samples=200,smooth,thick,coul1]{rad(atan(1/x))};
+\draw[thick, dashed] (axis cs:1, pi/2) node[right]{$\frac{\pi}{2}$} -- (axis cs:0.01, pi/2);
+\draw[thick, dashed] (axis cs:1, pi/4) node[right]{$\frac{\pi}{4}$} ;
+\draw[thick, dashed] (axis cs:1, 0) -- (axis cs:100, 0);
+%\addplot[domain=0.05:1, dashed, thick]{0};
+%\addplot[domain=1:100, dashed, thick]{-20*log10(x)} node[pos=0.7, above, sloped]{\SI{-20}{dB/décade}};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Comportement dérivateur : }%
+\label{par:comportement_derivateur_}
+Pour des pulsations $\omega\gg\omega_0$, la fonction de transfert peut s'écrire 
+\[
+\ul{H}(\omega) \approx jRC\omega
+\]
+et la tension de sortie devient :
+\[
+\ul{s}(\omega) = RC\times j\omega\ul{e}(\omega)
+\]
+$j\omega\ul{e}(\omega)$ correspond à la dérivée temporelle du signal d'entrée. Dans ce domaine de fréquences, le filtre a un comportement dérivateur. 
+
+\subsection{Filtre passe-bas d'ordre 2}
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) to[european resistor,l=$R$] (3,0) to[L=$L$] (6,0) to[C,l=$C$] (6,-2) to[short] (0,-2);
+\draw (6,0) to[short,i=\mbox{$i=0$}] (7,0);
+\draw (6,-2) -- (7,-2);
+\draw[->] (0,-1.9) -- (0,-0.1) node[midway,left]{$\underline{e}(\omega)$};
+\draw[->] (7,-1.9) -- (7,-0.1) node[midway,right]{$\underline{s}(\omega)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+\item Lorsque $\omega \rightarrow \infty$ la bobine se comporte comme un interrupteur ouvert et le condensateur comme un fil. Donc $s(\omega)\rightarrow 0$ ; 
+\item Lorsque $\omega \rightarrow 0$ la bobine se comporte comme un fil est le condensateur comme un interrupteur ouvert. Donc Donc $s(\omega)\rightarrow e(\omega)$.
+\end{itemize}
+La fonction de transfert du filtre est (pont diviseur de tension) : 
+\begin{equation*}
+H(\omega) = \frac{Z_C}{Z_C+Z_L+Z_R} = \frac{1/jC\omega}{R+j(L\omega-1/C\omega)} = \frac{1}{jRC\omega-LC\omega^2+1} = \frac{1}{1-\frac{\omega^2}{\omega_0^2}+j \frac{\omega}{\omega_0Q}}.
+\end{equation*}
+Le gain du filtre est $G = \dfrac{1}{\sqrt{\left( 1- \left( \frac{\omega}{\omega_0} \right)^2 \right)^2+\left( \frac{\omega}{Q\omega_0} \right)^2}}$. Et $G_{dB}=-10\log\left(\left( 1- \left( \dfrac{\omega}{\omega_0} \right)^2 \right)^2+\left( \dfrac{\omega}{Q\omega_0} \right)^2\right)$
+
+\begin{center}
+\begin{tikzpicture}
+    %tikz elec
+\begin{axis}[
+  height=6cm,
+  width=8cm,
+  xmin=0.1,xmax=10,
+  ymin=-40,ymax=20,
+  xmode=log,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$\log\left(\frac{\omega}{\omega_0}\right)$,
+  ylabel=$G_{dB}$,
+  ylabel style = {anchor=south,},
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0.1:10,samples=200,smooth,coul1, thick]{-10*ln((1-(x)^2)^2+x^2/0.25)/ln(10)};
+\addplot[domain=0.1:10,samples=200,smooth,coul2, thick]{-10*ln((1-(x)^2)^2+x^2/25)/ln(10)};
+\addplot[domain=1:10,samples=200,smooth, dashed, thick]{-40*log10(x)};
+%\draw (axis cs:1.5,5) node[above right] {$\log(\omega_0)$};
+\draw (axis cs:0.6,7) node[left] {$Q=5$};
+\draw (axis cs:0.6,-7) node[left] {$Q=0.5$};
+\draw (axis cs:8,-30) node[right]{pente = \SI{-40}{dB/décade}};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Pour des facteurs de qualité élevés ($Q>\frac{1}{\sqrt{2}}$ ), on observe un phénomène de résonance, autour de $\omega=\omega_0$, le gain devient supérieur à $1$  et le gain en décibels devient positif.
+
+\subsection{Filtre passe-bande d'ordre 2}
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) to[L,l=$L$] (3,0) to[C=$C$] (6,0) to[european resistor,l=$R$] (6,-2) to[short] (0,-2);
+\draw (6,0) to[short,i=\mbox{$i=0$}] (7,0);
+\draw (6,-2) -- (7,-2);
+\draw[->] (0,-1.9) -- (0,-0.1) node[midway,left]{$\underline{e}(\omega)$};
+\draw[->] (7,-1.9) -- (7,-0.1) node[midway,right]{$\underline{s}(\omega)$};
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+\item Lorsque $\omega \rightarrow \infty$ la bobine se comporte comme un interrupteur ouvert et le condensateur comme un fil. Donc $s(\omega)\rightarrow 0$ ; 
+\item Lorsque $\omega \rightarrow 0$ la bobine se comporte comme un fil est le condensateur comme un interrupteur ouvert. Donc Donc $s(\omega)\rightarrow 0$.
+\end{itemize}
+On construit donc ainsi un filtre passe-bande. 
+
+On trouve la fonction de transfert du filtre : $H(\omega)=\dfrac{1}{1+jQ \left( \frac{\omega}{\omega_0}-\frac{\omega_0}{\omega} \right)}$ avec $\omega_0=\dfrac{1}{\sqrt{LC}}$ et $Q=\dfrac{1}{R} \sqrt{\dfrac{L}{C}}$. 
+
+Le gain est $G(\omega)=\dfrac{1}{\sqrt{1+Q^2\left( \frac{\omega}{\omega_0}-\frac{\omega_0}{\omega} \right)^2}}$, et $G_{dB}=-10\log \left( 1+Q^2\left( \frac{\omega}{\omega_0}-\frac{\omega_0}{\omega} \right)^2 \right)$
+
+\begin{center}
+\begin{tikzpicture}
+    %tikz elec
+\begin{axis}[
+  height=6cm,
+  width=8cm,
+  xmin=0.1,xmax=10,
+  ymin=-30,ymax=5,
+  xmode=log,
+  xtick=\empty,
+  ytick=\empty,
+  axis y line=middle,
+  axis x line=middle,
+  clip=false,
+  xlabel=$\log\left(\frac{\omega}{\omega_0}\right)$,
+  ylabel=$G_{dB}$,
+  ylabel style = {anchor=south,},
+  xlabel style = {anchor=west},
+  ]
+\addplot[domain=0.1:10,samples=200,smooth,coul3, thick]{-10*ln(1+0.1*(x-1/x)^2)/ln(10)};
+\addplot[domain=0.1:10,samples=200,smooth,coul1, thick]{-10*ln(1+(x-1/x)^2)/ln(10)};
+\addplot[domain=0.1:10,samples=200,smooth,coul2, thick]{-10*ln(1+9*(x-1/x)^2)/ln(10)};
+%\draw (axis cs:1,0) node[above right] {$\log(\omega_0)$};
+\draw (axis cs:10,-10) node[right]{$Q=0.3$};
+\draw (axis cs:10,-20) node[right]{$Q=1$};
+\draw (axis cs:10,-30) node[right]{$Q=3$};
+%\draw (axis cs:0.6,7) node[left] {$Q=5$};
+%\draw (axis cs:0.6,-7) node[left] {$Q=0.5$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+La courbe représentant $G_{dB}(\log(\omega))$ présente une asymptote en $-\infty$ de pente égale à 20 dB/décade et en $+\infty$ une asymptote de pente égale à 20 dB/décade.
+
+On peut trouver la \emph{bande passante à -3~dB} en trouvant les valeurs $\omega_{c1}$ et $\omega_{c2}$ de $\omega$ pour lesquelles $G_{dB}(\omega)=-3 \Leftrightarrow G(\omega)=\frac{1}{\sqrt{2}}$. On trouve finalement
+\begin{equation*}
+\Delta\omega = \omega_{c2}-\omega_{c1} = \frac{\omega_0}{Q}
+\end{equation*} 
+
+\section{Mise en cascade de filtres}%
+\label{sec:mise_en_cascade_de_filtres}
+
+\subsection{Impédance d'entrée et de sortie}%
+\label{sub:impedance_d_entree_et_de_sortie}
+
+On peut modéliser un filtre de la manière suivante :
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) to[short]  (2, 0) to[R=$Z_e$] (2, 3) to[short, i<=$\ul{i}_e$] (0, 3); 
+    \draw (6,0) -- (4, 0) to[V=$\ul{s}$] (4, 1.5) to[R=$Z_s$] (4, 3) to[short, i=$\ul{i}_s$] (6,3); 
+    \draw[-Stealth] (0, 0.2) -- (0,2.8) node[midway, left]{$\ul{e}$}; 
+    \draw[-Stealth] (6, 0.2) -- (6,2.8) node[midway, right]{$\ul{s'}$}; 
+    \draw[dashed](1.3, -0.5) rectangle (4.7, 3.5);
+    \draw (3, -0.5) node[below]{filtre};
+  \end{tikzpicture}
+\end{center}
+
+L'\textbf{impédance d'entrée} du filtre est $Z_e$ et l'\textbf{impédance de sortie} du filtre est $Z_s$. La fonction de transfert harmonique est toujours calculée avec $\ul{i}_s=0$.  On a donc 
+\begin{equation}
+  \ul{H} = \frac{\ul{s'}}{\ul{e}} = \frac{\ul{s}}{\ul{e}}
+\end{equation}
+
+\subsection{Mise en cascade de filtres}%
+\label{sub:mise_en_cascade_de_filtres}
+
+Il arrive qu'on mette deux filtres en cascade :
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) to[short]  (2.2, 0) to[R=$Z_{e1}$] ++(0, 3) to[short, i<=$\ul{i}_{e1}$] ++(-2.2, 0); 
+    \draw (6,0) -- (4, 0) to[V=$\ul{s}_1$] (4, 1.5) to[R=$Z_{s1}$] (4, 3) to[short, i=$\ul{i}_{s1}$] (6,3); 
+    \draw[-Stealth] (0.5, 0.2) -- ++(0,2.6) node[midway, left]{$\ul{e}_1$}; 
+    \draw[-Stealth] (5.5, 0.2) -- ++(0,2.6) node[midway, left]{$\ul{s'}_1$}; 
+    \draw[dashed](1.3, -0.5) rectangle (4.7, 3.5);
+    \draw (3, -0.5) node[below]{filtre 1};
+
+    \begin{scope}[xshift=6cm]
+      \draw (0,0) to[short]  (2.2, 0) to[R=$Z_{e2}$] ++(0, 3) to[short, i<=$\ul{i}_{e2}$] ++(-2.2, 0); 
+      \draw (6,0) -- (4, 0) to[V=$\ul{s}_2$] (4, 1.5) to[R=$Z_{s2}$] (4, 3) to[short, i=$\ul{i}_s$] (6,3); 
+    \draw[-Stealth] (0.5, 0.2) -- ++(0,2.6) node[midway, right]{$\ul{e}_2$}; 
+    \draw[-Stealth] (5.5, 0.2) -- ++(0,2.6) node[midway, right]{$\ul{s'}_2$}; 
+    \draw[dashed](1.3, -0.5) rectangle (4.7, 3.5);
+    \draw (3, -0.5) node[below]{filtre 2};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+Dans ces conditions, on n'a pas (alors que qu'on aimerait bien avoir !) $\ul{H}_\text{tot} = \ul{H}_1 \times \ul{H}_2$. La raison étant que comme $\ul{i}_{s1} \neq 0$, $\ul{s'}_1 \neq \ul{s}_1$.
+
+On peut régler ce problème en concevant des filtres tels que $Z_{s1} \ll Z_{e2}$. 
+
+\begin{loi}{Mise en cascade de filtres}
+  Pour pouvroir mettre des filtres en cascade, on préférera des filtres dont l'impédance de sortie est faible et l'impédance d'entrée est élevée
+  \begin{equation}
+    Z_\text{entrée du filtre 2} \gg Z_\text{sortie du filtre 1}
+  \end{equation}
+
+  Dans ces conditions, la fonction de transfert totale du filtre est le produit des fonctions de transfert des filtres individuels.
+
+  \begin{equation}
+    \ul{H}_\text{tot} = \ul{H}_1 \times \ul{H}_2
+  \end{equation}
+\end{loi}
+
+\section{Action d'un filtre sur un signal périodique}%
+\label{sec:action_d_un_filtre_sur_un_signal_periodique}
+
+Nous allons voir comment simuler l'action d'un filtre sur un signal périodique dont le spectre est connu. On s'intéresse à un signal carré $e(t)$ que l'on peut décomposer en série de Fourrier de la manière suivante
+
+\begin{equation}
+  e(t) = A\sum_{n=0}^\infty a_n\cos(n\omega_0t + \varphi_n) \quad \text{avec} \quad a_n = 
+  \begin{cases}
+    \frac{1}{n} \quad \text{si $n$ est impair} \\
+    0 \quad \text{si $n$ est pair}
+  \end{cases} \quad \text{et $\varphi_n = \frac{\pi}{2}$ }
+\end{equation}
+
+Pour déterminer l'action d'un filtre sur ce signal, on regarde comme le filtre modifie chaque composante de la décomposition en série de Fourrier, puis on reconstitue le signal. 
+
+On commence par créer des listes contenant les $a_n$ et les $\varphi_n$ :
+\begin{minted}{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+N=1000    # On fera les calculs sur les 1000 premières harmoniques
+w0=1      # On choisit arbitrairement ω0 = 1
+
+# Création des listes d'amplitudes et de phases pour le signal carré
+# les deux listes ont N+1 valeurs car il y a en plus la composante continue
+ampl_carre = np.zeros(N)
+phi_carre = np.zeros(N) + np.pi/2
+for i in range(1, N):
+    if i%2==1:
+        ampl_carre[i] = 1/i
+\end{minted}
+
+On écrit ensuite une fonction \texttt{signal(ampl, phi, t)} qui reconstitue le signal aux instants \texttt{t}.
+
+\begin{minted}{python}
+
+
+# Reproduit le signal périodique défini par les harmoniques dont 
+# les amplitudes sont dans la liste 'ampl' et les phases sont dans 
+# la liste phi. w est la pulstation fondamentale du signal, t est la liste
+# des temps auxquels le signal est calculé.
+def signal(ampl, phi, w ,t):
+    sortie = np.zeros(len(t))
+    sortie += ampl[0]
+    for i in range(1, len(ampl)):
+        sortie += ampl[i]*np.cos(i*w*t + phi[i])
+    return sortie
+\end{minted}
+
+Ensuite on écrit deux fonction qui décrivent l'action d'un filtre passe-bas d'ordre 1 et d'un filtre passe-haut d'ordre 1 sur les différentes harmoniques:
+\begin{minted}{python}
+# Passe-bas d'ordre 1
+# wc est la pulsation de coupure du filtre
+def filtre_pb1(ampl, phi, w, wc):
+    # fonction de transfert H(w) = 1/(1+jw/wc)
+    ampl_s = np.zeros(len(ampl))
+    phi_s = np.zeros(len(phi))
+    for i in range(N):
+        ampl_s[i] = ampl[i]/np.sqrt(1+(i*w/wc)**2)
+        phi_s[i]  = phi[i] - np.arctan(i*w/wc)
+    return ampl_s, phi_s
+
+# Passe-haut d'ordre 1
+# wc est la pulsation de coupure du filtre
+def filtre_ph1(ampl, phi, w, wc):
+    # fonction de transfert H(w) = 1/(1-jwc/w)
+    ampl_s = np.zeros(len(ampl))
+    phi_s = np.zeros(len(phi))
+    ampl_s[0] = 0
+    for i in range(1, N):
+        ampl_s[i] = ampl[i]/np.sqrt(1+(wc/(i*w))**2)
+        phi_s[i]  = phi[i] + np.arctan(i*wc/(i*w))
+    return ampl_s, phi_s
+\end{minted}
+
+On peut finalement observer l'effet du filtre sur le signal carré. On commence par appliquer le filtre passe-haut avec une pulsation de coupure égale à $\omega_0$. 
+
+\begin{minted}{python}
+t = np.linspace(0, 20, 200)
+# Le signal carré d'origine
+s = signal(ampl_carre, phi_carre, t)
+
+# On calcule l'effet du filtre
+ampl_f, phi_f = filtre_ph1(ampl_carre, phi_carre, w, w0)
+s_f = signal(ampl_f, phi_f, t)
+
+# On affiche le signal d'origine et le signal filtré
+plt.plot(t,s)
+plt.plot(t,s2)
+plt.show()
+\end{minted}
+
+\begin{pycode}
+import numpy as np
+import matplotlib.pyplot as plt
+import tikzplotlib
+
+N=1000    # On fera les calculs sur les 1000 premières harmoniques
+w0=1      # On choisit arbitrairement ω0 = 1
+
+
+ampl_carre = np.zeros(N)
+phi_carre = np.zeros(N) + np.pi/2
+for i in range(1, N):
+    if i%2==1:
+        ampl_carre[i] = 1/i
+
+# Reproduit le signal périodique défini par les harmoniques dont 
+# les amplitudes sont dans la liste 'ampl' et les phases sont dans 
+# la liste phi. w est la pulstation fondamentale du signal, t est la liste
+# des temps auxquels le signal est calculé.
+def signal(ampl, phi, w ,t):
+    sortie = np.zeros(len(t))
+    sortie += ampl[0]
+    for i in range(1, len(ampl)):
+        sortie += ampl[i]*np.cos(i*w*t + phi[i])
+    return sortie
+
+# Passe-bas d'ordre 1
+# wc est la pulsation de coupure du filtre
+def filtre_pb1(ampl, phi, w, wc):
+    # fonction de transfert H(w) = 1/(1+jw/wc)
+    ampl_s = np.zeros(len(ampl))
+    phi_s = np.zeros(len(phi))
+    for i in range(N):
+        ampl_s[i] = ampl[i]/np.sqrt(1+(i*w/wc)**2)
+        phi_s[i]  = phi[i] - np.arctan(i*w/wc)
+    return ampl_s, phi_s
+
+# Passe-haut d'ordre 1
+# wc est la pulsation de coupure du filtre
+def filtre_ph1(ampl, phi, w, wc):
+    # fonction de transfert H(w) = 1/(1-jwc/w)
+    ampl_s = np.zeros(len(ampl))
+    phi_s = np.zeros(len(phi))
+    ampl_s[0] = 0
+    for i in range(1, N):
+        ampl_s[i] = ampl[i]/np.sqrt(1+(wc/(i*w))**2)
+        phi_s[i]  = phi[i] + np.arctan(i*wc/(i*w))
+    return ampl_s, phi_s
+
+t = np.linspace(0, 20, 200)
+# Le signal carré d'origine
+s = signal(ampl_carre, phi_carre, w0, t)
+
+# On calcule l'effet du filtre
+ampl_f, phi_f = filtre_ph1(ampl_carre, phi_carre, w0, w0)
+s_f = signal(ampl_f, phi_f, w0, t)
+
+# On affiche le signal d'origine et le signal filtré
+plt.plot(t,s)
+plt.plot(t,s_f)
+\end{pycode}
+
+\begin{center}
+  \begin{pycode}
+print(tikzplotlib.get_tikz_code(axis_height="7cm", axis_width="10cm"))
+plt.clf()
+plt.cla()
+  \end{pycode}
+\end{center}
+
+On peut aussi, par exemple, observer l'effet intégrateur du filtre passe bas, lorsque la pulsation de coupure est petite devant la pulsation du signal :
+
+\begin{minted}{python}
+# On calcule l'effet du filtre
+ampl_f, phi_f = filtre_pb1(ampl_carre, phi_carre, w0 ,w0/10)
+s_f = signal(ampl_f, phi_f, w0, t)
+
+# On affiche le signal d'origine et le signal filtré
+plt.plot(t,s)
+plt.plot(t,5*s_f) # on amplifie le signal de sortie pour que ça soit plus clair
+plt.show()
+\end{minted}
+
+\begin{center}
+  \begin{pycode}
+# On calcule l'effet du filtre
+ampl_f, phi_f = filtre_pb1(ampl_carre, phi_carre, w0, w0/10)
+s_f = signal(ampl_f, phi_f, w0, t)
+
+# On affiche le signal d'origine et le signal filtré
+plt.plot(t,s)
+plt.plot(t,5*s_f)
+print(tikzplotlib.get_tikz_code(axis_height="7cm", axis_width="10cm"))
+  \end{pycode}
+\end{center}
+\end{document}

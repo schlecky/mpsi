@@ -1,0 +1,66 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage[version=4]{mhchem}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{decorations.text}
+\titre{TP27 : Dosage potentiométrique}
+\begin{document}
+%\small
+
+
+\section{Objectif du TP}
+ Dans ce TP, nous allons mettre en \oe{}uvre un dosage potentiométrique, c'est une type de dosage dans lequel on repère l'équivalence en mesurant le potentiel de la solution par rapport au potentiel d'une électrode de référence. Nous allons doser une solution acidifiée de sel de Mohr. Le sel de Mohr est un composé de formule \ce{((NH4)2Fe(SO4)2, 6H2O)} de masse molaire $M=\SI{392}{\gram\per\mole}$ qui permet de conserver de façon stable les ions \ce{Fe^2+} qui sinon s'oxydent en ions \ce{Fe^3+} au contact de l'air.
+
+\section{Préparation du dosage}%
+\label{sec:preparation_du_dosage}
+
+\begin{itemize}
+  \item Peser précisément environ (ou \textit{environ exactement}) \SI{4}{\gram} de sel de Mohr. Il n'est pas nécessaire de prélever exactement \SI{4}{\gram}, mais il faut connaitre précisément la masse prélevée.
+
+  \item Utiliser le solide prélevé pour préparer une solution aqueuse dans une fiole de volume $V=\SI{100}{\milli\litre}$. Quelle est la concentration attendue de la solution préparée ?
+
+  \item Dans un bécher de \SI{150}{\milli\litre}, introduire $V'=\SI{10}{\milli\litre}$ de la solution préparée précédemment (prélevés à la pipette), environ \SI{80}{\milli\litre} d'eau et enfin \SI{10}{\milli\litre} d'acide sulfurique de concentration \SI{1}{\mole\per\litre} (prélevés à l'éprouvette graduée directement sous la hotte). \textbf{Attention, } pour diluer de l'acide concentré, il faut toujours verser l'acide dans l'eau et jamais l'eau dans l'acide, car la réaction de dissolution de l'acide dans l'eau est très exothermique et peut provoquer des projections. 
+\end{itemize}
+Nous allons doser la solution de sel de Mohr par une solution de permanganate de potassium (\ce{K+ + MnO4-}) de concentration $c'=\SI{2.00e-2}{\mole\per\litre}$. 
+\begin{itemize}
+  \item Écrire la réaction de dosage et justifier qu'elle est une \emph{bonne} réaction pour effectuer un dosage.
+  \item Écrire la relation entre les concentrations et volumes à l'équivalence. Déterminer la valeur attendue du volume versé à l'équivalence.
+\end{itemize}
+
+\section{Dosage}%
+\label{sec:dosage}
+
+Pour mesurer le potentiel de la solution, on y plonge une électrode de référence, elle permet de former une pile entre la solution que l'on étudie et un couple oxydant/réducteur qui se trouve dans la pile et dont on connait le potentiel. Les électrodes possibles sont :
+\begin{itemize}
+  \item électrode au calomel $E_\text{ref}=\SI{0.241}{\volt}$ ;
+  \item électrode d'argent (la plus probable) $E_\text{ref}=\SI{0.225}{\volt}$;
+  \item électrode au sulfate mercureux  (la moins probable) $E_\text{ref}=\SI{0.651}{\volt}$. 
+\end{itemize}
+La figure ci-dessous montre le schéma d'une électrode de référence d'argent.
+\begin{center}
+\newcommand{\svgwidth}{4cm}
+  \input{images/electrode_ag.pdf_tex}
+\end{center}
+
+\begin{itemize}
+  \item Tracer le potentiel $E$ de la solution (et non la différence de potentiels mesurée) en fonction de $V$ le volume versé. 
+  \item Déterminer le volume versé à l'équivalence $V_\text{eq}$.
+  \item En déduire la pureté du solide utilisé (sous la forme d'un pourcentage).
+  \item Déterminer expérimentalement les potentiels standards des deux couples mesurés, comparer aux valeurs tabulées.
+  \item Aurait-on pu acidifier la solution avec de l'acide nitrique ou de l'acide chlorhydrique ?
+  \item Qu'observe-t-on dans le bécher en plus de la coloration violette ? Expliquer. En déduire pourquoi, même lorsque c'est le permanganate qu'on dose, on le met toujours dans la burette ?
+\end{itemize}
+Dans le tableau ci-dessous, on donnes quelques valeurs de potentiels standards :
+\begin{center}
+  \begin{tabular}{lllllll}
+  \toprule
+  Couple & \ce{Fe^3+ / Fe^2+} & \ce{MnO4- / Mn^2+} & \ce{Cl2(g) / Cl-(aq)} & \ce{NO3- / NO(g)} & \ce{MnO2(s) / Mn^2+} & \ce{[Fe(SO4)]+ / Fe(SO4)}\\
+  \midrule
+  $E^\circ$(\si{volt}) &  \num{0.77} & \num{1.51} & \num{1.36} & \num{0.96} & \num{1.23} & \num{0.71}\\ 
+  \bottomrule
+  \end{tabular}
+\end{center}
+\end{document}
+

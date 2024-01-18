@@ -1,0 +1,257 @@
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage{mhchem}
+\usepackage{makecell}
+\usepackage{pgfplots}
+\titre{TP16 :Suivi de l'hydrolyse de l'acétate d'éthyle par conductimétrie}
+
+\begin{document}
+\noindent \textsc{Objectifs du TP}
+\begin{itemize}
+\item Utiliser un appareil de mesure (conductimètre) en s'aidant d'une notice.
+
+\item Suivi cinétique d'une transformation chimique : mettre en \oe uvre une méthode de suivi temporel, et exploiter les résultats pour déterminer les caractéristiques cinétiques d'une réaction.
+\end{itemize}
+
+
+\section{Généralités sur la conductimétrie}
+
+\subsection{Introduction}
+
+\indent La conductimétrie est une méthode physique utilisée fréquemment en chimie. Elle repose sur les propriétés électriques des solutions ioniques :
+
+\begin{itemize}
+\item dans une solution, seuls les ions peuvent transporter le courant électrique
+\item les contributions de tous les ions s'ajoutent
+\end{itemize}
+
+
+\indent La conductivité se mesure en faisant passer un courant alternatif dans la solution. En effet en courant continu, soit il y aurait conduction et électrolyse, soit après un régime transitoire le courant deviendrait nul et on ne pourrait rien mesurer (condensateur en régime continu).
+
+
+\subsection{Schéma électrique équivalent}
+
+\indent Un conductimètre est composé de deux plaques parallèles de surface~$S$, distante de~$\ell$. Ces deux plaques forment la \textbf{cellule} de conductimétrie. \'Electriquement, la portion de solution comprise entre ces deux plaques est équivalente à une résistance.
+
+\vspace{-0.4cm}
+%\begin{figure}[!h]
+%\begin{center}
+%\centrefigure{PS/tp_conductimetrie}
+%\end{center}
+%\end{figure}\\
+
+\indent Le conductimètre mesure la conductance (l'inverse de la résistance) de la portion de solution contenue dans la cellule.
+
+\subsection{Relation entre la conductance et la conductivité}
+
+\indent Vous démontrerez en deuxième année\footnote{Mais cette relation est à retenir tout de suite !} que la résistance d'un cylindre conducteur homogène de longueur~$\ell$ et de section~$S$ vaut $R = \frac{\rho \ell}{S}$ où $\rho$ est la \textbf{résistivité} du matériau en \si{\ohm\meter}.
+
+\indent Cette relation est aussi valable pour une portion parallélépipédique d'une solution ionique : $G = \frac{\sigma S}{\ell}$, où $\sigma=\frac{1}{\rho}$ est la conductivité de la solution en $\si{\siemens\per\meter}$, $G$ la conductance de la portion de solution en S, $S$ la surface d'une plaque de la cellule en $\si{\meter^2}$ et $\ell$ la longueur de la cellule en \si{\meter}.
+
+\subsection{La constante de cellule}
+
+\indent On cherche à séparer les natures des contributions à la valeur mesurée en écrivant la conductance $G$ sous la forme :
+
+\vspace{-0.5cm}
+
+\centers{$G = \text{caractéristique électrique} \times \text{caractéristiques géométriques}$}
+
+\indent Les caractéristiques géométriques sont données par $S$ et $\ell$. On choisit donc de définir la \textbf{constante de cellule} :
+\centers{$\boxed{K\e{cell} = \f{\ell}{S}}$ \qquad \text{de manière à ce que} \qquad $G = \sigma \times \f{1}{K\e{cell}}$}
+
+\indent Pour les conductimètres utilisés en TP, cette constante est de l'ordre du$\U{cm^{-1}}$. On pourrait la déterminer en mesurant la cellule mais cette méthode est peu précise. C'est la raison pour laquelle on préfère utiliser une solution étalon (de conductivité connue).
+
+
+\subsection{Conductivité molaire limite}
+
+\subsubsection{Définition}
+
+\indent En définissant $\sigma = K\e{cell} \, G$, on s'est affranchi des caractéristiques liées à la géométrie de la cellule. Il est pratique de
+se ramener à la \textbf{conductivité molaire} $\lambda$ en$\U{S.m^2.mol^{-1}}$ telle que :
+\centers{$\boxed{\sigma = \lambda \, c}$}
+
+\noindent où $c$ est la concentration de la solution en l'ion considéré.
+
+\medskip
+
+\indent Ainsi pour une solution d'acide chlorhydrique : $\sigma = \lambda_{(H^+)} \, [H^+] + \lambda_{(\Cl^-)} \, [\Cl^-]$, puisque comme on l'a dit en introduction, les conductivités des ions s'ajoutent.
+
+\medskip
+
+\indent Dans le cas général, la conductivité molaire dépend de la concentration. Elle est cependant constante pour des solutions diluées\footnote{Aux
+concentrations élevées, la conductivité n'est plus proportionnelle à la concentration.}. C'est la raison pour laquelle on trouve dans les tables la \textbf{conductivité molaire limite} (pour des solutions infiniment diluées) : on la note $\lambda^0_{(\text{X}_i)}$, pour l'ion X$_i$.
+
+\medskip
+
+\indent Pour une solution diluée d'acide chlorhydrique, on écrira : $\sigma = \lambda^0_{(H^+)} \, [H^+] + \lambda^0_{(\Cl^-)} \, [\Cl^-]$.
+
+\vspace{-0.4cm}
+
+\subsubsection{Conductivité molaire limite équivalente}
+
+\indent Certaines tables donnent, non pas la conductivité molaire limite, mais la \textbf{conductivité molaire limite équivalente}, qui correspond à la conductivité molaire limite pour une unité de charge de l'ion. Pour les ions monovalents, cela ne change rien. En revanche, il faut se méfier dans les autres cas.
+
+\indent Ainsi pour une solution de sulfate de calcium : $\sigma = \lambda^0_{(\Ca^{2+})} \, [\Ca^{2+}] + \lambda^0_{(SO_4^{2-})} \, [SO_4^{2-}]$ si on utilise la conductivité molaire limite des ions. Mais $\sigma = 2 \, \lambda^0_{(\Ca^{2+})} \, [\Ca^{2+}] + 2 \, \lambda^0_{(SO_4^{2-})} \, [SO_4^{2-}]$ si $\lambda^0$ désigne la conductivité molaire limite équivalente (\ie par unité de charge). Elle est parfois notée $\lambda^0_{(\f{1}{2}\,\Ca^{2+})}$ ou $\lambda^0_{(\f{1}{2}\,SO_4^{2-})}$ pour marquer la différence.
+
+\indent \underline{Prenez donc toujours garde à la conductivité qui est utilisée.}\\
+
+\vspace{-0.4cm}
+
+\section{Partie théorique sur la cinétique}
+
+\subsection{Objectifs expérimentaux}
+
+\begin{itemize}
+\item Suivre la cinétique de la saponification de l'acétate d'éthyle (éthanoate d'éthyle en nomenclature officielle) par l'hydroxyde de sodium de constante de vitesse~$k$ :
+
+
+\centers{$CH_3COOC_2H_5\aq + HO^-\aq \rightarrow CH_3COO^-\aq + C_2H_5OH\aq$}
+
+\item Vérifier que cette réaction est d'ordre global égal à~$2$.
+\item Vérifier que chacun des ordres partiels est égal à~$1$.
+\item Déterminer la constante de vitesse.
+\end{itemize}
+
+\subsection{\'Etude quantitative}
+
+\indent On note $a$ la concentration initiale en ester et en ion hydroxyde, $x$ l'avancement volumique.
+
+\begin{enumerate}
+
+\item $\clubsuit$ Grâce aux hypothèses sur les ordres partiels de la réaction, donner la relation entre $a$, $x$, $t$ et $k$.
+
+\setcounter{save}{\arabic{enumi}}
+\end{enumerate}
+
+\indent On rappelle que la conductivité de la solution est : $\boxed{\sigma = \sum_i \lambda_i^0(M_i^{z_i +}) \, . \, c_i}$ avec $z_i$ un entier relatif, $\lambda_i^0(M_i^{z_i +})$ la conductivité molaire limite de l'ion $M_i^{z_i +}$, et $c_i$ sa concentration.
+
+\medskip
+
+\indent On note $\sigma_0$ et $\sigma_{\infty}$ respectivement les~conductivités initiale et finale.
+
+\begin{enumerate}
+\setcounter{enumi}{\thesave}
+
+\item $\clubsuit$ Après avoir recensé \textbf{tous} les ions en solution, montrer que l'on peut écrire la relation : 
+
+\encadre{$\f{\sigma_0-\sigma}{\sigma-\sigma_{\infty}} = k\,a\,t$}
+
+\setcounter{save}{\arabic{enumi}}
+\end{enumerate}
+
+\indent Un mélange identique à celui que vous allez étudier a été préparé 24 heures auparavant. Sa conductivité a été mesurée à la température de la salle. On~considère donc $\sigma_{\infty}$ comme connue.
+
+\begin{enumerate}
+\setcounter{enumi}{\thesave}
+
+\item $\clubsuit$ En déduire la courbe à tracer pour obtenir le plus simplement possible les valeurs de $k$ et de $\sigma_0$.
+
+\setcounter{save}{\arabic{enumi}}
+\end{enumerate}
+
+\section{Partie expérimentale}
+
+Elle sera réalisée à l'aide du conductimètre que l'on n'oubliera pas d'étalonner. Une notice est à votre disposition sur votre paillasse. Les informations essentielles figurent en plus à la fin de cet énoncé.
+
+\subsection{Préliminaires}
+
+\begin{itemize}
+\item [\textbullet] Préparer la série de béchers suivante :
+  \begin{itemize}
+  \item	Bécher $1$ : environ $20 \U{mL}$ de KCl à $10^{-1} \U{mol.L^{-1}}$, afin d'effectuer l'étalonnage du conductimètre (seulement si votre conductimètre nécessite un étalonnage)
+  \item	Bécher $2$ : $20 \U{mL}$ d'acétate d'éthyle à $5.10^{-2} \U{mol.L^{-1}}$
+  \item	Bécher $3$ : $20 \U{mL}$ d'hydroxyde de sodium à $5.10^{-2} \U{mol.L^{-1}}$
+  \item	Bécher $4$ : $20 \U{mL}$ d'hydroxyde de sodium à $5.10^{-2} \U{mol.L^{-1}}$ auquel on ajoute $20 \U{mL}$ d'eau distillée
+  \end{itemize}
+\end{itemize}
+	
+\subsection{Mesure}
+
+On utilisera Latispro$\circledR$ en mode \ofg{pas à pas}.
+
+\subsubsection{Mesure de la conductivité de la solution du bécher $4$}
+
+\begin{itemize}
+\item [\textbullet] Ouvrir le tableau de bord (\ofg{Outils}, \ofg{Tableau de bord}).
+
+\item [\textbullet] Faire la mesure et la noter.
+\end{itemize}
+
+\subsubsection{Mesure au cours du temps}
+
+\begin{itemize}
+%\item[\textbullet] Lancer le logiciel \ofg{Acqui Poinca}.
+%\item[\textbullet] Sélectionner l'appareil de mesure (conductimètre).
+%\item[\textbullet] Se placer en mode cinétique et choisir une mesure toutes les $30 \U{s}$.
+\item[\textbullet] Mettre le bécher $2$ sur l'agitateur magnétique avec un barreau aimanté, rincer et essuyer l'extérieur de la sonde et
+l'introduire dans le bécher (\textbf{On fera attention à ce que le barreau ne puisse pas cogner contre la cellule}).
+
+\item [$\bullet$] Appuyer sur la flèche bleu pour avoir accès à la fenêtre \ofg{Acquisition pas à pas}.
+\item[$\bullet$] Verser la solution d'hydroxyde de sodium (bécher $3$) dans le bécher $2$ et déclencher simultanément le chronomètre. Vérifier que la cellule trempe complètement dans le bécher sans que le barreau puisse cogner dessus, agiter une dizaine de secondes.
+\item[$\bullet$] Stopper l'agitation
+
+%et lancer la mesure, simultanément arrêter le chronomètre.
+
+\item [$\bullet$] Toutes les 30s et pendant 15 minutes, relever manuellement la conductivité.
+\item[$\bullet$] Relever la température du milieu réactionnel.
+\item[$\bullet$] Garder le milieu réactionnel afin de le laisser évoluer.
+\item[$\bullet$] Mesurer à la fin du TP, la valeur de $\sigma$.
+\end{itemize}
+
+%\begin{itemize}
+%\item[$\bullet$] Lancer le logiciel $G(t)$ qui doit se trouver dans le répertoire \ofg{Acquichimie" présent sur le bureau.
+%\item[$\bullet$] Paramètres d'acquisition du logiciel à valider : une mesure toutes les $30 \,$s pendant $15\,$min.
+%\item[$\bullet$] Mettre le bécher $2$ sur l'agitateur magnétique avec un barreau aimanté, rincer et essuyer l'extérieur de la sonde et
+%l'introduire dans le bécher (\textbf{On fera attention à ce que le barreau ne puisse pas cogner contre la cellule}).
+%\item[$\bullet$] Verser la solution d'hydroxyde de sodium (bécher $3$) dans le bécher $2$ et déclencher simultanément le chronomètre. Vérifier que la cellule trempe complètement dans le bécher sans que le barreau puisse cogner dessus, agiter une dizaine de secondes.
+%\item[$\bullet$] Stopper l'agitation et lancer la mesure en cliquant sur \ofg{commencer", simultanément arrêter le chronomètre.
+%\item[$\bullet$] Relever la température du milieu réactionnel.
+%\item[$\bullet$] Garder le milieu réactionnel afin de le laisser évoluer.
+%\item[$\bullet$] Mesurer à la fin du TP, la valeur de $\sigma$.
+%\end{itemize}
+
+
+\subsubsection{Exploitation}
+
+
+\begin{enumerate}
+\setcounter{enumi}{\thesave}
+
+\item Dresser un tableau regroupant les différentes conductivités mesurées.
+\item Comparer la valeur obtenue en fin de TP à celle de $\sigma_{\infty}$ obtenue au bout de $24 \U{h}$.
+\item Comparer le $\sigma_0$ obtenu à la conductivité du bécher $4$.
+\item En utilisant soit Regressi$\circledR$, soit Excel$\circledR$, valider l'ordre $2$, déterminer la constante de vitesse et $\sigma_0$.
+
+\setcounter{save}{\arabic{enumi}}
+\end{enumerate}
+
+
+\`A titre indicatif, on donne :
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+ion & $H_3O^+$ & $\Na^+$ & $K^+$ & $\Pb^{2+}$  & $\Cl^-$ & $HO^-$ & $CH_3COO^-$ & $SO_4^{2-}$\\
+\hline
+$\lambda^0 \U{(mS.m^2.mol^{-1})}$ & 35,0 & 5,01 & 7,35 & 14,0 & 7,63 & 19,9 & 4,09 & 16 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\vspace{-1cm}
+
+\section{\`A propos de Latispro$\circledR$}
+
+\begin{itemize}
+
+\item [\textbullet] Le logiciel Latispro$\circledR$ s'ouvre par \ofg{Logiciels Physique-Chimie} (sur le bureau), puis en passant par le dossier \ofg{Chimie} et non \ofg{Physique}.
+
+\item [\textbullet] Si la fenêtre d'étalonnage ne s'affiche pas au démarrage de Latispro$\circledR$, aller dans \ofg{Edition}, \ofg{Capeurs d'utilisateurs} et choisir le bon capteur. Si ce dernier n'apparaît pas, vérifier la bonne connexion de la cellule conductimétrique à la console de Latispro$\circledR$. Redémarrer l'ordinateur et réitérer la démarche.
+
+\end{itemize}
+
+\end{document}
+
+
+

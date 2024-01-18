@@ -1,0 +1,172 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage{mhchem}
+\usepackage{makecell}
+\usepackage{pgfplots}
+\titre{TP9 : Mesure de constantes d'équilibre}
+\begin{document}
+%\small
+
+
+\section{Objectif du TP}
+L'objectif de ce TP est de mesurer la constante d'équilibre de réactions chimiques.
+
+\section{Dissolution du sulfate de calcium}
+\subsection{Étude préliminaire}%
+\label{sub:etude_preliminaire}
+
+ Le sulfate de calcium (\ce{CaSO4}), plus connu sous le nom de gypse joue un rôle important dans la résistance mécanique des matériaux à base de ciment.
+
+ Le sulfate de calcium est un solide ionique, lorsqu'il est mis en solution aqueuse, il se dissout selon l'équation :
+ \[
+ \ce{CaSO4(s) <=> Ca^2+(aq) + SO4^2-(aq) }
+ \]
+ de constante d'équilibre 
+ \[
+ K_S = \frac{1}{{c^\circ}^2}[\ce{Ca^2+}][\ce{SO4^2-}]
+ \] 
+ Lorsque cette réaction atteint un état d'équilibre, c'est-à-dire qu'il reste du \ce{CaSO4(s)} en fin de réaction, on dit que la solution est \emph{saturée}. Si on introduit du \ce{CaSO4(s)} dans de l'eau pure, on a le tableau d'avancement :
+ \begin{center}
+   \begin{tabular}{@{}llll@{}}
+   \toprule
+    & \ce{CaSO4(s)} & \ce{Ca^2+(aq)} & \ce{SO4^2-(aq)} \\
+    \midrule
+    État initial & $n$ & $0$ & $0$ \\
+    Équilibre & $n-\xi$ & $\xi$ & $\xi$ \\
+    \bottomrule
+   \end{tabular}
+ \end{center}
+ Donc la quantité de \ce{CaSO4(s)} dissoute à l'équilibre dans un volume $V$ de solution est donnée par 
+\[
+\xi = c^\circ V\sqrt{K_S}
+\]
+La \emph{solubilité molaire} $S$ du sulfate de calcium est 
+\[
+ S = \frac{\xi}{V} = c^\circ \sqrt{K_S} \quad \text{en}\quad \si{\mol\per\litre}
+\]
+Et sa \emph{solubilité massique} est :
+\[
+s = S\times M(\ce{SO4^2-}) \quad \text{en} \quad \si{\gram\per\litre}
+\]
+
+Pour déterminer $\xi$, nous allons mesurer la conductivité électrique de la solution. La conductivité $\sigma$ d'une solution aqueuse contenant des ions \ce{Ca^2+} et \ce{SO4^2-} est :
+\[
+\sigma = \lambda_{\ce{Ca^2+}}[\ce{Ca^2+}] + \lambda_{\ce{SO4^2-}}[\ce{SO4^2-}] = \frac{\xi}{V}\left( \lambda_{\ce{Ca^2+}} + \lambda_{\ce{SO4^2-}}\right)  = S\left( \lambda_{\ce{Ca^2+}} + \lambda_{\ce{SO4^2-}}\right)
+\]
+où $\lambda_{\ce{Ca^2+}} = \SI{11.90}{\milli\siemens\meter\squared\per\mol}$ et $\lambda_{\ce{SO4^2-}} = \SI{16.00}{\milli\siemens\meter\squared\per\mol}$ sont les \emph{conductivités ioniques molaires} des deux espèces. 
+
+\subsection{Protocole expérimental}%
+\label{sub:protocole_experimental}
+\begin{itemize}
+  \item Étalonner le plus précisément possible le conductimètre à l'aide d'une solution de chlorure de potassium (\ce{K+ + Cl-}).
+
+  \item Préparer un bécher contenant environ \SI{100}{\milli\litre} d'eau distillée et mesurer sa conductivité.
+
+  \item Transvaser dans un erlenmeyer, ajouter une spatule de sulfate de calcium et mettre la solution à agiter 5 à 10~minutes (vous pouvez profiter de ce temps pour étalonner le pH-mètre). Il reste des cristaux de sulfate de calcium à l'issue de cette agitation : on peut considérer que la solution est saturée.
+
+  \item Arrêter l'agitation, on laissera décanter le système afin de faciliter la filtration
+
+  \item À l'aide de papier filtre, de l'entonnoir sur son support et de l'erlenmeyer, filtrer en versant délicatement le contenu du premier erlenmeyer.
+
+  \item Mesurer la conductivité de la solution obtenue.
+
+  \item Recommencer la même expérience avec deux spatules de \ce{CaSO4}.
+\end{itemize}
+
+\subsection{Exploitation des résultats}%
+\label{sub:exploitation_des_resultats}
+\begin{itemize}
+\item Comparer et commenter les résultats des mesures avec une ou deux spatules de \ce{CaSO4}.
+
+\item On mesure la conductivité de l'eau distillée pour prendre en compte la présence d'ions conducteurs dans celle-ci. Comment modifier l'éxpression de $\sigma$ obtenue dans la partie précédente pour les prendre en compte ?
+
+\item Déterminer la valeur de $K_S$ et la comparer à la valeur tabulée à \SI{25}{\celsius} $K_S=\num{4.93e-5}$. 
+\end{itemize}
+\section{Mesure de la constante d'acidité de l'acide éthanoïque}%
+\label{sec:mesure_de_la_constante_d_acidite_de_l_acide_ethanoique}
+
+\subsection{Étude préliminaire}%
+\label{sub:etude_preliminaire}
+L'acide éthanoïque est un acide faible de formule \ce{CH3COOH}. Dans l'eau il se dissocie partiellement en ion éthanoate \ce{CH3COO-} et ion \ce{H+}, selon l'équation de réaction :
+\[
+\ce{CH3COOH(aq) + H2O(\ell) <=> CH3COO-(aq) + H3O+(aq)}
+\]
+
+La constante de cet équilibre est la constante d'acidité $K_a$ de l'acide éthanoïque.
+
+Lorsqu'on introduit une quantité $n$ d'acide éthanoïque dans l'eau, on peut construire le tableau d'avancement :
+\begin{center}
+  \begin{tabular}{@{}llll@{}}
+  \toprule
+   & \ce{CH3COOH} & \ce{CH3COO-} & \ce{H3O+} \\
+   \midrule
+   État initial & $n$ & 0 & 0 \\
+   Équilibre & $n-\xi$  & $\xi$ & $\xi$ \\
+   \bottomrule
+  \end{tabular}
+\end{center}
+
+La constante d'équilibre de cette réaction est 
+\[
+K_a = \frac{(\xi/V)^2}{(n-\xi)/V\times c^\circ}
+\]
+En notant $x=\xi/V$ et $c=n/V$ on obtient : 
+\[
+K_a = \frac{1}{c^\circ}\frac{x^2}{c-x}
+\]
+
+Si on néglige les ions $\ce{H3O+}$ apportés par l'autoprotolyse de l'eau, on rappelle que le pH de la solution est défini comme $\mathrm{pH} = -\log([\ce{H3O+}]/c^\circ)$ et on obtient la relation 
+\[
+K_a  = \frac{10^{-2\,\mathrm{pH}}}{c/c^\circ-10^{-\mathrm{pH}}}
+\]
+
+\begin{itemize}
+  \item En écrivant l'équilibre d'autoprotolyse de l'eau, dont la constante $K_e$ vaut \num{e-14}, déterminer la concentration en ions \ce{H3O+} dans l'eau pure et le pH de cette dernière. Proposer une valeur du pH à partir de laquelle on pourra effectivement négliger les ions \ce{H3O+} apportés par l'autoprotolyse de l'eau par rapport à ceux apportés par l'acide éthanoïque. 
+\end{itemize}
+
+\subsection{Le pH-mètre}%
+\label{sub:phmetre}
+Avant de mesurer le pH, il faut étalonner le pH-mètre. Un pH-mètre mesure une différence de potentiel entre une référence et une electrode \emph{de verre} plongée dans la solution étudiée et dont le potentiel est sensible à la concentration en ions \ce{H3O+}. La relation entre cette différence de potentiel et le pH est affine. 
+Étalonner le pH-mètre, c'est ajuster la pente et l'ordonnée à l'origine de cette relation à partir d'un solution de pH connu.
+
+Généralement on commence par étalonner avec une solution de pH égal à 7 puis, si on travaille en milieu acide, avec une solution de pH égal à 4. Si on travaille en milieu basique on utilisera plutôt une solution basique de pH égal à 9. Le protocole d'étalonnage peut varier selon les modèles. Reportez-vous à la notice du pH-mètre dont vous disposez.
+
+Les électrodes ne doivent jamais rester à l'air libre, et en raison de sa constitution, l'electrode de verre ne doit pas effectuer de séjour prolongé dans une solution basique.
+
+Avant chaque plongée d'une électrode dans une nouvelle solution, la ricer à l'eau distillée au-dessus d'un bécher et l'essuyer au papier Joseph.
+
+\subsection{Protocole expérimental}%
+\label{sub:protocole_experimental}
+
+\begin{itemize}
+  \item Étalonner le pH-mètre.
+
+  \item Prélever \SI{50}{\milli\litre} d'acide éthanoïque à \SI{e-2}{\mol\per\litre}
+
+  \item En utilisant la fiole et la pipette jaugée, préparer successivement \SI{100}{\milli\litre} de solution de concentration \SI{e-3}{\mol\per\litre}, \SI{e-4}{\mol\per\litre}, \SI{e-5}{\mol\per\litre} et \SI{e-6}{\mol\per\litre}.
+
+  \item Mesurer le pH de chacune des 5 solutions. Ne pas les jeter.
+\end{itemize}
+
+\subsection{Exploitation des résultats}%
+\begin{itemize}
+  \item Utiliser les différentes valeurs de pH mesurées pour estimer la valeur de $K_a$. Et la comparer à la valeur tabulée $K_a = 10^{\num{-4.76}}$. 
+
+\end{itemize}
+\label{sub:exploitation_des_resultats}
+
+\subsection{Mesure par conductimétrie}%
+\label{sub:mesure_par_conductimetrie}
+
+\begin{itemize}
+  \item Proposer et mettre en œuvre un protocole permettant de mesurer la constante $K_a$ par conductimétrie.
+
+  On donne $\lambda_{\ce{H3O+}}=\SI{35.0}{\milli\siemens\meter\squared\per\mol}$ et $\lambda_{\ce{CH3COO-}}=\SI{4.09}{\milli\siemens\meter\squared\per\mol}$
+  \item Comparer à la valeur obtenue dans la partie précédente.
+\end{itemize}
+
+
+
+
+\end{document}

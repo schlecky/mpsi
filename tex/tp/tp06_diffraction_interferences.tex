@@ -1,0 +1,101 @@
+\documentclass{tp}
+\titre{TP6 : Diffraction et interférences}
+%\setAnnee{2015--2016}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+Le but de ce TP est d'observer les phénomènes de diffraction de d'interférences avec de la lumière. 
+
+\section{Diffraction} 
+
+Vous disposez d'un laser rouge de longueur d'onde $\lambda=\SI{650}{\nm}$ et d'un ensemble de fentes dont les largeurs valent dans l'ordre : 400, 280, 120, 100, 50, 40 et \SI{70}{\micro\meter}.
+\subsection{Observation qualitative}
+\begin{itemize}
+\item Diriger le faisceau du laser vers l'écran posé à une distance $D$ suffisamment grande ($D\simeq\SI{2}{\m}$). 
+\item Quelle est la dimension de la tache lumineuse sur l'écran ?
+\item Faire passer le laser à travers les différentes fentes. Comment évolue la tache lumineuse sur l'écran ? 
+\item Faire un schéma de votre montage expérimental.
+\item Faire un schéma de l'allure de la tache lumineuse pour une fente assez fine. Comment expliquer la forme de la tache ?
+\end{itemize}
+
+\subsection{Mesures quantitatives}
+On souhaite maintenant étudier plus précisément la diffraction du faisceau laser par une fente.
+\begin{itemize}
+  \item Pour chacune des fentes noter dans un tableur la largeur $a$ de la fente ainsi que la largeur $l$ de la tache centrale observée à l'écran. C'est la dire la distance entre les deux franges sombres qui l'entourent (ne pas oublier les incertitudes)
+  \item Pour chacune des fentes déterminer l'angle de diffraction $\theta$ correspondant. C'est l'angle sous lequel est vue la tâche centrale depuis la fente.
+  \item La théorie prévoit que l'angle de diffraction est relié à la longueur d'onde $\lambda$ et à la largeur de la fente $a$ par la relation 
+  \begin{equation*}
+    \theta = 2 \frac{\lambda}{a}
+  \end{equation*}
+  Comparer les résultats expérimentaux à la théorie.
+\end{itemize}
+
+
+On peut montrer que si on remplace la fente par un obstacle opaque de même largeur, la figure de diffraction est la même. L'angle de diffraction est donné par la formule ci-dessus où $a$ est la largeur de l'obstacle.
+
+\begin{itemize}
+  \item Utiliser ce résultat pour mesurer expérimentalement l'épaisseur d'un cheveu.
+\end{itemize}
+
+
+
+
+\section{Interférences lumineuses}
+\subsection{Fentes d'Young}%
+\label{sub:fentes_d_young}
+
+L'objectif de cette partie est d'observer et de mesurer les caractéristiques des interférences lumineuses. On dispose d'un laser et d'une diapositive qui comporte trois double fentes (fentes d'Young). Les fentes ont une largeur de \SI{70}{\micro\meter} et sont espacées de 200, 300 et \SI{500}{\micro\meter}.
+\begin{itemize}
+\item Quelle devrait être la forme de la tache observée en l'absence d'interférences ?
+\item Expliquer qualitativement l'allure de la tache lumineuse observée sur l'écran.
+\item Pour les différents écartements $d$ disponibles entre les deux fentes, mesurer la distance $e$ entre les franges lumineuses observées sur l'écran. 
+\item La théorie prévoit $e=D\lambda/d$ où $D$ est la distance entre les fentes et l'écran. Les mesures effectuées sont-elles compatibles avec la valeur prévue théoriquement
+\end{itemize}
+
+\subsection{Application au CD}%
+\label{sub:application_au_cd}
+Un CD (compact disc) est composé d'un disque en plastique (polycarbonate) de \SI{1.2}{mm} d'épaisseur recouvert d'une fine couche d'aluminium. Les information sur un CD standard sont codées sur une piste d'alvéoles en spirale moulée dans le polycarbonate. L'objectif de cette partie est de déterminer la distance $d$ entre les pistes présentes sur le CD.
+
+\begin{center}
+  \begin{tikzpicture}
+    \coordinate (B) at (4.2,0);
+    \coordinate (A) at (0,0);
+    \fill[fill=gray!40] ($(A)+(0, -0.01)$) rectangle ($(B)+(0, 0.3)$);
+    \fill[fill=gray!20] (0,0) coordinate (A) -| ++(1,0.2) -| ++(0.5, -0.2) -| ++(0.5, 0.2) -| ++ (0.7, -0.2) -| ++(0.6, 0.2) -| ++(0.4, -0.2) -- ++(0.5, 0)  coordinate (B) --++(0, -0.3)-- (0, -0.3) -- cycle;
+    \fill[fill=gray!60] (0, 0.3) rectangle (4.2, 0.4);
+    \fill[fill=gray] (0, 0.4) rectangle (4.2, 0.5);
+    \draw (0,0) -| ++(1,0.2) -| ++(0.5, -0.2) -| ++(0.5, 0.2) -| ++ (0.7, -0.2) -| ++(0.6, 0.2) -| ++(0.4, -0.2) -- ++(0.5, 0);
+    \draw (0, -0.3) -- (4.2, -0.3);
+    \draw (0, 0.3) -- (4.2, 0.3);
+    \draw (0, 0.5) -- (4.2, 0.5);
+    \draw (0, 0.4) -- (4.2, 0.4);
+    \draw[->] (-1, -0.15) node[left]{polycarbonate} -- (0, -0.15);
+    \draw[->] (-1, 0.3) node[left]{aluminium} -- (0, 0.15);
+    \draw[->] (5.2, -0.15) node[right]{couche protectrice} -- (4.2, 0.35);
+    \draw[->] (5.2, 0.3) node[right]{face imprimée} -- (4.2, 0.45);
+  \end{tikzpicture}
+  \captionof{figure}{Vue en coupe d'un CD}
+\end{center}
+
+
+\begin{center}
+  \includegraphics[width=6cm]{images/cd.png}
+  \captionof{figure}{image de la surface d'un CD prise par un microscope électronique}
+\end{center}
+
+Contrairement à la partie précédente, ici le faisceau laser ne passe pas uniquement à travers 2 fentes, mais va être réfléchi par un nombre $N$ de bandes réfléchissantes (les espaces entre les pistes) beaucoup plus grand. On peut montrer que dans ces conditions, on observe à nouveau des taches lumineuses séparées par une \emph{interfrange}  $e$ identique à celle obtenue avec uniquement 2 fentes (valable pour des petits angles):
+\begin{equation*}
+  e = \frac{D\lambda}{d}
+\end{equation*}
+
+Si les angles ne sont pas petits, on pourra utiliser la formule des réseaux :
+\[ \sin(\theta_n) = n \frac{\lambda}{d}  \]
+où $\theta$ est l'angle entre la tache d'ordre $0$ et la tache d'ordre $n$. 
+
+\begin{itemize}
+  \item À partir du montage précédent, remplacer la diapositive utilisée par l’écran troué sur support, et l’écran blanc par le CD fixé sur support adapté. Observer les différentes taches lumineuses qui apparaissent sur l'écran après réflexion sur le CD et mesurer l'interfrange $e$. En déduire la valeur de la distance $d$ entre les pistes.  
+
+\end{itemize}
+
+\end{document}

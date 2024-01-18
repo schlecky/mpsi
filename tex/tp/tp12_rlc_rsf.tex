@@ -1,0 +1,99 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{makecell}
+\usepackage{pgfplots}
+\titre{TP12 : Régime sinusoïdal forcé}
+\begin{document}
+%\small
+\section{Objectif du TP}
+L'objectif du TP est d'étudier des circuits électriques en régime sinusoïdal forcé. On commencera par l'étude d'un circuit $RLC$ série puis on mesurera l'impédance complexe d'un dipôle inconnu.
+
+\section{Circuit $RLC$ en régime sinusoïdal forcé}%
+\label{sec:circuit_rlc_en_regime_sinusoidal_force}
+
+Nous allons alimenter un circuit $RLC$ série avec une tension sinusoïdale et étudier l'évolution de la tension aux bornes de la résistance en fonction de la fréquence de la tension d'alimentation, ce qui nous permettra d'obtenir l'intensité en fonction de l'a tension aux bornes du dipôle $RLC$. 
+\begin{center}
+  \begin{circuitikz}
+    \draw (0,0) to[R=$R$] (2,0) to[L=${(L, r)}$, i^>=$i(t)$] (4,0) to[C=$C$] (6,0);
+    \draw[-stealth] (6,-1) -- (0,-1) node[midway, below]{$u(t)$}; 
+  \end{circuitikz}
+\end{center}
+
+Les GBF ont une résistance de sortie d'environ \SI{50}{\ohm}, pour se rapprocher au mieux d'un générateur de tension idéal, nous allons utiliser un amplificateur opérationnel en mode suiveur ci-dessous. On fera bien attention à alimenter l'amplificateur opérationnel (\SI{+15}{\volt}, \SI{-15}{\volt}, \SI{0}{\volt}) avant d'allumer le GBF.
+\begin{center}
+  \begin{circuitikz}
+  \ctikzset{tripoles/en amp/input height=0.35}
+    \draw (0,0) node[eground](gnd){} to[sV=$u(t)$ , n=gbf] (0,2) to[short] (1,2) node[en amp,anchor=+](opamp){}
+  (opamp.-) -- ++(0,1) coordinate(A) -- (A-|opamp.out)coordinate(Y2) -- (opamp.out) to[C=$C$ ] ++(2,0) to[L=${(L, r)}$ ] ++(2,0) coordinate(Y1) to[R,l_=$R$, v^<=$u_R(t)$ ] ++(0,-2) |- (gnd);
+  \draw[-stealth] (Y2) -- ++(45:0.5) node[right] {$Y_2$}; 
+  \draw[-stealth] (Y1) -- ++(45:0.5) node[right] {$Y_1$}; 
+  \end{circuitikz}
+  \captionof{figure}{Montage utilisé pour l'étude du circuit $RLC$ série.}
+  \label{fig:montage_rlc}
+\end{center}
+
+Dans ce circuit on choisira les valeurs de composants suivantes (que l'on prendra soin de mesurer aussi précisément que possible):
+\begin{itemize}
+  \item $R=\SI{200}{\ohm}$;
+  \item $L\approx \SI{40}{\milli\henry}$;
+  \item $C \approx \SI{10}{\nano\farad}$. 
+\end{itemize}
+$r$ est la résistance interne de la bobine qu'il faudra mesurer. 
+\subsection{Résultats théoriques}%
+\label{sub:resultats_theoriques}
+
+L'étude du circuit précédent en régime sinusoïdal forcé nous permet d'exprimer la tension complexe $\ul{u}_R$ en fonction de $\ul{u}$ comme
+\begin{equation}
+  \ul{u}_R = \frac{\frac{R}{R'}\ul{u}}{1+jQ\left( x-\frac{1}{x} \right) } 
+\end{equation}
+avec $R' = R+r$,  $\omega_0^2 = \frac{1}{LC}$ la pulsation de résonnance, $Q=\frac{1}{R'}\sqrt{\frac{L}{C}}=\frac{L\omega_0}{R'}$ le facteur de qualité, et $x=\frac{\omega}{\omega_0}$ (pulsation réduite). 
+
+Le déphasage $\varphi_R$ de $u_R(t)$ par rapport à $u(t)$ est 
+\begin{equation}
+  \varphi_R = \arctan\left( Q\left( \frac{\omega_0}{\omega} - \frac{\omega}{\omega_0} \right)  \right) 
+\end{equation}
+\begin{itemize}
+  \item En utilisant les valeurs mesurées pour les composants, calculer $Q$ et $\omega_0$, en déduire la valeur de $f_0$.
+\end{itemize}
+
+\subsection{Étude expérimentale}%
+\label{sub:etude_experimentale}
+
+\subsubsection{Étude rapide}%
+\label{ssub:etude_rapide}
+
+Le but est de déterminer la fréquence de résonance, le facteur de qualité et la largeur de la résonance (largeur de bande) du circuit $RLC$ série.
+
+\begin{itemize}
+  \item Réaliser le circuit représenté sur la figure~\ref{fig:montage_rlc} et fixer l'amplitude de la tension du GBF à \SI{3.0}{\volt}. On veillera à ce que cette amplitude reste constante au cours de l'expérience.
+
+  \item Déterminer la valeur de la fréquence de résonance ;
+
+  \item Déterminer la largeur de bande, c'est à dire la largeur du pic de résonance au niveau ou l'amplitude de $u_R(t)$ est égale à l'amplitude maximale divisée par $\sqrt{2}$. 
+
+  \item Déterminer le déphasage $\varphi_R$ pour quelques fréquences bien choisies. 
+
+  \item Vérifier que les valeurs du déphasage et de l'amplitude de $u_R(t)$ correspondent bien aux valeurs attendues à basse fréquence, haute fréquence et à la fréquence de résonance.
+
+  \item Reprendre l'étude pour $R=\SI{1}{\kilo\ohm}$ et comparer les valeurs obtenues pour les deux valeurs de résistance.
+\end{itemize}
+
+\subsubsection{Courbe de résonance}%
+\label{ssub:courbe_de_resonance}
+\begin{itemize}
+\item Tracer sur un même graphique les courbes représentatives de $G(f) = \frac{{u_R}_0}{u_0}$ et $\varphi_R(f)$, où ${u_R}_0$ est l'amplitude de $u_R(t)$ et $u_0$ est l'amplitude de $u(t)$. 
+
+\item Comparer les courbes expérimentales aux courbes théoriques (on pourra représenter sur le même graphique les courbes théoriques
+\end{itemize}
+
+\end{document}
+\section{Impédance d'un dipôle inconnu}%
+\label{sec:impedance_d_un_dipole_inconnu}
+
+Vous disposez d'un dipôle dont l'impédance est inconnu. Le but de cette partie est de déterminer l'impédance de ce dipôle en fonction de la fréquence, et d'en déduire les caractéristiques et éventuellement la composition de ce dipôle.
+
+À vous de trouver comment faire !
+
+
+
+\end{document}

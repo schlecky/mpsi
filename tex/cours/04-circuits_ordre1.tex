@@ -1,0 +1,607 @@
+\documentclass{cours}
+\usepackage{pgfplots}
+\usepackage{calc}
+\begin{document}
+\setcounter{chapter}{3}
+\shorthandoff{:!}
+\chapter{Circuits linéaires du premier ordre}
+\section{Définition}
+Un circuit linéaire du premier ordre est un circuit dans lequel les grandeurs électriques satisfont une équation différentielle linéaire du premier ordre. 
+(Il ne contient généralement pas simultanément un condensateur et une bobine)
+
+\section{Modèles équivalents en régime permanent}
+En régime permanent, les grandeurs électriques du circuit sont \textbf{indépendantes du temps}. Leur dérivée temporelle est donc nulle : $\frac{\D u}{\D t}=0$ et $\frac{\D i}{\D t}=0$.
+
+\subsection{Le condensateur}
+ \begin{circuitikz}[baseline=-0.25em]
+   %%tikz elec
+  \draw (0,0) to[C,i>^=$i_C$] (2,0);
+  \draw[<-] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_C$};
+\end{circuitikz}
+\hspace{2cm}
+La relation entre la tension et l'intensité est : $i_C=C \dfrac{\D u_C}{\D t}$. En régime permanent, $\dfrac{\D u_C}{\D t}=0$ et donc $i_c(t)=0$. Aucun courant ne traverse le condensateur, il se comporte comme un \textbf{interrupteur ouvert}.
+\begin{center}
+  \begin{tikzpicture}
+   %%tikz elec
+    \draw (0,0) to[C,i=\mbox{$i=0$}] (2,0);
+    \draw (4,0) node {$\Leftrightarrow$};
+    \draw (6,0) -- (7,0) -- (7.5,0.3) (7.5,0)--(8.5,0);
+  \end{tikzpicture}
+\end{center}
+
+\begin{application}
+On cherche à calculer la tension $u_C$ aux bornes du condensateur en régime permanent :
+
+\vspace{1em}
+\begin{tikzpicture}[european,scale=0.8,baseline=2cm]
+   %%tikz elec
+\draw (0,0) to[V,v=$E$] (0,4) to[short] (2,4) to[R,l_=$R_1$] (2,2) to[R,l_=$R_2$] (2,0) to[short] (0,0);
+\draw (2,2) to[short] (3,2) to[C] (3,0) to[short] (2,0);
+\draw[->] (3.7,0) -- (3.7,2) node[midway,right] {$u_C$};
+\end{tikzpicture}
+\parbox[c]{5cm}{En régime permanent,\\ ce circuit est équivalent à :}
+\begin{tikzpicture}[european,scale=0.8,baseline=2cm]
+   %%tikz elec
+\draw (0,0) to[V,v=$E$] (0,4) to[short] (2,4) to[R,l_=$R_1$] (2,2) to[R,l_=$R_2$] (2,0) to[short] (0,0);
+\draw (2,2) to[short] (3,2)  (3,0) to[short] (2,0);
+\draw[->] (3.7,0) -- (3.7,2) node[midway,right] {$u_C$};
+\end{tikzpicture}
+
+\vspace{1em}
+On trouve la tension $u_C$ en repérant un pont diviseur de tension : $u_C=E \frac{R_2}{R_1+R_2}$.
+\end{application}
+
+\subsection{La bobine}
+ \begin{circuitikz}[baseline=-0.25em]
+  \draw (0,0) to[L,i>^=$i_L$] (2,0);
+  \draw[<-] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_L$};
+\end{circuitikz}
+\hspace{2cm}
+La relation entre la tension et l'intensité est : $u_L=L \dfrac{\D i_L}{\D t}$. En régime permanent, $\dfrac{\D i_L}{\D t}=0$ et donc $u_L(t)=0$. La tension aux bornes de la bobine est nulle, elle se comporte comme un \textbf{interrupteur fermé} (ou comme un fil).
+
+\begin{center}
+  \begin{tikzpicture}
+   %%tikz elec
+    \draw (0,0) to[L] (2,0);
+    \draw[<-] (0,-0.5) -- (2,-0.5) node[midway,below]{$u_L=0$};
+    \draw (4,0) node {$\Leftrightarrow$};
+    \draw (6,0) -- (8,0);
+    \draw[<-] (6,-0.5) -- (8,-0.5) node[midway,below]{$u=0$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{application}
+On cherche à déterminer la tension $u_R$ aux bornes de la résistance $R$ dans le circuit suivant en régime permanent :
+
+\begin{tikzpicture}[baseline=1cm]
+\draw (0,0) to[V=$E$] (0,2) to[L=$L$] (2,2) to[european resistor,l_=$R$] (2,0) to[short] (0,0);
+\draw[->] (2.5,0) -- (2.5,2) node[midway, right] {$u_R$};
+\end{tikzpicture}
+\hspace{1cm}
+\parbox[c]{5cm}{
+En régime permanent,\\ ce circuit est équivalent à : 
+}
+\begin{tikzpicture}[baseline=1cm]
+\draw (0,0) to[V=$E$] (0,2) to[short] (2,2) to[european resistor,l_=$R$] (2,0) to[short] (0,0);
+\draw[->] (2.5,0) -- (2.5,2) node[midway, right] {$u_R$};
+\end{tikzpicture}
+
+Et on trouve directement $u_R=E$.
+\end{application}
+
+\section{Propriétés de continuité}
+\subsection{Aux bornes d'un condensateur}
+ \begin{circuitikz}[baseline=-0.25em]
+  \draw (0,0) to[C,i>^=$i_C$] (2,0);
+  \draw[<-] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_C$};
+\end{circuitikz}
+\hspace{1cm}
+$i_C=C \dfrac{\D u_C}{\D t}$. Pour provoquer un saut de tension aux bornes d'un condensateur, il faudrait que l'intensité $i_C(t)$ soit infinie. Donc \textbf{la tension aux bornes d'un condensateur est continue}.
+
+\begin{application}
+Dans le circuit suivant, l'interrupteur est initialement ouvert et le condensateur est déchargé ($u_C=0$). On ferme l'interrupteur à $t=0$, déterminer la tension $u_R(0^+)$ et l'intensité $i(0^+)$ juste après avoir fermé l'interrupteur.
+\begin{center}
+\begin{tikzpicture}[baseline=1cm] 
+\draw (0,0) to[V=$E$] (0,2) to[short,i=$i$] (0.7,2) to[short] (1.3,2.3) (1.3,2) to[short] (2,2) to[C,l_=$C$] (2,0) to[european resistor,l_=$R$] (0,0);
+\draw[->] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_R$};
+\draw[<-] (2.5,2) -- (2.5,0)  node[midway,right] {$u_C$};
+\end{tikzpicture}
+\end{center}
+
+La loi des mailles donne $E=u_C+u_R$, et la tension est continue aux bornes du condensateur, donc $u_C(0^+)=u_C(0^-)=0$. 
+
+On obtient $u_R(0^+)=E$. Et la loi d'Ohm donne $i(0^+)=u_R(0^+)/R=E/R$.
+\end{application}
+
+\subsection{Aux bornes d'une bobine}
+ \begin{circuitikz}[baseline=-0.25em]
+  \draw (0,0) to[L,i>^=$i_L$] (2,0);
+  \draw[<-] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_L$};
+\end{circuitikz}
+\hspace{1cm}
+$u_L=L \dfrac{\D i_L}{\D t}$. Pour provoquer une discontinuité de l'intensité du courant qui traverse la bobine, il faudrait que la tension à ses bornes soit infini. Donc \textbf{l'intensité du courant qui traverse une bobine est continue.}
+
+\begin{application}
+Dans le circuit suivant, l'interrupteur est initialement ouvert. On le ferme à $t=0$, déterminer la tension $u_R(0^+)$ et l'intensité $i(0^+)$ juste après avoir fermé l'interrupteur.
+\begin{center}
+\begin{tikzpicture}[baseline=1cm] 
+\draw (0,0) to[V=$E$] (0,2) to[short,i=$i$] (0.7,2) to[short] (1.3,2.3) (1.3,2) to[short] (2,2) to[L,l_=$L$] (2,0) to[european resistor,l_=$R$] (0,0);
+\draw[->] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_R$};
+\draw[<-] (2.5,2) -- (2.5,0)  node[midway,right] {$u_L$};
+\end{tikzpicture}
+\end{center}
+
+L'intensité du courant est continue dans la bobine, donc $i_L(0^+)=i_L(0^-)=0$. 
+
+Et la loi d'Ohm donne $u_R(0^+)=Ri(0^+)=0$.
+\end{application}
+ 
+
+\section{\'Etude du circuit RC}
+\subsection{Position du problème}
+On considère le circuit suivant où l'interrupteur $K$ est ouvert pour $t<0$ et le condensateur est initialement déchargé ($u_C=0$). \`A $t=0$ on ferme l'interrupteur et on cherche à déterminer l'évolution de la tension $u_C(t)$ aux bornes du condensateur.
+\begin{center}
+\begin{tikzpicture}[baseline=1cm] 
+\draw (0,0) to[V=$E$] (0,2) to[short,i=$i$] (0.7,2) to[short] (1.3,2.3) (1.3,2) to[short] (2,2) to[C,l_=$C$] (2,0) to[european resistor,l_=$R$] (0,0);
+\draw[->] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_R$};
+\draw[<-] (2.5,2) -- (2.5,0)  node[midway,right] {$u_C$};
+\draw (1,2.5) node {$K$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Analyse qualitative}
+On commence par chercher comment évolue qualitativement la tension $u_C(t)$ :
+\begin{itemize}
+\item pour t<0 $u_C(t)=\SI{0}{V}$. Comme $u_C(t)$ est continue, $u_C(0^+)=u_C(0^-)=0$ et $i(0^+)=E/R$ (loi des mailles et loi d'Ohm).
+
+\item En régime permanent, le condensateur se comporte comme un interrupteur ouvert, le circuit étudié devient équivalent à :
+\begin{center}
+\begin{tikzpicture}[baseline=1cm] 
+   %%tikz elec
+\draw (0,0) to[V=$E$] (0,2) to[short,i=$i$] (0.7,2) to[short] (1.3,2.3) (1.3,2) to[short] (2,2) to[short] (2,1.5) (2,0.5) to[short] (2,0) to[european resistor,l_=$R$] (0,0);
+\draw[->] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_R$};
+\draw[<-] (2.5,2) -- (2.5,0)  node[midway,right] {$u_C$};
+\draw (1,2.5) node {$K$};
+\end{tikzpicture}
+\end{center}
+Donc $i(\infty)=0$ et $u_C(\infty)=E$.
+\end{itemize}
+On peut tracer qualitativement l'évolution de $u_C(t)$ et $i(t)$ :
+
+\begin{center}
+\begin{tikzpicture}
+   %%tikz elec
+\begin{scope}
+\draw[->] (0,0) -- (0,2.5) node[right] {$u_C(t)$};
+\draw[->] (0,0) -- (5,0) node[below] {$t$};
+\draw[dotted] (0,2) node[left] {$E$} -- (5,2);
+\draw[coul1,thick] (0,0) to[out=70,in=180] (2.5,2) to (5,2);
+\draw[dotted] (2.5,0) -- (2.5,2.5);
+\draw (1.25,0) node[below,text width=2.5cm,align=center] {Régime transitoire};
+\draw (3.75,0) node[below,text width=2.5cm,align=center] {Régime permanent};
+\end{scope}
+
+\begin{scope}[shift={(9,0)}]
+\draw[->] (0,0) -- (0,2.5) node[right] {$i_C(t)$};
+\draw[->] (0,0) -- (5,0) node[below] {$t$};
+\draw[dotted] (0,2) node[left] {$E/R$} -- (5,2);
+\draw[coul1,thick] (0,2) to[out=-70,in=180] (2.5,0) to (5,0);
+\draw[dotted] (2.5,0) -- (2.5,2.5);
+\draw (1.25,0) node[below,text width=2.5cm,align=center] {Régime transitoire};
+\draw (3.75,0) node[below,text width=2.5cm,align=center] {Régime permanent};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+On distingue le \textbf{régime transitoire} au cours duquel les grandeurs électriques varient et le \textbf{régime permanent} au cours duquel elles sont \emph{relativement} constantes.
+
+On peut faire une analyse un peu plus précise grâce au \emph{portait de phase}. 
+
+\begin{minipage}{5cm}
+\begin{tikzpicture}[baseline=2cm] 
+   %%tikz elec
+\draw (0,0) to[V=$E$] (0,2) to[short,i=$i$] (2,2) to[C,l_=$C$] (2,0) to[european resistor,l_=$R$] (0,0);
+\draw[->] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_R$};
+\draw[<-] (2.5,2) -- (2.5,0)  node[midway,right] {$u_C$};
+\end{tikzpicture}
+\end{minipage}%
+\begin{minipage}{\linewidth-5cm}
+\begin{itemize}
+\item Loi des mailles : $E=u_R+u_C$
+\item Loi d'Ohm : $u_R=Ri$
+\item Condensateur : $i=C \dfrac{\D u_C}{\D t}$
+\end{itemize}
+\end{minipage}
+En combinant ces trois équation, on obtient l'équation différentielle : 
+\begin{equation*}
+E=RC \dt{u_C}+u_C \quad \text{ou} \quad \dt{u_C} = -\frac{u_C}{RC} + \frac{E}{RC}
+\end{equation*}
+
+Le graphique de $\dt{u_C}$ en fonction de $u_C$ s'appelle le \emph{portait de phase} du système. Dans ce cas on obtient :
+\begin{center}
+\begin{tikzpicture}
+   %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=10,
+  ymin=0,ymax=10,
+  xtick=\empty,
+  ytick=\empty,
+  axis lines=left,
+  clip=false,
+  xlabel=$u_C$,
+  ylabel=$\dt{u_C}$,
+  every axis y label/.style={at={(axis description cs:0,1)},anchor=south},
+  every axis x label/.style={at={(axis description cs:1,0)},anchor=west},
+  ]
+\addplot[domain=0:9,samples=10,smooth,coul1,thick]{9-x};
+\draw (axis cs:9,0) node[below]{$E$};
+\draw (axis cs:0,9) node[left]{$\frac{E}{RC}$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Le portrait de phase permet de déterminer qualitativement l'évolution de $u_C(t)$. 
+\begin{itemize}
+  \item À l'instant initial $u_C(0) = 0$ et $\dt{u_C}=\frac{E}{RC}$ donc $u_C$ augmente;
+  \item Plus $u_C$ augmente, plus $\dt{u_C}$ diminue, $u_C$ augmente de moins en moins vite;
+  \item Lorsque $u_C(t)=E$, $\dt{u_C}=0$ et la tension cesse d'augmenter, le régime permanent est atteint .
+\end{itemize}
+
+On retrouve l'évolution qualitative de $u_C$ obtenue avec la méthode précédente.
+\subsection{Analyse quantitative}
+
+On cherche à déterminer $u_C(t)$. On va résoudre exactement l'équation différentielle.
+
+On note $\tau=RC$ ($\tau$ a la dimension d'un temps), l'équation différentielle se met sous la forme : $\dfrac{\D u_C}{\D t}+\dfrac{1}{\tau}u_C=\dfrac{E}{\tau}$
+
+La solution de cette équation différentielle se met sous la forme :
+\begin{center}
+$u_C(t)= $ Solution de l'équation homogène + solution particulière.
+\end{center}
+On trouve $u_C(t)=E+k\exp(-t/\tau)$, où $k$ est une constante déterminée par la condition initiale $u_C(0^+)=0$. On a donc $E+k=0$ soit $k=-E$.
+
+On obtient finalement :
+\begin{equation*}
+\boxed{
+u_C(t)=E \left( 1-\e^{-t/\tau} \right)
+} \quad \text{avec} \quad \tau=RC
+\end{equation*}
+
+\noindent\begin{minipage}{7cm}
+\begin{tikzpicture}
+   %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=10,
+  ymin=0,ymax=10,
+  xtick=\empty,
+  ytick=\empty,
+  axis lines=left,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$u_C(t)$,
+  every axis y label/.style={at={(axis description cs:0,1)},anchor=south},
+  every axis x label/.style={at={(axis description cs:1,0)},anchor=west},
+  ]
+\addplot[domain=0:10,samples=100,smooth,coul1,thick]{8*(1-exp(-x/2))};
+\draw[dotted] (axis cs:0,8) node[left] {$E$}-- (axis cs:10,8);
+\draw[dotted] (axis cs:2,0) node[below] {$\tau$}-- (axis cs:2,10);
+\draw[dashed] (axis cs:0,0) -- (axis cs:2,8);
+
+\end{axis}
+\end{tikzpicture}
+\end{minipage}%
+\begin{minipage}{\linewidth-7cm}
+\paragraph{Remarque :} $\dfrac{\D u_C}{\D t}(t=0^+)=\dfrac{E}{\tau}$. On peut déterminer graphiquement $\tau$ en traçant le point d'intersection de la tangente à l'origine avec la droite d'équation $u=E$.
+\end{minipage}
+
+\paragraph{\'Evolution de l'intensité :} $i_C(t)=C \dfrac{\D u_C}{\D t}=\dfrac{EC}{\tau}\e^{-t/\tau}=\dfrac{E}{R}\e^{-t/\tau}$.
+
+\begin{center}
+\begin{tikzpicture}
+   %%tikz elec
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=10,
+  ymin=0,ymax=10,
+  xtick=\empty,
+  ytick=\empty,
+  axis lines=left,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$i_C(t)$,
+  every axis y label/.style={at={(axis description cs:0,1)},anchor=south},
+  every axis x label/.style={at={(axis description cs:1,0)},anchor=west},
+  ]
+\addplot[domain=0:10,samples=100,smooth,coul1,thick]{8*exp(-x/2)};
+\draw (axis cs:0,8) node[left] {$E/R$};
+\draw[dotted] (axis cs:2,0) node[below] {$\tau$}-- (axis cs:2,10);
+\draw[dashed] (axis cs:0,8) -- (axis cs:2,0);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Bilan énergétique}
+\paragraph{\'Energie fournie par le générateur  : } $E_g=\displaystyle\int_{t=0}^{\infty}P_g(t)\, \D t = \int_0^{\infty}E\cdot i(t) \D t = \int_0^{\infty}\dfrac{E^2}{R} \e^{-t/\tau}\D t$. Soit finalement :
+\begin{equation*}
+\boxed{
+  Eg=CE^2
+}
+\end{equation*}
+
+\paragraph{\'Energie stockée dans le condensateur :} La tension aux bornes du condensateur tend vers $E$ lorsque $t$ tends vers $+\infty$.
+\begin{equation*}
+\boxed{
+  E_C=\dfrac{1}{2}CE^2
+}
+\end{equation*}
+
+\paragraph{\'Energie dissipée par effet Joule dans la résistance :} La conservation de l'énergie lors de l'évolution du circuit impose à l'énergie dissipée dans la résistance de satisfaire 
+\begin{equation*}
+\boxed{E_R=E_g-E_C=\dfrac{1}{2}CE^2}
+\end{equation*} 
+Vérifions cela par le calcul : 
+\begin{equation*}
+E_R=\displaystyle\int_{t=0}^{\infty}P_R(t)\, \D t=\int_0^{\infty}R\cdot i^2(t) \D t=\int_0^{\infty}\dfrac{E^2}{R}  \e^{-2t/\tau} \D t=\dfrac{1}{2}CE^2
+\end{equation*}
+On retrouve heureusement le même résultat que celui trouvé en utilisant la conservation de l'énergie. 
+
+\paragraph{Remarque : } La moitié de l'énergie fournie par le générateur est stockée dans le condensateur, l'autre moitié est dissipée par effet Joule. Le rendement de ce circuit de charge de condensateur est de 50~\%.
+\section{Le circuit RL série}
+\begin{minipage}{5cm}
+\begin{tikzpicture}[baseline=1cm] 
+   %%tikz elec
+\draw (0,0) to[V=$E$] (0,2) to[short,i=$i$] (0.7,2) to[short] (1.3,2.3) (1.3,2) to[short] (2,2) to[L,l_=$L$] (2,0) to[european resistor,l_=$R$] (0,0);
+\draw[->] (0,-0.5) -- (2,-0.5) node[midway,below] {$u_R$};
+\draw[<-] (2.5,2) -- (2.5,0)  node[midway,right] {$u_L$};
+\draw (1,2.5) node {$K$};
+\end{tikzpicture}
+\end{minipage}%
+\begin{minipage}{\linewidth-5cm}
+On ferme l'interrupteur $K$ à $t=0$, on cherche à déterminer l'évolution temporelle de $i(t)$ (et $u_L(t)$).
+\end{minipage}
+\subsection{Analyse qualitative}
+\begin{itemize}
+\item L'intensité $i(t)$ est continue dans la bobine donc $i(0^+)=i(0^-)=0$. Et $u_L(0^+)=E$.
+\item En régime permanent, la bobine se comporte comme un fil, donc $u_L(t\rightarrow\infty)=0$ et $i(t\rightarrow\infty)=E/R$.
+\end{itemize}
+On obtient qualitativement les évolutions suivantes :
+\begin{center}
+\begin{tikzpicture}
+   %%tikz elec
+\begin{scope}
+\draw[->] (0,0) -- (0,2.5) node[right] {$i(t)$};
+\draw[->] (0,0) -- (5,0) node[below] {$t$};
+\draw[dotted] (0,2) node[left] {$E/R$} -- (5,2);
+\draw[coul1,thick] (0,0) to[out=70,in=180] (2.5,2) to (5,2);
+\draw[dotted] (2.5,0) -- (2.5,2.5);
+\draw (1.25,0) node[below,text width=2.5cm,align=center] {Régime transitoire};
+\draw (3.75,0) node[below,text width=2.5cm,align=center] {Régime permanent};
+\end{scope}
+
+\begin{scope}[shift={(9,0)}]
+\draw[->] (0,0) -- (0,2.5) node[right] {$u_L(t)$};
+\draw[->] (0,0) -- (5,0) node[below] {$t$};
+\draw[dotted] (0,2) node[left] {$E$} -- (5,2);
+\draw[coul1,thick] (0,2) to[out=-70,in=180] (2.5,0) to (4.8,0);
+\draw[dotted] (2.5,0) -- (2.5,2.5);
+\draw (1.25,0) node[below,text width=2.5cm,align=center] {Régime transitoire};
+\draw (3.75,0) node[below,text width=2.5cm,align=center] {Régime permanent};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+Il y a un retard à l'établissement du courant dans la bobine.
+
+\subsection{Analyse quantitative}
+\begin{itemize}
+\item Loi des mailles : $E=u_R+u_L$ ;
+\item loi d'Ohm : $u_R=R\cdot i$ ;
+\item bobine : $u_L=L \dfrac{\D i}{\D t}$
+\end{itemize}
+On obtient l'équation différentielle $E=Ri+L \dfrac{\D i }{\D t}$, soit $\dfrac{\D i }{\D t}+\dfrac{R}{L}i=\dfrac{E}{L}$. On pose $\tau=\dfrac{L}{R}$ et on obtient l'équation différentielle suivante :
+\begin{equation*}
+\boxed{
+  \frac{\D i}{\D t}+\frac{1}{\tau}i = \frac{E}{L}
+}
+\end{equation*}
+On trouve la solution de la même manière que dans le cas du circuit RC : 
+\begin{equation*}
+i(t) = \frac{E}{R} + k\e^{-t/\tau} \quad \text{avec} \quad i(t=0)=0 \quad \text{on trouve} \quad k=-\frac{E}{R} \quad \text{donc} \quad \boxed{i(t)=\frac{E}{R}\left( 1-\e^{-t/\tau} \right)}
+\end{equation*}
+La tension $u_L(t)$ aux bornes de la bobine est donnée par :
+\begin{equation*}
+u_L(t)=L \frac{\D i}{\D t} \Leftrightarrow \boxed{u_L(t)=E\e^{-t/\tau}}
+\end{equation*}
+Ce qui donne les graphiques suivants :
+\begin{center}
+\begin{tikzpicture}
+   %%tikz elec
+\begin{scope}
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=10,
+  ymin=0,ymax=10,
+  xtick=\empty,
+  ytick=\empty,
+  axis lines=left,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$i(t)$,
+  every axis y label/.style={at={(axis description cs:0,1)},anchor=south},
+  every axis x label/.style={at={(axis description cs:1,0)},anchor=west},
+  ]
+\addplot[domain=0:10,samples=100,smooth,coul1,thick]{8*(1-exp(-x/2))};
+\draw[dotted] (axis cs:0,8) node[left] {$E/R$}-- (axis cs:10,8);
+\draw[dotted] (axis cs:2,0) node[below] {$\tau$}-- (axis cs:2,10);
+\draw[dashed] (axis cs:0,0) -- (axis cs:2,8);
+
+\end{axis}
+\end{scope}
+\begin{scope}[shift={(8,0)}]
+\begin{axis}[
+  height=4cm,
+  width=6cm,
+  xmin=0,xmax=10,
+  ymin=0,ymax=10,
+  xtick=\empty,
+  ytick=\empty,
+  axis lines=left,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$u_L(t)$,
+  every axis y label/.style={at={(axis description cs:0,1)},anchor=south},
+  every axis x label/.style={at={(axis description cs:1,0)},anchor=west},
+  ]
+\addplot[domain=0:10,samples=100,smooth,coul1,thick]{8*exp(-x/2)};
+\draw (axis cs:0,8) node[left] {$E$};
+\draw[dotted] (axis cs:2,0) node[below] {$\tau$}-- (axis cs:2,10);
+\draw[dashed] (axis cs:0,8) -- (axis cs:2,0);
+\end{axis}
+\end{scope}
+
+
+\end{tikzpicture}
+\captionof{figure}{Évolution de l'intensité $i(t)$ qui traverse la bobine et de la tension $u_L(t)$ à ses bornes.}
+\end{center}
+
+\section{Résolution numérique d'une équation différentielle}%
+\label{sec:resolution_numerique_d_une_equation_differentielle}
+
+L'étude des circuits linéaires d'ordre 1, amène toujours à la même équation différentielle :
+\begin{equation}
+  \dt{x} + \frac{1}{\tau}x = e(t),
+  \label{eq:diff}
+\end{equation}
+où $e(t)$ correspond à l'excitation du circuit (tension, courant,...). 
+Nous avons vu comment résoudre cette équation pour une excitation $e(t)$ constante (échelon de tension), mais la résolution peut devenir beaucoup plus compliquée pour une excitation quelconque, on peut penser par exemple à une excitation par une tension sinusoïdale redressée comme sur le graphique ci-dessous : 
+\begin{center}
+  \begin{tikzpicture}
+   %%tikz elec
+    \begin{axis}[
+    height=4cm,width=8cm,
+    xmin=0, xmax=3*360, ymin=0, ymax=1.1,
+    xtick=\empty,
+    ytick=\empty,
+    xlabel=$t$,
+    ylabel=$e(t)$,
+    xlabel near ticks,
+    ylabel near ticks,
+    ]
+      \addplot[thick, domain=0:3*360, smooth, samples at={0,10,...,3*360}] {abs(sin(x))};
+    \end{axis}
+
+    \begin{scope}[xshift=9cm]
+    \draw (0,0) to[sV, v=$e(t)$ ] (0,2) to [R=$R$] (3,2) to [C=$C$, v=$x(t)$ ] (3,0) to[short] (0,0);  
+      
+    \end{scope}
+  \end{tikzpicture} 
+  \captionof{figure}{Représentation de l'excitation $e(t)$ et du circuit électrique étudié.}
+\end{center}
+Dans ce cas, on peut recourir à une résolution numérique de l'équation différentielle par la \textbf{méthode d'Euler}.
+
+Le principe de la méthode est d'écrire l'équation différentielle \eqref{eq:diff} sous la forme
+\begin{equation}
+  \dt{x} = \underbrace{e(t) - \frac{1}{\tau}x}_{f(t, x)} = f(t, x)
+\end{equation}
+
+La fonction $f$ (que l'on connait), nous permet de déterminer la valeur de $\dt{x}$ en un point $(t, x)$ donné. Elle nous permet donc de déterminer la pente de la tangente à la courbe représentative de $x(t)$ en ce point.
+
+Ainsi, connaissant un point $(t_1, x_1)$ de la courbe représentative de $x(t)$, on pourra en déterminer un second $(t_2, x_2)$ en faisant l'approximation que pour $t_2 = t_1 + \Delta t$ proche de $t_1$, ce second point se trouve sur la tangente à la courbe.
+
+\begin{center}
+  \begin{tikzpicture}
+   %%tikz elec
+    \draw[-latex] (0,0) coordinate (O)-- (10, 0) node[right]{$t$};
+    \draw[-latex] (0,0) -- (0, 4) node[right]{$x(t)$};
+    \draw[thick] plot[domain=0:10] (\x, {4*(1-exp(-\x/3))});
+    \fill (2, {4*(1-exp(-2/3))}) coordinate (X1)  circle (2pt) node[above left]{$(t_1, x_1)$ };
+    \newcommand{\deltat}{1}
+    \pgfmathsetmacro{\pente}{4/3*exp(-2/3)};
+    \draw[dashed] (X1) ++ (-1, -\pente) -- ++ (2*\deltat, {2*\pente*\deltat}) coordinate (X2) -- ++(\deltat, \pente*\deltat) coordinate (p);
+    \fill (X2) circle (2pt); 
+    \draw (X2) node[above left] {$(t_2, x_2)$};
+    \draw (4.5, 1.5) node[right] {Tangente au point $(t_1, x_1)$ de pente $f(t_1, x_1)$};
+     \draw[latex-] (p)--(4.5, 1.5);
+     \draw[dotted] (X1) -- ($(X1|-O)$) coordinate (A);
+     \draw[dotted] (X2) -- ($(X2|-O)$) coordinate (B);
+     \draw ($(A)!0.5!(B)$) node[below]{$\Delta t$}; 
+  \end{tikzpicture}
+  \captionof{figure}{Schématisation de la méthode d'Euler qui permet de trouver le point $(t_2, x_2)$ à partir du point $(t_1, x_1)$. }
+\end{center}
+
+Il suffit ensuite de répéter l'opération en partant du point $(t_2, x_2)$ pour obtenir un nouveau point $(t_3, x_3)$, etc. On peut traduire cette méthode par le programme suivant
+
+\begin{minted}{python}
+import numpy as np
+
+def f(t, x):
+  """ définition de l'équation différentielle à résoudre"""
+  tau = 3
+  return np.abs(np.sin(t))-x/tau
+
+def euler(f, t_0, x_0, delta_t, t_max):
+  """ Fonction qui renvoie une liste de valeurs de t et de valeurs de x
+      représentant la solution de l'équation différentielle définie par f
+      entre x_0 et x_max en utilisant un pas delta_t"""
+  lt = [t_0]     # Liste des valeurs de t
+  lx = [x_0]     # Liste des valeurs de x
+  while lt[-1] < t_max :   # Tant que l'on n'a pas atteint la valeur max de x
+    nt = lt[-1] + delta_t                       # Valeur suivante de t
+    nx = lx[-1] + delta_t*f(lt[-1], lx[-1])     # Valeur suivante de x
+    lt.append(nt)    # Ajoute les nouvelles valeurs aux listes
+    lx.append(nx)
+  return lt, lx
+\end{minted}
+
+On peut alors utiliser la fonction \texttt{euler} pour résoudre l'équation différentielle définie par la fonction \texttt{f}. Sur le graphique ci-dessous, on montre la résolution de cette équation avec plusieurs pas $\Delta t$ différents.
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+      xlabel=$t$,
+      xmin=0, ymin=0,xmax=30,
+      ylabel=$x(t)$,
+      xlabel near ticks,
+      ylabel near ticks,
+    ]
+      \addplot[mark=none, thick] table[x index=0, y index=1] {data/euler_0.01.csv};
+    \end{axis}
+  \end{tikzpicture}
+  \hspace{0.5cm}
+  \begin{tikzpicture}
+    \begin{axis}[
+      xmin=5,
+      xmax=10,
+      legend pos=north west,
+      xlabel=$t$,
+      ylabel=$x(t)$,
+      xlabel near ticks,
+      ylabel near ticks,
+      ]
+      \addplot[mark=none, thick] table[x index=0, y index=1] {data/euler_0.01.csv};
+      \addlegendentry{$\Delta t=\SI{0.01}{\second}$ };
+      \addplot[mark=none, thick, dashed] table[x index=0, y index=1] {data/euler_0.05.csv};
+      \addlegendentry{$\Delta t=\SI{0.05}{\second}$ };
+      \addplot[mark=none, thick, dotted] table[x index=0, y index=1] {data/euler_0.2.csv};
+      \addlegendentry{$\Delta t=\SI{0.20}{\second}$ };
+      \addplot[mark=none, thick, dash dot] table[x index=0, y index=1] {data/euler_0.5.csv};
+      \addlegendentry{$\Delta t=\SI{0.50}{\second}$ };
+      \addplot[mark=none, thick, dash dot  dot] table[x index=0, y index=1] {data/euler_1.csv};
+      \addlegendentry{$\Delta t=\SI{1.00}{\second}$ };
+    \end{axis}
+  \end{tikzpicture}
+
+  \captionof{figure}{À gauche : représentation graphique de la solution de l'équation différentielle \eqref{eq:diff}. À droite : représentation de la même solution pour différents pas $\Delta t$.}  
+  \label{fig:sol_num}
+\end{center}
+
+On voit bien sur la figure~\ref{fig:sol_num} que le pas choisi pour calculer la solution a un influence importante sur la précision de la solution. Il faut choisir un pas suffisamment bas pour que la solution soit acceptable et suffisamment grand pour que le temps de calcul soit raisonnable.
+\end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% LaTeX-command: "latex -shell-escape"
+%%% End: 

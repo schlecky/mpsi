@@ -1,0 +1,121 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage{mhchem}
+\usepackage{makecell}
+\usepackage{pgfplots}
+\titre{TP10 : Cinétique de l'oxydation de l'ion \ce{I-} par l'ion \ce{S2O8^2-}}
+\begin{document}
+%\small
+
+
+\section{Objectif du TP}
+L'objectif de ce TP est de faire une étude de la cinétique d'une réaction chimique afin d'en déterminer un ordre partiel et une estimation de l'énergie d'activation.
+
+\section{Principe de la manipulation}
+L'ion peroxodisulfate \ce{S2O8^2-} oxyde l'ion \ce{I-} selon la réaction (1)\refstepcounter{equation} lente d'avancement volumique $x_1$. On donne le tableau d'avancement en concentrations ci-dessous. 
+\begin{center}
+  \begin{tabular}{@{}llllllll@{}}
+   \toprule
+   & \ce{S2O8^2-(aq)} & + & \ce{2I-(aq)} & \ce{<=>} & \ce{I2(aq)} &+ & \ce{2SO4^2-(aq)} \\
+   \midrule
+   $t=0$  & $a$  & & $b$ & & $0$ & & $0$ \\
+   $t$  & $a-x_1$ & & $b-2x_1$ & & $x_1$ & & $2x_1$ \\
+   \bottomrule
+  \end{tabular}
+\end{center}
+On suppose que la loi de vitesse est de la forme 
+\[
+v = -\dt{[\ce{S2O8^2-}]} = k[\ce{S2O8^2-}][\ce{I-}]
+\]
+C'est-à-dire que l'on suppose l'ordre global égal à 2 et chacun des ordres partiels est égal à 1.
+
+On se propose de vérifier que l'ordre partiel de la réaction par rapport à l'ion peroxodysulfate \ce{S2O8^2-} vaut bien 1 et de déterminer l'ordre de grandeur de l'énergie d'activation $E_a$. 
+
+On opère par dégénérescence de l'ordre. On utilise la méthode dite « méthode d'isolement d'Ostwald » : la concentration en ion iodure est maintenue constante par une réaction rapide et totale qui a lieu en parallèle de la réaction étudiée :
+\begin{equation}
+\label{eq:2}
+\ce{2S2O3^2-(aq) + I2(aq) -> 2I-(aq) + S4O6^2-(aq)}
+\end{equation}
+Donc à chaque fois que l'ion iodure est consommé par la réaction~(1), il est aussitôt reformé grâce à la réaction~\eqref{eq:2}. Tant qu'il y a du thiosulfate dans la solution, il ne peut pas y avoir de diiode. Dès que le thiosulfate est épuisé, du diiode apparait. On repère l'apparition du diiode grâce à l'empois d'amidon qui devient alors bleu-noir en sa présence. On note $\tau$ le temps a bout duquel du diiode apparait en solution. 
+
+On introduit initialement une concentration $c$ de thiosulfate en solution.
+
+\begin{itemize}
+  \item Monter que si l'hypothèse de départ est correcte, la loi de vitesse permet d'écrire la relation 
+  \begin{equation}
+  \label{eq:1}
+  \frac{1}{b}\ln \left( \frac{a}{a-c/2} \right) = k\tau
+  \end{equation}
+  \end{itemize}
+  On voit qu'il suffit de faire varier les concentrations initiales afin de pouvoir accéder à la constante de vitesse et valider l'ordre partiel par rapport au peroxodisulfate. Dans notre cas, on diminue la concentration en peroxodisulfate (à concentration en iodure constante), ce qui diminue la vitesse donc $\tau$ augmente.
+
+  On ajoute des sels d'ammonium en plus des réactifs dans certains bechers. En effet, la constante de vitesse dépend aussi de la force ionique de la solution
+  \[
+  I = \frac{1}{2}\sum_i z_i^2[\ce{A}_i] \quad \text{avec $z_i$ la charge de l'ion $\ce{A_i}$}
+  \]
+ 
+
+\section{Manipulations}%
+\label{sec:manipulations}
+\subsection{À température ambiante}%
+\label{sub:a_temperature_ambiante}
+Les différents couples étudiés sont indiqués dans le tableau suivant :
+\begin{center}
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+ & \multicolumn{4}{c}{Bécher A} & \multicolumn{2}{c}{Bécher B}\\ 
+ \cmidrule(r){2-5}\cmidrule(l){6-7}
+Solution & \ce{K+ + I-} & \ce{K+ + NO3-}  & \ce{2Na+ + S2O3^2-} & Empois & \ce{2NH4+ + S2O8^2-} & \ce{2NH4^+ + SO4^2-}\\
+$[\phantom{A}]$ (\si{\mol\per\litre}) & $\num{0.1}$ & $\num{0.1}$ & $\num{0.01}$ &  d'amidon  & $\num{0.1}$ & $\num{0.1}$\\    
+\midrule
+ & \multicolumn{6}{c}{Volumes à prélever en \si{\milli\litre}}\\
+ \cmidrule{2-7}
+ Couple 1 & 20 & 0 & 5 & 5 & 20 & 0 \\
+ Couple 2 & 20 & 0 & 5 & 5 & 15 & 5 \\
+ Couple 3 & 20 & 0 & 5 & 5 & 10 & 10\\
+ Couple 4 & 20 & 0 & 5 & 5 & 5 & 15 \\
+ Couple 5 & 10 & 10 & 5 & 5 & 20 & 0 \\
+ Couple 6 & 5 & 15 & 5 & 5 & 20 & 0 \\
+ \bottomrule
+\end{tabular}
+\end{center}
+Les couples de bécher seront préparés en utilisant les pipettes jaugées. Les solutions seront donc versées dans les béchers afin d'effectuer chaque prélèvement. On fera attention à mettre le minimum de produit afin d'éviter tout gaspillage.
+
+Chaque binôme étudiera deux couples et les résultats seront mutualisés. Le tableau ci-après précise les couples que chaque binôme (référencé par le numéro de paillasse) devra réaliser.
+\begin{center}
+  \begin{tabular}{ll}
+    \toprule
+    Numéro de paillasse & Couples étudiés \\
+    \midrule
+    1, 2, 3 et 4 & 1 et 6\\
+    5, 7, 7 et 8 & 2 et 4\\
+    9, 10, 11 et 12 & 3 et 5\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+Pour chaque couple :
+\begin{itemize}
+  \item Préparer le bécher A et le bécher B ;
+  \item Placer un des deux béchers sur l'agitateur magnétique avec un barreau aimanté ;
+  \item Ajouter le contenu du second bécher en déclenchant le chronomètre ;
+  \item Arrêter le chronomètre lors de l'apparition de la couleur bleu-noir et mesurer la température du mélange. Noter le temps~$\tau$.
+\end{itemize}
+
+Enfin il ne reste plus qu'à utiliser les résultats obtenus pour tous les couples pour déterminer $k$ par régression linéaire en utilisant la relation~\eqref{eq:1}.
+
+\subsection{Expériences à d'autres températures}%
+\label{sub:experiences_a_d_autres_temperatures}
+Le but est d'estimer la valeur de l'énergie d'activation de la réaction. Dans l'idéal il faudrait recommencer l'étude précédente à plusieurs températures et, à chaque température, déterminer $k$ par régression linéaire. Il ne resterait plus qu'à utiliser la loi d'Arrhénius pour exploiter les résultats.
+
+Comme il ne reste pas suffisamment de temps pour faire tout celà, $k$ va ici être estimé pour différentes températures, et ce \textbf{uniquement pour le couple 1}.
+
+\begin{itemize}
+  \item Procéder à des mesures à diverses températures, en utilisant les différents bains thermostatés ainsi qu'un mélange eau+glace dans un petit cristallisoir.
+
+  \item Déterminer la valeur de l'énergie d'activation $E_a$. 
+\end{itemize}
+
+
+
+\end{document}

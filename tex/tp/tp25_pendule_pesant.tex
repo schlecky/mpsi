@@ -1,0 +1,116 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\titre{TP25 : Pendule pesant}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+L'objectif du TP est de réliser un pendule pesant et d'étudier son mouvement pour déterminer un moment d'inertie. On observera aussi l'influence des frottements de l'air ainsi que le non isochronisme des oscillations pour des grandes amplitudes.
+
+\section{Introduction}%
+\label{sec:introduction}
+
+On dispose d'un pendule pesant consitué d'une tige en métal de longueur totale $l_T=\SI{60}{\cm}$, de masse $m_T$ et de moment d'inertie $J_T$ par rapport à l'axe de rotation. On a aussi une masse amovible de masse $m_M = \SI{100}{g}$ que l'on peut fixer sur la tige. On peut également fixer sur la petite masse, un accessoire supplémentaire de masse $m_A=\SI{50}{\g} $ pour augmenter la force de frottement fluide de l'air sur le pendule.
+
+On fera l'acquisition de l'angle $\theta$ que fait la tige avec la verticale à l'aide d'un capteur situé au niveau de la liaison pivot et d'une carte d'acquisition reliée à un ordinateur. On utilisera le logiciel \textit{Atelier scientifique} pour faire les acquisitions. Il faudra configurer le module d'acquisition de l'angle pour un calibre de $\pm \SI{45}{\degree} $ et régler le zéro de l'angle (\textit{Grandeur} $\rightarrow$ \textit{Réglage du zéro}).
+
+\section{Petites oscillations}%
+\label{sec:petites_oscillations}
+Dans cette partie, on se limite à de petites oscillations (amplitude inférieure à \SI{10}{\degree}) autour de la position d'équilibre du pendule. 
+
+\subsection{Sans frottements}%
+\label{sub:sans_frottements}
+On ne place pas sur le pendule l'accessoire permettant d'augmenter les frottements de l'air. Dans ces conditions, on peut commencer par négliger les frottements et dans ce cas, le mouvement du pendule a pour équation :
+
+\begin{equation}
+  J_\Delta \ddot{\theta} = -mgl \sin(\theta)
+\end{equation}
+%
+où $J_\Delta$ est le moment d'inertie total du pendule par rapport à l'axe de rotation, $l$ est la distance entre le centre de gravité $G$ et l'axe de rotation, et $m$ est la masse totale du pendule.
+
+Dans le cadre de l'approximation des petits angles, on obtient l'équation d'un oscillateur harmonique :
+\begin{equation}
+  \ddot{\theta} + \frac{mgl}{J_\Delta} \theta = 0
+\end{equation}
+de période propre $T_0 = 2\pi\sqrt{\frac{J_\Delta}{mgl}}$ 
+
+On se propose de mesurer le moment d'inertie du pendule et de déterminer la position de son centre de gravité. 
+\begin{itemize}
+  \item En détachant \textbf{avec précaution} la tige du module de mesure de l'angle, mesurer la masse $m_T$ e la tige, puis la remettre en place avec autant de précaution.
+
+  \item Mesurer la période $T_1$ du pendule sans la masse amovible.
+
+  \item Mesurer la période $T_2$ du pendule avec la masse amovible placée à une distance $l_2$ de l'axe de rotation.
+
+  \item Ne plus changer la position de la masse amovible pendant tout le TP.
+\end{itemize}
+
+On peut montrer (à faire pour s'entrainer) que l'on a les relations suivantes :
+\begin{equation}
+  l = \frac{J_T}{m_Tg \left(\frac{T_1}{2\pi}\right)^2} \quad \text{,} \quad 
+  l' = \frac{J_T+m_Ml_2^2}{(m_T+m_M)g \left(\frac{T_2}{2\pi}\right)^2} \quad \text{et} \quad 
+  l' = \frac{m_Tl + m_Ml_2}{m_T+m_M} \label{eq:JTllp}
+\end{equation}
+où $l'$ est la distance entre l'axe de rotation et le centre de gravité du pendule lorsque la masse amovible y est attachée.
+
+On peut en déduire l'expressions suivante de $J_T$ :
+\begin{equation}
+  J_T = \frac{gm_Ml_2}{4\pi^2}\frac{T_1^2T_2^2}{T_1^2-T_2^2}\left( 1- \frac{4\pi^2l_2}{gT_2^2} \right)
+\end{equation}
+Ce qui permet de déterminer les valeurs de $l$ et $l'$ avec les équations \eqref{eq:JTllp}. 
+
+\begin{itemize}
+  \item Utiliser ces résultats pour déterminer les valeurs de $J_T$, $l$ et $l'$. 
+\end{itemize}
+
+\subsection{Influence des frottements}%
+\label{sub:influence_des_frottements}
+
+Fixer l'accessoire permettant d'augmenter les frottements de l'air sur le pendule. Utiliser l'orientation qui maximise les frottements. Faire une acquisition du mouvement. On pourra faire une modélisation des données avec le logiciel \textit{Atelier Scientifique} pour déterminer le facteur de qualité de l'oscillateur. Proposer une modélisation des frottements et calculer le coefficient de frottement.
+
+\section{Grandes oscillations}%
+\label{sec:grandes_oscillations}
+Dans cette partie, on supprimera l'accessoire qui augmente les frottements fluides sur le pendule.
+
+Pour faire une acquisition avec de grandes amplitudes, il faut modifier le calibre de l'acquisition de l'angle et passer à $\pm\SI{180}{\degree}$. Une fois le changement effectué, il faut refaire le zéro.
+\begin{itemize}
+  \item Faire l'acquisition du mouvement pour différents angles initiaux, de plus en plus grands (on ne dépassera pas \SI{90}{\degree}). Tracer l'évoltion de la période en fonction de l'amplitude du mouvement 
+\end{itemize}
+
+En utilisant la consevation de l'énergie mécanique du pendule (intégrale première du mouvement), on peut montrer que (le faire pour s'entraîner !)
+
+\begin{equation}
+  \dot{\theta} = \pm \sqrt{\frac{2mgl}{J_\Delta}\left( \cos(\theta)-\cos(\theta_0) \right) }
+\end{equation}
+
+En écrivant que la période est $T=\int_0^T \D t$, et en faisant attention aux signes, on peut alors montrer que la période des oscillations s'écrit comme 
+\begin{equation}
+  T = \sqrt{\frac{2J_\Delta}{mgl}}\int_{-\theta_0}^{\theta_0} \frac{\D \theta}{\sqrt{\cos(\theta)-\cos(\theta_0)}}
+  \label{eq:periode}
+\end{equation}
+
+L'intégrale de l'équation~\eqref{eq:periode} n'est pas calculable analytiquement, nous allons déterminer sa valeur numériquement. On utilisera la bibliothèque \texttt{scipy.integrate} pour faire le calcul numérique de l'intégral. Le code python suivant montre comment calculer cette intégrale :
+
+\begin{minted}{python}
+from scipy.integrate import quad
+import numpy as np
+
+# renvoie la fonction dont on veut calculer l'intégrale
+def f(theta0):
+  # définit la fonction à renvoyer
+  def f2(theta):
+    return 1/np.sqrt(np.cos(theta)-np.cos(theta0))
+  return f2
+
+theta0 = 0.1
+val = quad(f(theta0), -theta0, theta0)[0] #valeur de l'intégrale
+\end{minted}
+
+\begin{itemize}
+  \item Comparer les valeurs expérimentales de la période aux valeurs théoriques.
+\end{itemize}
+\end{document}
+
+ 

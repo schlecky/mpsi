@@ -1,0 +1,116 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{makecell}
+\usepackage{pgfplots}
+\titre{TP13 : Analyse spectrale}
+\begin{document}
+%\small
+\section{Objectif du TP}
+L'objectif du TP est de faire l'analyse du spectre de différents signaux électriques et optiques et, en ce qui concerne les signaux électriques, de comparer les spectres mesurés aux valeurs théoriques.
+
+
+\section{Analyse spectrale de signaux électriques}%
+\label{sec:analyse_spectrale_de_signaux_electriques}
+
+Dans cette partie, nous allons mesurer le spectre de signaux électriques, c'est à dire l'amplitude du signal en fonction de la fréquence. Pour cela, nous allons faire l'acquisition informatique de l'évolution temporelle des signaux avec l'interface d'acquisition et le logiciel \texttt{Latis Pro} et effectuer une opération mathématique appelée \emph{transformée de Fourier} qui permet d'en calculer le spectre. On pourra effectuer la transformée de Fourrier directement depuis \texttt{Latis Pro}. 
+
+
+
+
+\begin{itemize}
+	\item Régler le GBF pour qu'il délivre un signal sinusoïdal de fréquence $f=\SI{100}{\Hz}$, d'amplitude $A=\SI{4}{\V}$ et de moyenne $B=\SI{1}{\V}$. Faire l'acquisition informatique de plusieurs périodes (au moins une dizaine) de ce signal en utilisant un nombre de points suffisamment grand pour représenter au mieux le signal sinusoïdal.
+
+	\item Pour calculer numériquement le spectre d'un signal, on utilise la méthode de la \emph{transformée de Fourier}. Utiliser la fonction de calcul de transformée de Fourier du logiciel \emph{Latis Pro}  pour afficher le spectre du signal précédent.
+
+	\item Où retrouve-t-on sur le spectre du signal les paramètres $f$, $A$ et $B$ ?
+
+	\item Régler le GBF pour qu'il délivre un signal carré dont les paramètres sont les mêmes que précédemment et calculer sa transformée de Fourier. Cette fois il apparait plusieurs pics correspondant aux harmoniques de la fréquence fondamentale $f$. Noter l'amplitude de chaque harmonique. 
+
+	\item La théorie prévoit que le spectre du signal carré ne fasse apparaitre que des harmoniques d'ordre impairs (1, 3, 5, ...) et l'amplitude $A_n$ de l'harmonique d'ordre $n$ est proportionnelle à $\frac1n$. La mesure expérimentale est-elle en accord avec la théorie ? On pourra par exemple tracer le graphique qui représente $A_n$ en fonction de $\frac{1}{n}$. 
+
+	\item Représenter le spectre d'un signal triangulaire. La théorie prévoit que seules les harmoniques d'ordres impairs sont présente avec une amplitude proportionnelle à $\frac{1}{n^2}$ où $n$ est l'ordre de l'harmonique. Vérifier expérimentalement ce résultat, On pourra par exemple tracer le graphique qui représente $A_n$ en fonction de $\frac{1}{n^2}$. 
+\end{itemize}
+
+Nous allons maintenant observer l'effet d'un circuit non linéaire sur le spectre d'un signal. Pour cela, on réalisera le montage suivant :
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) node[ground]{} to[sV=GBF] (0,2) to[D, l=diode] (2,2) coordinate (Y1) to[R=$R$] (2,0) to[short](0,0); 
+    \draw[-stealth](Y1) -- ++(45:0.5) node[above right] {$Y_1$};
+  \end{tikzpicture}
+\end{center}
+On pourra prendre une résistance $R\approx \SI{1}{\kilo\ohm}$ mais sa valeur exacte n'a que peut d'importance. La tension fournie par le GBF est sinusoïdale.
+
+\begin{itemize}
+  \item Faire l'acquisition de la tension aux bornes de $R$ et donner l'allure de son spectre. Quel est l'effet d'un composant non linéaire comme la diode sur le spectre d'un signal électrique ?
+\end{itemize}
+
+
+
+
+\section{Analyse spectrale d'un signal lumineux}%
+\label{sec:analyse_spectrale_d_un_signal_lumineux}
+\subsection{Généralités}%
+\label{sub:generalites}
+
+Une manière simple de faire l'analyse spectrale de la lumière est d'utiliser un dispositif dispersif qui dévie la lumière d'une manière qui dépend de sa longueur d'onde, et de mesurer l'intensité lumineuse reçue dans chaque direction.
+
+Le spectromètre que nous allons utiliser fonctionne sur ce principe : une fibre optique dirige la lumière vers un réseau qui la renvoie en direction d'un capteur CCD qui permet d'enregistrer l'intensité lumineuse reçue par chacun de ses pixels.
+
+%\begin{center}
+%\begin{tikzpicture}[scale=0.7]
+  %\draw[rounded corners, fill=gray] (0,0) -- ++(10,0) --++(0,-7) --++(-6.5,0) --++(-1,1) coordinate[midway](A) --++(-2.5,0) --cycle;
+  %\def\l{0.1}
+  %\draw[rounded corners, fill=gray!30] (0+\l,0-\l) -- ++(10-2*\l,0) --++(0,-7+2*\l) --++(-6.5+1.4*\l,0) --++(-1,1) --++(-2.5+0.6*\l,0) --cycle;
+  %\draw[rotate around={-45:(A)}, fill=gray] ($(A)+(-0.2, 0)$)  rectangle ++(0.4,-0.14)
+  %($(A)+(-0.125, -0.14)$) rectangle ++(0.25, -0.28);
+  %\coordinate (B) at ($(A) + (48:6.7)$);
+  %\draw[rotate around={-48:(B)}, fill=gray!10] ($(B)+(-0.8, 0)$) rectangle ++(1.6, 0.32);
+  %\coordinate (C) at (8.7, -3.4);
+  %\draw[rotate around={85:(C)}, fill=gray!10] ($(C)+(-0.8, 0)$) rectangle ++(1.6, 0.32);
+  %\coordinate (D) at (3.65, -4.4);
+  %\draw[rotate around={-70:(D)}, fill=gray!10] ($(D)+(-0.8, 0)$) rectangle ++(1.6, 0.32);
+  %\coordinate (E) at (2.0, -2.2);
+  %\draw[rotate around={-100:(E)}, fill=gray!50] ($(E)+(-1.4, 0)$) rectangle ++(2.8, 0.7);
+%\end{tikzpicture}
+%\end{center}
+\begin{center}
+\def\svgwidth{8cm}
+  \input{images/spectrometre.pdf_tex}
+  \captionof{figure}{Schéma de fonctionnement du spectrometre USB à fibre optique}
+\end{center}
+
+\subsection{Analyse qualitative}%
+\label{sub:analyse_qualitative}
+
+\begin{itemize}
+  \item Observer les spectres de différentes sources de lumière :
+  \begin{itemize}
+    \item Lumière du jour (si possible)
+    \item Lampe à incandescence
+    \item Lampe à économie d'énergie
+    \item lampe spectrale
+    \item laser
+  \end{itemize}
+  \item Reprendre l'observation de ces spectres en ayant placé entre la source et le spectromètre un filtre coloré standard, puis un filtre interférentiel.
+\end{itemize}
+
+\end{document}
+\subsection{Analyse semi-quantitative : principe de la fluorescence}%
+\label{sub:analyse_semi_quantitative_principe_de_la_fluorescence}
+\begin{itemize}
+  
+\item Placer le bécher de fluorescéine sur un support et l'éclairer horizontalement avec une lampe à incandescence.
+
+
+\item Observer le spectre d'émission de la fluorescéine en plaçant la fibre optique au dessus du bécher à \SI{90}{\degree} de la lumière incidente. Noter les longueurs d'onde émises.
+
+\item Observer le spectre d'absorption de la fluorescéine, en plaçant la fibre optique à l'opposé de la lampe blanche. Noter les longueurs d'onde absorbées.
+
+\item Comparer les longueurs d'onde absorbées aux longueurs d'onde émises par la fluorescéine. 
+
+
+\end{itemize}
+
+
+\end{document}
+

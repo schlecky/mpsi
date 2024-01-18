@@ -1,0 +1,110 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{decorations.text}
+\titre{TP32 : Induction}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+L'objectif de ce TP est de mettre en \oe{}uvre des expériences permettant d'illustrer et d'interpréter les lois de Lenz et de Faraday. On cherchera également à déterminer l'inductance propre d'une bobine et l'inductance mutuelle de deux bobines.
+
+\section{Loi de Faraday}%
+\label{sec:loi_de_faraday}
+\subsection{Avec un aimant}%
+\label{sub:avec_un_aimant}
+On place une résistance $R=\SI{10}{\kilo\ohm}$ en série avec une bobine dont on connait le sens d'enroulement et on mesure la tension aux bornes de la résistance. 
+\begin{center}
+  \begin{tikzpicture}
+  \def\l{0.5}
+  \def\h{1.5}
+    \draw (0,0) to[oscope=oscilloscope] (0, 2) to[short] (2, 2) to[L] (2,0) to[short] (0,0) (2,2) to[short] (3,2) to[R=R] (3,0) to[short](2,0);
+    \fill[gray!50] (2-\l/2, -0.5) rectangle (2+\l/2, -0.5-\h/2); 
+    \draw (2-\l/2, -0.5) rectangle (2+\l/2, -0.5-\h); 
+    \draw (2, -0.5) node[below]{N};
+    \draw (2, -0.5-\h) node[above]{S};
+    \draw[latex-latex] (2+\l/2+0.2, -0.5) -- ++(0, -\h);
+  \end{tikzpicture}
+\end{center}
+\begin{itemize}
+  \item Observer l'évolution de la tension mesurée en fonction notamment du sens de déplacement de l'aimant, de l'orientation de l'aimant, du nombre de spires de la bobine, de la vitesse de déplacement de l'aimant.
+  \item Interpréter les observations en utilisant la loi de modération de Lenz ou la loi de Faraday.
+\end{itemize}
+
+  \subsection{Avec une autre bobine}%
+  \label{sub:avec_une_autre_bobine}
+  
+  On alimente une bobine avec un signal sinusoïdal et on observe à l'oscilloscope la force électromotrice induite dans la seconde bobine.
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) to[oscope=voie 2] (0, 2) to[short] (2, 2) to[L=Bobine 2] (2,0) to[short] (0,0) ;
+    \draw (0,-2.5) to[sV=GBF] ++(0, 2) to[short] ++(2, 0) to[L=Bobine 1] ++(0,-2) coordinate (V2) to[R=\SI{100}{\ohm} ] ++(-2,0) node[ground]{};
+    \draw[-latex] (V2) -- ++(-45:0.5) node[right]{Voie 1};
+  \end{tikzpicture}
+\end{center}
+Le premier circuit est alimenté par un GBF à la fréquence $f=\SI{1}{\kilo\hertz}$. On branche l'oscilloscope aux bornes d'une d'une résistance $R=\SI{100}{\ohm}$, la voie 2 de l'oscilloscope est branchée sur la seconde bobine.
+
+\begin{itemize}
+  \item À quoi sert la résistance $R$ ?
+  \item Réaliser le montage et noter vos observations, on notera notamment ce qu'il se passe lorsqu'on change l'orientation et la distance des bobines, lorsqu'on change le nombre de spire des bobines ou lorsqu'on introduit un noyau de fer dans les bobines.
+\end{itemize}
+
+\section{Mesure de l'inductance mutelle}%
+\label{sec:mesure_de_l_inductance_mutelle}
+
+On considère le circuit suivant avec $R=\SI{100}{\ohm}$.
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) to[sV=GBF] ++(0, 2) to[short, i=$i_1$ ] ++(2, 0) to[L,l_=$L_1$ ] ++(0,-2) coordinate (V2) to[R=$R$] ++(-2,0) node[ground]{};
+    \draw (4,0) to[L,l_=$L_2$] ++(0, 2) to[short, i=$i_2$ ] ++(2, 0)  to[oscope=voie 2] ++(0,-2) node[ground]{} to[short] ++(-2,0) ;
+     
+    \draw[-latex] (V2) -- ++(-45:0.5) node[right]{Voie 1};
+    \draw[latex-latex] (2.2, 1.5) to[bend left] (3.8, 1.5);
+    \draw  (3, 1.5) node[above, fill=white]{$M$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+  \item Montrer que si $V_1$ et $V_2$ sont les amplitudes des tensions observées sur les voies 1 et 2, on peut exprimer l'inductance mutuelle comme
+  \begin{equation}
+    M = \frac{R}{\omega} \frac{V_2}{V_1}
+  \end{equation}
+
+  \item Mesurer l'inductance mutuelle $M$, ainsi que les inductances propres des deux bobines avec un LC-mètre. En déduire la valeur du coefficient de couplage $k$. On rappelle que $M = k\sqrt{L_1L_2}$. 
+\end{itemize}
+
+\section{Mesure d'une inductance propre}%
+\label{sec:mesure_d_une_inductance_propre}
+
+Nous allons déterminer l'inductance propre d'une bobine par la méthode du pont de Maxwell qui permet de mesurer l'inductance à partir d'un voltmètre, d'une résistance et d'un condensateur étalonnés. On dit que le pont est équilibré lorsque la tension affichée par le voltmètre est nulle.
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) -- (0,4) to[L=$L$] ++(1.5, 0) to[R=$R_x$] ++(1.5, 0) coordinate (A) to[R=$Q$ ] ++(3,0) -- ++(0, -4) to[sV=$e(t)$] (0,0)
+  (0, 1.5) to[R=$P$] ++(3,0) coordinate (B) -- ++(0.5, 0) coordinate (C) -- ++(0, 0.5) to[vC=$C$, mirror] ++(2,0) -- ++(0, -0.5) -- ++(0.5,0)
+  (C) -- ++(0, -0.5) to[vR,l_=$R$, mirror] ++(2,0) -- ++(0, 0.5) 
+  (A) to[rmeter, t=V] (B);
+
+    ;  
+  \end{tikzpicture}
+\end{center}
+\begin{itemize}
+  \item Montrer que lorsque le pont est équilibré, on a 
+  \begin{equation}
+    R_x = \frac{PQ}{R} \quad \text{et} \quad L_x = PQC
+  \end{equation}
+
+\item Réaliser le montage avec $P = Q = \SI{100}{\ohm}$, la bobine étant celle présente dans les armoires. Pour $R$, on utilisera la boîte à décades et pour $C$ la boîte de capacités.
+
+\item \textbf{Mesure de $R_x$ :} Alimenter le circuit en régime continu, et déterminer la valeur de $R$ qui permet d'obtenir une tension nulle sur le voltmètre. En déduire la valeur de $R_x$.
+
+\item \textbf{Mesure de $L_x$ :} Alimenter le circuit en régime sinusoïdal, de fréquence $f=\SI{1}{\kilo\hertz}$. Déterminer la valeur de $C$ qui permet d'annuler la tension affichée par le voltmètre. En déduire la valeur de $L_x$. 
+
+\item Comparer la valeur obtenue de $L_x$ avec celle donnée par le LC-mètre. 
+
+\item Proposer une autre méthode de mesure de la valeur de $L_x$ et la mettre en \oe{}uvre si le temps restant le permet.
+\end{itemize}
+\end{document}
+

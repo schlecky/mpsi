@@ -1,0 +1,108 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\titre{TP28 : Calorimétrie}
+\begin{document}
+%\small
+
+
+\section{Objectif du TP}
+Dans ce TP, nous allons mettre en \oe{}uvre des techniques de calorimétrie permettant de mesurer certaines propriétés thermodynamiques de la matière. Nous allons mesurer la capacité thermique d'un métal ainsi que l'enthalpie massique de fusion de la glace.
+
+\section{Détermination de la capacité thermique du calorimètre et de ses accessoires : méthode du mélange}%
+\label{capacite_thermique_calorimetre}
+
+\begin{center}
+  \includegraphics[width=7cm] {images/calorimetre_melange.jpg}
+\end{center}
+
+\begin{itemize}
+  \item Placer dans le calorimètre environ \SI{150}{\cubic\cm} d'eau chauffée préalablement aux environs de \SI{50}{\celsius} dans un bécher. Cette quantité d'eau (masse $m_c$) sera mesurée aussi précisément que possible à l'éprouvette graduée.
+
+  \item Bien fermer le calorimètre, introduire la sonde de température et l'agitateur.
+
+  \item Préparer l'acquisition en choisissant une durée d'acquisition d'environ \SI{15}{\minute} et un nombre de points raisonnable (environ 500). Lancer l'acquisition et agiter continuellement.
+
+  \item Lorsque la température de l'eau du calorimètre s'est stabilisée, introduire avec précaution \SI{150}{\milli\litre} d'eau à température ambiante dont vous aurez mesuré la température $T_f$ (masse $m_f$). Continuer à agiter doucement et continuellement.
+
+  \item Une fois que la température est à nouveau stable, arrêter l'acquisition. Déterminer la température $T_c$ juste avant l'introduction d'eau froide ainsi que la température $T_\text{fin}$ stabilisée après le mélange.
+\end{itemize}
+
+En négligeant les fuites thermiques et en considérant l'évolution comme isobare, on peut montrer que (le faire pour vous entraîner !) :
+\begin{equation}
+  m_Fc_e(T_\text{fin}-T_f) +  (m_c c_e + C)(T_\text{fin}-T_c) = 0
+\end{equation}
+avec $c_e=\SI{4.18e3}{\joule\per\kelvin\per\kg} $ la capacité thermique massique de l'eau.
+
+\begin{itemize}
+  \item Déterminer $C$ en \si{\joule\per\kelvin} et la valeur en eau $\mu$ du calorimètre. $\mu$ est la masse d'eau qui aurait la même capacité thermique que le calorimètre, soit $C=\mu c_e$. $C$ doit être de l'ordre de \SI{100}{\joule\per\kelvin}. 
+\end{itemize}
+
+\section{Mesure de la capacité thermique massique d'un métal}%
+\label{sec:mesure_de_la_capacite_thermique_massique_d_un_metal}
+
+Nous allons mesurer la capacité thermique massique $c$ d'un métal. 
+
+\begin{center}
+  \includegraphics[width=7cm] {images/calorimetre_metal.jpg}
+\end{center}
+\begin{itemize}
+  \item Mesurer la masse $m$ du cylindre en métal.
+
+  \item Suspendre le cylindre en métal dans le bécher d'eau chaude que l'on porte à une température proche de \SI{100}{\celsius}. Il faut que le métal reste suffisamment longtemps dans l'eau bouillante pour que sa température soit la même que celle de l'eau.
+
+  \item  Pendant que l'eau chauffe, introduire dans le calorimètre une masse $m_f$ d'environ \SI{200}{\g} d'eau à température ambiante mesurée à l'éprouvette graduée.
+
+  \item Lancer une acquisition de \SI{15}{\min} avec un nombre de points raisonnable. Lorsque la température dans le calorimètre est stable, et lorsque le métal a atteint la température de l'eau bouillante, noter la température $T_c$ de l'eau chaude (qui doit être la même que celle du métal).
+
+  \item Effectuer rapidement l'opération suivante : sortir le métal du bécher, mesurer sa température avec un thermomètre infrarouge (si disponible) et l'introduire dans le calorimètre en vous assurant que la totalité du métal est en contact avec l'eau du calorimètre.
+\end{itemize}
+
+En négligeant les fuites thermiques et en considérant l'évolution comme isobare, on peut montrer (faites-le aussi !) que 
+\begin{equation}
+  (m_fc_e+C)(T_\text{fin} - T_f) + mc(T_\text{fin}-T_c) = 0
+\end{equation}
+\begin{itemize}
+  \item Déterminer la capacité thermique massique $c$ du métal. Dans le tableau ci-dessous, on donne les capacités thermiques de quelques métaux 
+    \begin{center}
+      \begin{tabular}{lll}
+        \toprule
+        Métal & $c_p$ (\si{\joule\per\kelvin\per\kg}) & $M$ (\si{g\per\mol}) \\
+        \midrule
+          Aluminium & \num{910} & 27 \\
+          Fer & \num{450} & 56\\
+          Laiton & \num{377} & 65\\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+\item Vérifier la loi de Dulong et Petit donnant la capacité thermique massique d'un métal
+  \begin{equation}
+    M_\text{métal}c \approx \SI{25}{\joule\per\kelvin\per\mol} 
+  \end{equation}
+\end{itemize}
+
+\section{Mesure de l'enthalpie massique de fusion de la glace}%
+\label{sec:mesure_de_l_enthalpie_massique_de_fusion_de_la_glace}
+\begin{center}
+  \includegraphics[width=7cm] {images/calorimetre_glacon.jpg}
+\end{center}
+Nous allons mesurer l'enthalpie massique $h_f$ de fusion de l'eau à \SI{0}{\celsius}.
+\begin{itemize}
+  \item Placer une masse $m=\SI{200}{\g} $ d'eau liquide mesurée à l'éprouvette graduée à température ambiante $T_c$ dans le calorimètre vide. Peser l'ensemble (vase en aluminium+eau), noter la masse $m_1$.  $T_c$ est la température stabilisée, elle sera déterminée à partir de la courbe.
+
+  \item Lancer une acquisition de \SI{15}{\min}. Deux minutes après le début de l'acquisition (lorsque la température est stable), introduire environ \SI{50}{\g} de   glaçons à $T_0=\SI{0}{\celsius} $ dans le calorimètre après les avoir essuyés sommairement avec du papier absorbant. Agiter doucement et continuellement.
+
+  \item Lorsque la température est stabilisée et que tous les glaçons ont fondu, l'acquisition peut être arrêtée. Peser l'ensemble (vase en alu + eau), noter la masse $m_2$ et en déduire la masse $M$ des glaçons.
+\end{itemize}
+
+En négligeant les fuites thermiques et en considérant l'évolution comme isobare, on peut montrer que (il faut le faire !) :
+
+\begin{equation}
+  (mc_e+C)(T_\text{fin}-T_c) + Mc_e(T_\text{fin}-T_0) + Mh_f = 0
+\end{equation}
+
+\begin{itemize}
+  \item Déterminer $h_f$. La valeur de $h_f$ communément admise est $h_f = \SI{330}{\kilo\joule\per\kg} $ 
+\end{itemize}
+
+\end{document}
+

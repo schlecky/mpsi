@@ -1,0 +1,169 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage{mhchem}
+\usepackage{makecell}
+\usepackage{pgfplots}
+\newcommand{\pKa}{\ensuremath{\mathrm{p}K_a}}
+\newcommand{\pH}{\ensuremath{\mathrm{pH}}}
+\titre{TP19 : pH-métrie et dosages acido-basiques}
+\begin{document}
+%\small
+
+
+\section{Objectif du TP}
+L'objectif de ce TP est de mesurer le pH de solutions et de réaliser un titrage d'une solution d'acide par une méthode pH-métrique, conductimétrique et à l'aide d'un indicateur coloré.
+
+\section{Quelques mesures de pH}
+\begin{itemize}
+  \item Étalonner le pH-mètre ;
+  \item Mesurer à la fois au pH-mètre et au papier-pH, le pH des solutions suivantes (dans cet ordre, ne pas prélever plus de \SI{50}{\milli\litre} par binôme, ne pas hésiter à mutualiser les solutions) :
+  \begin{itemize}
+    \item Eau distillée ;
+    \item eau du robinet ;
+    \item solution d'acide éthanoïque de concentration $c=\SI{1e-2}{\mol\per\litre}$ ;
+    \item solution d'acide chlorhydrique de concentration $c=\SI{1e-2}{\mol\per\litre}$ ;
+    \item solution d'ammoniac de concentration $c=\SI{1e-2}{\mol\per\litre}$ ( \textbf{Attention à ne pas déboucher simultanément les flacons d'ammoniac et d'acide. Après la mesure, fermer hermétiquement à l'aide d'un film plastique le bécher contenant l'ammoniac.}  )
+  \end{itemize}
+\item Comparer les résultats à ceux attendus.
+\item Comparer la précision du papier-pH et celle du pH-mètre.
+\end{itemize}
+
+\section{Titrage acido-basique}%
+\label{sec:titrage_acido_basique}
+
+Nous allons utiliser trois méthodes de titrage acido-basique : pH-métrique, conductimétrique et colorimétrique. 
+
+Le titrage pH-métrique permet d'obtenir le pH de la solution à tout instant, mais la détermination du point d'équivalence peut s'avérer délicate. La méthode conductimétrique permet d'obtenir le point d'équivalence avec précision dans tous les cas. La méthode colorimétrique est une méthode rapide et efficace à condition de choisir convenablement l'indicateur coloré et que le saut de pH soit suffisamment important.
+
+On étudiera le titrage de l'acide éthanoïque par la soude dont l'équation de titrage est 
+\begin{equation}
+  \ce{CH3COOH (aq) + HO- (aq) -> CH3COO- (aq) + H2O(l)}
+\end{equation}
+
+\subsection{Résultats théoriques}%
+\label{sub:partie_theorique}
+
+\subsubsection{Définitions}%
+\label{ssub:definitions}
+\begin{itemize}
+\item Un \textbf{dosage} est une technique destinée à déterminer une quantité de matière ou la concentration d'une solution
+
+\item Un \textbf{titrage} est un dosage qui fait intervenir une réaction chimique.  La réaction chimique du titrage doit être totale et rapide.
+\end{itemize}
+
+\subsubsection{Notations}%
+\label{ssub:notations}
+
+On note 
+\begin{center}
+  \begin{tabular}{ll}
+    \toprule
+  $V_a$ & volume d'acide versé dans le bécher \\
+  $c_a$ & concentration de l'acide (que l'on cherche à déterminer)\\
+  $V_b$ & volume de base versée \\
+  $c_b$ & concentration de la base dans la burette \\
+  $x = \frac{c_bV_b}{c_aV_a}$ & quantité de base versée / quantité d'acide\\
+  \bottomrule
+  \end{tabular}
+\end{center}
+À l'équivalence on a $c_aV_a = c_bV_\text{eq}$ donc $x=\frac{V_b}{V_\text{eq}}$.  
+
+\subsubsection{Titrage pH-métrique}%
+\label{ssub:titrage_ph_metrique}
+Dans le tableau ci-dessous, on donne les expressions des différentes concentrations et du pH pour différentes valeurs de $x$. 
+\begin{center}
+  \begin{tabular}{llllll}
+  \toprule
+  $x$ & $[\ce{CH3COOH}]$ & $[\ce{CH3COO-}]$ & $[\ce{H3O+}]$ & $[\ce{HO-}]$& pH \\
+  \midrule
+  $0$ & $c_a$ & $\epsilon_1$ & $\epsilon_1$ & $\frac{K_e\cz^2}{\epsilon_1}$& $\frac{1}{2}\left( \pKa - \log(c_a/\cz) \right) $ \\ 
+  $<1$  & $\frac{c_aV_a-c_bV_b}{V_a+V_b}$ & $\frac{c_bV_b}{V_a+V_b}$ & $\epsilon_2$ & $\frac{K_e\cz^2}{\epsilon_2}$& $\pKa + \log \left( \frac{x}{1-x} \right) $  \\
+  $=1$  & $\epsilon_3$ & $\frac{c_bV_b}{V_a+V_b} = \frac{c_aV_a}{V_a+V_b}$ & $\frac{K_e\cz^2}{\epsilon_3}$ & $\epsilon_3$  & $\frac{1}{2}\left( \pKa + \mathrm{p}K_e +\log \left( \frac{c_b/\cz}{1+V_a/V_\text{eq}} \right)  \right) $  \\
+  $>1$ & $\epsilon_4$ & $\frac{c_aV_a}{V_a+V_b}$ & $\frac{K_e \cz^2 (V_a+V_b)}{c_bV_b-c_aV_a}$ & $\frac{c_bV_b-c_aV_a}{V_a+V_b}$ & $\mathrm{p}K_e+\log\left( \frac{c_b}{\cz}\frac{x-1}{x+1} \right) $   \\
+  \bottomrule
+  \end{tabular}
+\end{center}
+
+\subsubsection{Titrage conductimétrique }%
+\label{ssub:titrage_conductimetrique_}
+On note \ce{CH3COOH=AH} et \ce{CH3COO-=A-}
+
+La conductivité de la solution est 
+\begin{equation}
+  \sigma = \lambda_{\ce{A-}}[\ce{A-}] + \lambda_{\ce{Na+}}[\ce{Na+}] + \lambda_{\ce{HO-}} [\ce{HO-}] + \lambda_{\ce{H3O+}}[\ce{H3O+}]
+\end{equation}
+On ne s'intéresse qu'à ce qu'il se passe loin du point d'équivalence :
+\begin{center}
+  \begin{tabular}{ll}
+    \toprule
+    $x$ & $\sigma(V_a+V_b)$ \\
+    \midrule
+    $<1$ & $\lambda_{\ce{A-}}c_bV_b + \lambda_{\ce{Na+}}c_bV_b$ \\
+    $>1$ & $\lambda_{\ce{A-}}c_aV_a + \lambda_{\ce{Na+}}c_bV_b + \lambda_{\ce{HO-}}(c_bV_b-c_aV_a)$\\ 
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+Pour s'affranchir de la dilution, on trace la conductivité corrigée $\sigma(V_a+V_b)$ en fonction de $V_b$. Loin de l'équivalence, on obtient des segments de droite dont l'intersection donne le volume équivalent. On observe une rupture de pente à l'équivalence car la conductivité des ions \ce{HO-} est beaucoup plus grande que celle des ions \ce{CH3COO-}.
+
+\subsubsection{Titrage en utilisant un indicateur coloré}%
+\label{ssub:titrage_en_utilisant_un_indicateur_colore}
+
+Un indicateur coloré acido-basique est un couple acide-base dont le $\pKa$ est noté $\mathrm{p}K_i$ dont les deux espèces n'ont pas la même couleur. Typiquement le changement de couleur se produit sur un intervalle de pH allant de $\mathrm{p}K_i-1$ à $\mathrm{p}K_i+1$. Il faudra donc que le $\mathrm{p}K_i$ de l'indicateur coloré se situe dans le saut de pH du titrage et que ce saut de pH soit suffisamment important. On donne quelques indicateurs colorés dans le tableau ci-dessous :
+\begin{center}
+  \begin{tabular}{llll}
+    \toprule
+    Nom &  $\mathrm{p}K_i$ & Zone de virage & Couleur acide/base \\
+    \midrule
+    Bleu de thymol & \num{2.0} & $\num{1.2}-\num{2.8}$ & rouge/jaune \\
+    Héliantine & \num{3.7} & $\num{3.1}-\num{4.4}$ & rouge/jaune \\
+    Rouge de méthyle & \num{5.2} & $\num{4.2}-\num{6.2}$ & rouge/jaune \\
+    Bleu de bromothymol & \num{6.8} & $\num{6.0}-\num{7.6}$ & jaune/bleu \\
+    Rouge de Crésol & \num{8.0} & $\num{7.2}-\num{8.8}$ & jaune/rouge \\
+    Phénolphtaléine & \num{9.0} & $\num{8.0}-\num{9.9}$ & incolore/rouge \\
+    Jaune d'alizarine & \num{11.0} & $\num{10.1}-\num{11.1}$ & jaune/violet\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\subsection{Partie expérimentale}%
+\label{sub:partie_experimentale}
+
+\subsubsection{Objectif du titrage}%
+\label{ssub:objectif_du_titrage}
+
+L'objectif est de doser l'acide éthanoïque ($\pKa=\num{4.8}$) dans le vinaigre blanc commercial de façon à déterminer son degré d'acidité, c'est-à-dire la fraction massique d'acide éthanoïque contenu dans le vinaigre. 
+
+\subsubsection{Étude préliminaire}%
+\label{ssub:etude_preliminaire}
+
+Le degré d'acidité du vinaigre est compris entre \num{5} et \SI{8}{\percent}. 
+\begin{itemize}
+  \item On souhaite que l'équivalence intervienne entre la moitié et les 2/3 de la burette de \SI{50}{\milli\litre}. Quel volume de vinaigre doit-on prélevier pour effectuer le dosage ?
+
+  \item Le volume à prélever n'étant pas très important, il peut être difficile de la prélever précisément avec de la verrerie classique. Comment procéder pour améliorer la précision du titrage ?
+
+  \item Quel indicateur coloré doit être utilisé ?
+\end{itemize}
+
+\subsubsection{Réalisation du titrage}%
+\label{ssub:realisation_du_titrage}
+
+\begin{itemize}
+\item Mettre en œuvre le titrage. On effectuera les trois méthodes de titrage simultanément en plongeant les électrodes pH-métriques et conductimétriques dans la solution tout en ajoutant quelques gouttes d'indicateur coloré.
+ 
+\item Faire un tableau contenant les valeurs du pH et de la conductivité.
+
+\item Tracer la courbe $\pH=f(V_b)$ et déterminer le volume à l'équivalence. En déduire la concentration en acide.
+
+\item Comparer la valeur du pH à la demi-équivalence à la valeur attendue.
+
+\item Déduire le volume équivalent du dosage colorimétrique et en déduire la concentration en acide.
+
+\item Tracer la courbe représentative de $\sigma \times (V_a+V_b) = f(V_b)$ et déterminer graphiquement le volume à l'équivalence. En déduire $c_a$. 
+
+\item Comparer les résultats donnés par les trois méthodes et discuter leur précision.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,54 @@
+\documentclass[]{tp}
+\usepackage{multicol}
+%\usepackage[version=3]{mhchem}
+\titre{TP30 : Calorimétrie 2}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+Dans ce TP, nous allons à nouveau mesurer la capacité thermique d'un métal et l'enthalpie massique de fusion de la glace comme au TP28, mais en utilisant une méthode différente.
+
+\vspace{1em}
+\textit{Ne pas oublier qu'une mesure physique doit toujours être associée à une incertitude expérimentale. Penser à lire la notice des appareils pour connaître l'incertitude liée aux valeurs qu'ils fournissent.}  
+
+\section{Détermination des capacités thermiques}%
+\label{capacite_thermique_calorimetre}
+\subsection{Protocole expérimental}%
+\label{sub:Protocole expérimental}
+
+On commence par déterminer la capacité thermique $C$ du calorimètre et de ses accessoires ainsi que la capacité thermique massique $c_e$ de l'eau. Pour cela, on procède de la manière suivante :
+
+\begin{itemize}
+  \item On place une masse $m_1=\SI{200}{\gram}$ d'eau dans le calorimètre sur lequel on a adapté une résistance chauffante. On vérifiera bien que la résistance est complètement immergée, sinon il faudra rajouter de l'eau (il faut connaitre précisément la masse d'eau).
+
+  \item Lorsque la température dans le calorimètre est stable, on fait passer un courant dans la résistance et on mesure l'évolution de la température $T(t)$. On mesurera l'intensité $i_1$ et la tension $u_1$ de la résistance au cours de l'expérience.
+
+  \item On fait l'acquisition de l'évolution de la température en agitant correctement l'eau pour que la température y soit homogène. La température devrait évoluer de manière affine avec le temps. Lorsqu'on observe une droite suffisamment bien définie pour déterminer sa pente, on arrête l'acquisition.
+
+  \item On répète les étapes précédentes avec une masse $m_2=\SI{300}{\gram}$ d'eau dans le calorimètre. 
+\end{itemize}
+
+\subsection{Analyse des résultats}%
+\label{sub:Analyse des résultats}
+Normalement, la tension $u$ et l'intensité $i$ du courant sont relativement constants au cours de l'expérience. La puissance thermique fournie par la résistance est $P=\dt{Q}=ui$. Le premier principe appliqué à l'eau et au calorimètre est :
+\begin{equation}
+  \Delta H = Q = (m_ec_e + C)\Delta T \quad \text{donc} \quad P = \dt{Q} = (m_ec_e + C) \dt{T}
+\end{equation}
+En notant $\alpha_1$ la valeur de $\dt{T}$ (pente de la droite) lors de la première expérience, et $\alpha_2$ sa valeur lors de la seconde expérience, on peut montrer (faites-le pour vous entraîner) que :
+\begin{equation}
+c_e = \frac{\alpha_2 P_1 - \alpha_1P_2}{\alpha_1\alpha_2(m_1-m_2)} \quad \text{et} \quad C = \frac{\alpha_2 m_2 P_1 - \alpha_1m_1P_2}{\alpha_1\alpha_2(m_1-m_2)}
+\end{equation}
+où $P_1$ et $P_2$ sont les puissances mesurées au cours des deux expériences.
+
+\section{Détermination de l'enthalpie de fusion de la glace}
+
+On souhaite mesurer l'enthalpie de fusion de la glace avec une méthode électrique. Le protocole détaillé est laissé à votre appréciation, mais on pourra éventuellement :
+\begin{itemize}
+  \item Mettre de l'eau à \SI{0}{\celsius} dans le calorimètre ;
+  \item Ajouter une masse $m_g$ de glace connue ;
+  \item Faire passer un courant dans la résistance et mesurer le temps que la glace met pour fondre totalement.
+  \item Lorsque toute la glace a fondu, éteindre l'alimentation électrique et mesurer l'évolution de la température de l'eau pour estimer le transfert thermique avec l'extérieur.
+\end{itemize}
+À vous de régler les détails, ou même de modifier le protocole.
+
+\end{document}

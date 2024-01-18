@@ -1,0 +1,88 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{chemfig}
+\usepackage[version=4]{mhchem}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{decorations.text}
+\titre{TP24 : Formation et dissolution d'un précipité}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+L'objectif de ce TP est d'observer la variabilité de la solubilité d'un précipité avec la température, puis la dissolution et la recristallisation d'un précipité lorsque le pH varie.
+
+\section{Formation d'un précipité : la pluie d'or}%
+\label{sec:formation_d_un_precipite_la_pluie_d_or}
+On se propose d'observer la variation de la solubilité avec la température. Cette variation sera visualisée lors d'une expérience de recristallisation, dont le but est de purifier une espèce chimique ou d'obtenir de beaux cristaux.
+
+L'iodure de plomb (\ce{PbI2}) est assez insoluble à froid et plus soluble à chaud. Il recristallise sous forme de paillettes jaune d'or, d'où le nom consacré de l'expérience.
+
+\subsection{Mode opératoire}%
+\label{sub:mode_operatoire}
+
+\begin{itemize}
+  \item Dans un bécher de \SI{50}{\milli\litre}, verser \SI{1}{\milli\litre} d'une solution de nitrate de plomb à \SI{5}{\percent} (prélevé avec une pipette graduée, s'il n'y a pas de pipette automatique). Ajouter \SI{1}{\milli\litre} de solution d'iodure de potassium (\ce{K+ + I-}) à \SI{5}{\percent}. Que se passe-t-il ?
+
+  \item Ajouter \SI{20}{\milli\litre} d'eau distillée à l'aide d'une éprouvette graduée.
+
+  \item Disposer le bécher sur la plaque chauffante et chauffer jusqu'à ébullition. Le solide doit se dissoudre totalement en donnant une solution incolore. (Si ça n'est pas le cas, il faut ajouter un peu d'eau)
+
+  \item Refroidir la solution en trempant le bécher dans un cristallisoir rempli d'un mélange eau/glace, tout en remuant bien (mais délicatement) le bécher. Dès que le liquide commence à changer d'aspect, sortir le bécher de l'eau froide et observer, en remuant un peu, le précipité jaune se former.
+\end{itemize}
+
+\subsection{Interprétation des résultats}%
+\label{sub:interpretation_des_resultats}
+
+On a mis en évidence que la recristallisation permet d'obtenur de jolis cristaux en paillettes, alors que l'on était parti d'une poudre (peu cristallisée). Cette formation de jolis cristaux est un gage de la pureté du produit recristallisé. 
+
+\section{Précipitation et redissolution de l'hydroxyde d'aluminium}%
+\label{sec:precipitation_et_redissolution_de_l_hydroxyde_d_aluminium}
+
+L'ion aluminium précipite suivant la réaction suivante 
+\begin{equation}
+  \ce{Al^3+ (aq) + 3HO- (aq) <=> Al(OH)3(s)} 
+\end{equation}
+de constante d'équilibre $K=1/K_s=10^{\num{32.5}}$. 
+Le précipité peut se dissoudre par complexation (ce précipité est donc amphotère)
+\begin{equation}
+  \ce{Al(OH)3(s) + HO-(aq) <=> Al(OH)4- (aq)}
+\end{equation}
+de constante d'équilibre $K_f = \num{10}$. 
+
+Pour observer cette précipitation, puis cette redissolution, qui ont lieu successivement avec l'ajout d'ions \ce{HO-} dans la solution, on va procéder à un dosage d'une solution acidifiée de \ce{Al^3+} par la soude, puis exploiter les courbes de dosage pH-métrique et conductimétrique obtenues.
+
+\subsection{Expérience}%
+\label{sub:experience}
+
+\begin{itemize}
+  \item Étalonner le pH-mètre et le conductimètre : utiliser les solutions tampon à votre disposition ainsi que la solution de chlorure de potassium (voir notices).
+ 
+ On part d'une solution mère telle que \ce{[Al^3+]} = \SI{4e-2}{\mole\per\litre}, \ce{[SO4^2-]}=\SI{6e-2}{\mole\per\litre} et \ce{[H2SO4]}=\SI{2.5e-2}{\mole\per\litre}.
+
+ \item Préparer \SI{100}{\milli\litre} de solution fille en diluant 10 fois la solution mère. Verser ces \SI{100}{\milli\litre} dans un bécher de \SI{200}{\milli\litre}. Remplir la burette de soude à \SI{0.1}{\mole\per\litre}.
+
+ \item Suivre l'évolution du pH : il faudra notamment être soigneux entre 4 et \SI{6}{\milli\litre} puis entre 15 et \SI{18}{\milli\litre} et entre 20 et \SI{23}{\milli\litre}. Les points seront reportés au fur et à mesure afin de juger s'il est nécessaire d'affiner la mesure en fonction de la variation du pH. Effectuer le dosage jusqu'à \SI{30}{\milli\litre}
+
+ \item En parallèle, relever la valeur de la conductivité de la solution.
+\end{itemize}
+\textbf{Remarque : } L'apparition ou la disparition d'un précipité sur une courbe de dosage est toujours caractérisée par un point anguleux. 
+
+\subsection{Exploitation}%
+\label{sub:exploitation}
+
+On exploitera principalement la courbe pH-métrique, la courbe de conductimétrie permet de confirmer graphiquement la présence des points remarquables.
+
+\begin{itemize}
+  \item Utiliser le logiciel " Dozzaqueux " pour confronter les résultats obtenus à la courbe théorique. Noter les volumes et valeurs de pH prévus pour les points caractéristiques de la courbe.
+
+  \item Écrire les réactions prépondérantes qui se déroulent dans le bécher dans chaque partie du dosage.
+  
+  \item Calculer le pH initial, le pH de début de précipitation et le pH de disparition du précipité.
+
+  \item Utiliser la courbe de pH pour déterminer les valeurs de $K_s$ et $K_f$. Comparer aux valeurs théoriques données plus haut.
+\end{itemize}
+
+\textit{Données : } \ce{H2SO4} : Première acidité forte et $\mathrm{p}K_a(\ce{HSO4- / SO4^2-) = \num{1.95}}$ 
+\end{document}
+

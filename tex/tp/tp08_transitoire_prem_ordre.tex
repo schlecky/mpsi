@@ -1,0 +1,88 @@
+\documentclass{tp}
+\usepackage{pgfplots}
+\titre{TP8 : Régime transitoire du premier ordre}
+\begin{document}
+%\small
+
+\section{Objectif du TP}
+L'objectif de ce TP est de faire l'acquisition de la tension aux bornes du condensateur au cours de sa charge à travers une résistance, et de confronter les résultats expérimentaux aux expressions théoriques.
+
+\vspace{1em}
+\textit{Ne pas oublier qu'une mesure physique doit toujours être associée à une incertitude expérimentale. Penser à lire la notice des appareils pour connaître l'incertitude liée aux valeurs qu'ils fournissent.}
+
+\section{Acquisition de la tension aux bornes du condensateur}
+\subsection{Visualisation à l'oscilloscope}
+Réaliser un montage permettant de visualiser la charge du condensateur à l'oscilloscope.
+
+Déterminer par cette méthode la constante de temps $\tau$ de la charge et la confronter à la valeur théorique qui est : $\tau=RC$. Ne pas oublier d'évaluer l'incertitude associée à cette mesure.
+
+On rappelle que la valeur de la constante de temps associée à la charge du condensateur peut être déterminée grâce à la méthode de la tangente représentée sur la figure ci-dessous.
+\begin{center}
+%includegraphics[width=0.4\linewidth]{TP10_charge_cond.pdf}
+\begin{tikzpicture}
+\begin{axis}[
+  height=6cm,
+  width=10cm,
+  xmin=0,xmax=10,
+  ymin=0,ymax=10,
+  xtick=\empty,
+  ytick=\empty,
+  axis lines=left,
+  clip=false,
+  xlabel=$t$,
+  ylabel=$u(t)$,
+  every axis y label/.style={at={(axis description cs:0,1)},anchor=south},
+  every axis x label/.style={at={(axis description cs:1,0)},anchor=west},
+  ]
+\addplot[domain=0:10,samples=100,smooth,thick]{8*(1-exp(-x/2))};
+\draw[dotted] (axis cs:0,8) node[left] {$E$}-- (axis cs:10,8);
+\draw[dotted] (axis cs:2,0) node[below] {$\tau$}-- (axis cs:2,10);
+\draw[dashed] (axis cs:0,0) -- (axis cs:2,8);
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Acquisition informatique} 
+\`A l'aide de l'interface d'acquisition et du logiciel \emph{LatisPro}, faire la même acquisition de la charge du condensateur.
+
+L'acquisition informatique permet de confronter directement l'évolution temporelle de la tension aux bornes du condensateur avec l'évolution prévue théoriquement. 
+
+On rappelle que la théorie prévoit que la tension $u(t)$ aux bornes d'un condensateur chargé sous une tension $E$ à travers une résistance $R$ est :
+\begin{equation}
+	u(t)=E\left(1-\exp\left(-\frac t\tau\right)\right)
+\end{equation}
+
+Pour pouvoir traiter les données enregistrées par \emph{LatisPro} il va falloir les importer dans Python. Pour cela on effectuera les étapes suivantes : 
+\begin{itemize}
+  \item Fichier $\rightarrow$ Exportation;
+  \item Format : \texttt{TXT} ; Décimal : point;  Entre les données : tabulation
+  \item Enregistrer le fichier, par exemple en lui donnant le nom \texttt{data.txt}.
+\end{itemize}
+
+On pourra ensuite importer les données dans un script Python avec la commande suivante
+\begin{minted}{python}
+import numpy as np
+# skiprows permet d'ignorer la première ligne du fichier qui contient les titres des colonnes.
+data = np.loadtxt("data.csv", skiprows=1)
+\end{minted}
+Il faudra très certainement spécifier le chemin complet du fichier \texttt{data.csv} dans la fonction \texttt{loadtxt}.
+Si les valeurs du temps $t$ et de la tension $u(t)$ sont contenues dans les deux premières colonnes du fichier \texttt{data.csv}, on pourra les récupérer dans des tableaux numpy \texttt{t} et \texttt{u} avec les commandes
+\begin{minted}{python}
+  t = data[:,0]
+  u = data[:,1]
+\end{minted}
+
+On pourra estimer la valeur de $E$ grace à la valeur limite atteinte par $u(t)$. Par exemple, si on veut prendre la valeur moyenne des 10 dernières valeurs de $u(t)$, on pourra écrire
+\begin{minted}{python}
+  E = np.mean(u[-10:])
+\end{minted}
+On peut ensuite transformer les données pour obtenir une droite. Par exemple on pourra tracer la fonction
+\begin{equation}
+  f(t) = \ln(E-u(t)) 
+\end{equation}
+en fonction de $t$. Dans ce cas la théorie prévoit que l'on obtient une droite décroissante de pente $-\frac{1}{\tau}$. Une régression linéaire devrait permettre de confronter la théorie et l'expérience et de déterminer la valeur de $\tau$.   
+
+On pourra enfin tracer sur le même graphique les mesures de $u(t)$ ainsi que la fonction théorique avec les paramètres déterminés par la régression linéaire.
+\end{document}

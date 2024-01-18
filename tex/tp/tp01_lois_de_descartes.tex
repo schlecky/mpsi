@@ -1,0 +1,171 @@
+\documentclass[a4paper]{tp}
+\usepackage[version=3]{mhchem}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{arrows.meta}
+\titre{TP1 : Lois de Descartes}
+\begin{document}
+\section{Objectif du TP}
+
+On dispose de matériel spécialement destiné à étudier les lois de la réflexion et de la réfraction : une lampe muni d'une fente envoie un faisceau incident sur un demi-disque en plexiglas. Celui-ci est fixé sur un rapporteur. Si besoin, ajuster la position de la lampe pour que le faisceau passe précisément par le centre du demi-disque.
+
+L'objectif du TP est de vérifier expérimentalement les lois de Snell-Descartes concernant la réflexion et la réfraction. On cherchera notamment à déterminer la relation entre les angles d'incidence et de réflexion.
+
+On attachera une attention particulière à essayer d'estimer les incertitudes associées aux mesures et à déterminer les incertitudes sur les résultats calculés (notamment sur l'indice de réfraction du plexiglas).
+
+
+\section{\'Etude de la réflexion et de la réfraction sur un dioptre  air-plexiglas} 
+
+On souhaite étudier la réflexion et la réfraction sur le dioptre plan. Pour cela, on fera arriver le pinceau lumineux sur la partie plate du demi-disque, comme sur la figure ci-dessous.
+
+\begin{center}
+\begin{tikzpicture}[]
+ \draw (0,0) circle(2);
+ \draw[fill=gray!20] (0,-1.5) -- (0,1.5) arc (90:-90:1.5);
+ \foreach \a in {10,20,...,80} {
+   \draw (\a:1.8) -- (\a:2) node[pos=1.1, right, sloped]{\scriptsize \a};
+   \draw (-\a:1.8) -- (-\a:2) node[pos=1.1, right, sloped]{\scriptsize \a};
+   \draw (180-\a:1.8) -- (180-\a:2) node[pos=1.1, left, sloped]{\scriptsize \a};
+   \draw (180+\a:1.8) -- (180+\a:2) node[pos=1.1, left, sloped]{\scriptsize \a};
+ }
+ \draw (0:1.8) -- (0:2) node[pos=1.1, right, sloped]{\scriptsize 0};
+ \draw (180:1.8) -- (180:2) node[pos=1.1, left, sloped]{\scriptsize 0};
+ \draw (90:1.8) -- (90:2) node[pos=1.1, right, sloped]{\scriptsize 90};
+ \draw (-90:1.8) -- (-90:2) node[pos=1.1, right, sloped]{\scriptsize 90};
+
+ \draw[thick, rayon] (215:3) -- (0,0);
+ \draw[thick, rayon] (0,0) -- (25:3);
+ \draw[dashed] (-1, 0) -- (1, 0);
+ \draw[latex-latex] (60:2.5) arc (60:120:2.5);
+ \draw (215:1) arc (215:180:1) node[midway, left]{$i_1$ };
+ \draw (0:1) arc (0:25:1) node[midway, right]{$i_2$ };
+\end{tikzpicture}
+\captionof{figure}{
+ Schéma du montage d'étude des lois de Descartes.
+}
+
+\end{center}
+\begin{itemize}
+  \item  Quel est l'intérêt d'avoir un second dioptre de forme circulaire ? 
+
+  \item Vérifier la loi de Snell-Descartes de la réflexion pour plusieurs valeurs de l'angle d'incidence.
+
+  \item Tracer la courbe expérimentale $\sin(i_1)$ en fonction de $\sin(i_2)$, où $i_1$ est l'angle d'incidence sur le dioptre plan et $i_2$ l'angle réfracté.
+
+  \item En appelant $y$ l'ordonnée et $x$ l'abscisse, quelle doit-être théoriquement la fonction $y(x)$ ? Tracer la droite passant au plus près des points expérimentaux et en déduire l'indice $n$ du plexiglas. 
+\end{itemize}
+
+\section{Réflexion totale}
+
+
+\begin{itemize}
+  \item Une réflexion totale est-elle possible sur un dioptre air-plexiglas ? Sur un dioptre plexiglas-air ? En déduire comment observer la réflexion totale avec le matériel disponible.
+  \item En déduire une autre façon de mesurer l'indice $n$ du plexiglas. 
+\end{itemize}
+
+\end{document}
+
+\section{Étude d'un prisme}
+
+On remplace le demi-disque par un prisme en plexiglas. Le faisceau lumineux est envoyé 
+sur un côté du prisme, il est réfracté par un
+premier dioptre en arrivant sur le prisme puis par un deuxième dioptre en
+sortant du prisme. 
+
+\begin{center}
+\tikzset{rayon/.style = {postaction={decorate},decoration = {markings, mark = at position 0.5 with {\arrow{latex}}}}}
+\begin{tikzpicture}[scale=1.2]
+%prisme
+\draw[thick] (0,0) -- (-120:3) coordinate (A) node[midway](I){};
+\draw[thick] (0,0) -- (-60:3) coordinate (B) node[pos=0.55](R){};
+\draw[thick] (A) -- (B);
+\draw (-120:0.5) arc (-120:-60:0.5) (0,-0.5) node[below]{A};
+
+%normal rayon incident
+\draw[dashed] (I) ++(-210:1) -- ++(-30:2.5);
+%rayon incident
+\draw[rayon] (I) ++(190:1.5) -- (I.center);
+\draw[dashed] (I) -- ++(10:3);
+%angle i
+\draw (I) ++(150:0.4) node[left,yshift=-0.1cm]{$i$} arc(150:190:0.4);
+
+%rayon intérieur
+\draw[rayon] (I.center) -- (R.center);
+%angle r
+\draw (I)++(-30:0.4) node[right,yshift=1]{$r$} arc(-30:-7:0.4);
+%angle r'
+\draw (R)++(210:0.4) node[above left,yshift=-4]{$r'$} arc(210:173:0.4);
+%normal rayon émergent
+\draw[dashed] (R) ++(-150:1)  -- ++(30:1.5);
+%rayon émergent
+\draw[rayon] (R.center) -- ++(-15:1.5);
+%angle i'
+\draw (R)++(-15:0.4) node[above right]{$i'$} arc(-15:30:0.4);
+%angle D
+\draw (R)++(-15:1) arc(-15:10:2) node[below right,yshift=-5]{$D$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Détermination de l'angle}
+
+Pour déterminer expérimentalement l'angle $A$, on envoie un faisceau de lumière sur cet angle et on mesure l'angle entre les deux faisceaux réfléchis. 
+\begin{center}
+  \begin{tikzpicture}
+    \draw[thick] (0,0) -- (-60:2) -- (-120:2) -- cycle;
+    \draw (-60:0.5) arc (-60:-120:0.5) node[midway, below]{$A$ };
+    \coordinate (A) at (-120:0.4);
+    \coordinate (B) at (-60:0.4);
+    \draw[rayon] ($(A)+(0,1)$) -- (A) ;  
+    \draw[rayon] ($(B)+(0,1)$) -- (B);  
+    \draw[rayon] (A) -- ++(-150:2);
+    \draw[rayon] (B) -- ++(-30:2);
+    \draw ($(A)+(-150:1)$) to[out=-60, in=-120] ($(B)+(-30:1)$) ;
+    \draw (0, -1.3) node[below] {$2A$} ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+  \item Montrer que l'angle entre les deux faisceaux réfléchis vaut $2A$. On peut le montrer dans le cas où les angles d'incidence sur les deux faces sont les mêmes, mais aussi que ça reste vrai si le prisme est un peu \emph{tourné}.  
+  \item Mesurer par cette méthode la valeur de $A$. 
+\end{itemize}
+
+
+\subsection{\'Etude de la déviation}
+
+On s'intéresse à la déviation du prisme c'est à dire l'angle
+$D$ entre le rayon incident et le rayon émergent (\cf figure en
+annexe). 
+\begin{itemize}
+  \item Tracer sur le même graphe les courbes expérimentales $D$ en fonction
+de $i$ correspondant aux deux configurations.
+Constater que les courbes présentent un minimum.
+\end{itemize}
+
+\bigskip
+
+On peut montrer que l'indice $n$ du prisme vérifie
+$$
+n=\frac{\sin\left(\frac{A+D_m}{2}\right)}{\sin\left(\frac{A}{2}\right)},
+$$
+où $A$ est l'angle du prisme et $D_m$ la valeur minimale de D.
+
+\begin{itemize}
+  \item Utiliser cette relation pour déterminer la valeur de l'indice du prisme à
+partir des courbes expérimentales.
+\end{itemize}
+
+
+\subsection{Dispersion}
+
+L'indice $n$ dépend de la longueur d'onde donc la déviation dépend
+de la longueur d'onde. 
+
+\begin{itemize}
+  \item Quelle couleur est la plus déviée par le prisme ?
+  \item Peut-on déterminer expérimentalement un ordre de grandeur de
+$\Delta n$, où $\Delta n$ est la différence d'indice entre les deux extrémités
+du spectre visible ?
+\end{itemize}
+\end{document}
+
+

@@ -1,0 +1,733 @@
+\documentclass{cours}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{cases}
+\usepackage{amssymb}
+\usepackage{calc}
+%\usepackage{esvect}
+\usepackage{tikz-3dplot} 
+\usetikzlibrary {decorations.text}
+\usepackage{mhchem}
+\begin{document}
+\newcommand{\Na}{\ensuremath{\mathcal{N}_A}}
+
+\setcounter{chapter}{14}
+\chapter{Description macroscopique et microscopique d'un système à l'équilibre}
+\section{La thermodynamique}%
+\label{sec:la_thermodynamique}
+
+\subsection{Échelles macroscopique et microscopique}%
+\label{sub:echelles_macroscopique_et_microscopique}
+
+Lorsqu'on observe la matière à une échelle \textbf{macroscopique}, elle apparaît continue. Mais si on l'observe à une échelle \textbf{microscopique}, elle est composée d'atomes et elle est discontinue.
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[fill=gray!10,decorate, decoration={random steps,segment length=2mm, amplitude=1pt}] (0,0) rectangle (3, 2);
+    \draw (1.5, 0) node[below]{Échelle macroscopique};
+
+    \draw[decorate, decoration={random steps,segment length=2mm, amplitude=1pt}] (5,0) rectangle ++(3, 2);
+    \draw (6.5, 0) node[below]{Échelle microscopique};
+
+    \foreach \i in {1,2,...,30}{
+    \pgfmathparse{random()}
+    \pgfmathsetmacro\xpos{5.05+2.9*\pgfmathresult}
+    \pgfmathparse{random()}
+    \pgfmathsetmacro\ypos{0.05+1.9*\pgfmathresult}
+    \fill (\xpos,\ypos) circle (0.05);
+    }
+  \end{tikzpicture}
+\end{center}
+
+Un système macroscopique contient un nombre de particules de l'ordre du nombre d'Avogadro 
+\begin{eqencadre}
+  \Na = \SI{6.02214076e23}{atomes}
+\end{eqencadre}
+Pour étudier un tel système avec les lois de la mécanique, il faudrait, pour stocker l'état du système 6 nombres par particule (3 pour la position et 3 pour la vitesse), c'est à dire de l'ordre de \SI{4e24}{nombres}. 
+
+Pour se rendre compte de ce que cela représente, imaginons que nous stockions ces nombres numériquement dans la mémoire d'un ordinateur. Un nombre à virgule est généralement stocké sur 4 octets, il faudrait donc \SI{16e24}{octets} pour stocker l'état du système à un instant donné. La capacité de stockage mondiale (en 2020), tous supports confondus est estimée à \SI{6.8e21}{octets}, ce qui serait largement insuffisant. 
+Si on écrivait les nombres nécessaires sur des feuilles de papier, la pile de feuilles nécessaire serait haute de plusieurs dizaines d'années-lumière !
+
+Le traitement mécanique à l'échelle microscopique est totalement impossible, on silifie le problème en introduisant des grandeurs macroscopiques comme la pression $P$, la température $T$, ...  
+
+On introduit également l'échelle \textbf{mésoscopique}, intermédiaire entre l'échelle microscopique et macroscopique. C'est une échelle suffisamment grande pour pouvoir y définir des grandeurs moyennes comme la température, la pression, etc.  Mais elle doit être suffisamment petite pour être que ces grandeurs restent locales à l'échelle macroscopique. L'échelle mésoscopique dépend de la densité du corps étudie.
+
+\subsection{Libre parcours moyen}%
+\label{sub:libre_parcours_moyen}
+Dans un fluide (gaz ou liquide), les particules sont libres de se déplacer. Par contre, il existe des interactions entre particules. On peut définir dans un tel corps le \textbf{libre parcours moyen} $\ell$  d'une particule. Il s'agit de la distance qu'elle parcourt \textit{en moyenne} entre chaque interaction avec une autre particule. 
+
+Dans un liquide, les particules sont quasiment en contact, donc le libre parcours moyen sera de l'ordre de la taille d'une particule, soit $\ell \approx \SI{1e-10}{\meter}$. 
+
+Dans un gaz à température et pression usuelles ($T=\SI{300}{\kelvin}$ et $p=\SI{1}{\bar}$), le libre parcours moyen d'une molécule du gaz est de l'ordre de $\ell \approx \SI{1}{\micro\m}$. 
+
+Pour le montrer, on peut utiliser un modèle de sphères dures. Considérons un gaz dont les particules sont des sphères de rayon $r$, avec en moyenne $n$ particules par \si{\cubic\meter}. Lorsqu'une particule parcours une distance $\ell$, elle balaye un cylindre de rayon $r$ et de hauteur $\ell$. Pour que cette particule n'en heurte en moyenne qu'une autre sur la distance $\ell$, il faut que le cylindre de hauteur $\ell$ et de rayon $2r$ ne contienne le centre que d'une seule autre particule (voir figure~\ref{fig:spheres_dures}).
+\begin{center}
+  \begin{tikzpicture}
+    \draw[fill=gray!50] (0,0) circle (0.5cm) circle(1pt);
+    \draw[fill=black] (0,0) circle(1pt);
+    \draw[fill=gray!10] (6,0.6) circle (0.5cm);
+    \draw[fill=black] (6,0.6) circle(1pt);
+    \draw[fill=gray!10] (4,-1.3) circle (0.5cm);
+    \draw[fill=black] (4,-1.3) circle(1pt);
+    \draw[fill=gray!10] (8,1.2) circle (0.5cm);
+    \draw[fill=black] (8,1.2) circle(1pt);
+    \draw[fill=gray!10] (9,-1.2) circle (0.5cm);
+    \draw[fill=black] (9,-1.2) circle(1pt);
+    \draw[dashed](0, 1) -- (10, 1);
+    \draw[dashed](0, -1) -- (10, -1);
+    \draw[dotted](0, 0.5) -- (10, 0.5);
+    \draw[dotted](0, -0.5) -- (10, -0.5);
+    \draw[latex-latex] (0, -2) -- (10, -2) node[midway, fill=white] {$\ell$ };
+    \draw[gray](0, 0) -- (10, 0);
+    \draw[latex-latex] (10, 0) -- (10, 1) node[midway, fill=white]{$2r$}; 
+  \end{tikzpicture}
+  \captionof{figure}{Modèle de sphères dures pour le calcul du libre parcours moyen}
+\end{center}
+
+On doit donc avoir 
+\begin{equation}
+  n\pi(2r)^2\ell = 1 \quad \text{soit} \quad \ell = \frac{1}{4\pi r^2 n}
+\end{equation}
+
+Dans les conditions usuelles de température et de pression, on a $n\approx \SI{2.5e25}{\per\cubic\meter}$ et $2r\approx \SI{1e-10}{\m}$ et on en déduit 
+\begin{eqencadre}
+  \ell \approx \SI{1.3}{\micro\meter} 
+\end{eqencadre}
+
+
+
+\subsection{Système thermodynamique}%
+\label{sub:systeme_thermodynamique}
+Un \textbf{système thermodynamique} est une partie de l'univers qui est isolée \emph{par la pensée} du reste de l'univers (milieu extérieur). La frontière entre le système thermodynamique et le milieu extérieur n'est pas forcément une frontière physique.
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[decorate, decoration={random steps,segment length=2mm, amplitude=1pt}] (0,0) circle (5cm and 2cm) ;
+    \draw (5,0) node[left]{Univers};
+    \draw[dashed, fill=gray!10,decorate, decoration={random steps,segment length=2mm, amplitude=1pt}] (-1,0) circle (2cm and 1cm) node[align=center]{Système\\ thermodynamque};
+  \end{tikzpicture}
+\end{center}
+
+
+\begin{itemize}
+  \item Un \textbf{système ouvert} peut échanger de la matière et de l'énergie avec le milieu extérieur. Par exemple une maison est un système ouvert.
+  \item Un \textbf{système fermé} ne peut échanger que de l'énergie avec le milieu extérieur (pas de matière). Par exemple une bouteille fermée hermétiquement.
+  \item Un \textbf{système isolé} ne peut échanger ni matière ni énergie avec le milieu extérieur. Par exemple une bouteille thermos peut parfois être considérée comme un système fermé. L'univers dans son ensemble est un système fermé.
+\end{itemize}
+
+\section{Description d'un gaz à l'échelle microscopique}%
+\label{sec:description_d_un_gaz_a_l_echelle_microscopique}
+Dans cette partie, nous allons étudier un gaz à l'échelle microscopique, et nous verrons plus loin comment relier les propriétés microscopiques des molécules du gaz à ses propriétés macroscopiques.
+
+On commence par modéliser un gaz par un ensemble de particules ponctuelles identiques de masse $m$. Vu le nombre incroyablement élevé de particules dans le gaz, il est complètement impossible de suivre le mouvement individuel de chacune. Par contre, on peut en donner une description \textbf{statistique}. 
+
+On appelle $n=\frac{N}{V}$ la densité volumique de particules. Les particules sont soumises à une agitation microscopique qui fait qu'elles ont toutes un vecteur vitesse $\vv{v}$ différent. On peut s'intéresser à la \textbf{distribution de vitesses} des particules. 
+
+Pour bien comprendre ce concept, on peut imaginer que l'on attribue à chaque particule d'un volume $V$ du gaz, un point $M(v_x, v_y, v_z)$ dans l'\textit{espace des vitesses}, dont les coordonnées sont celle de la vitesse de la particule en question. On se pose alors la question de la distribution de ces points dans l'espace des vitesses. Et comme le nombre de points est très élevé, on peut s'interroger sur la \textit{densité} $G(\vv{v})$  de ces points dans l'espace des vitesses. 
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[-latex] (-4, 0) -- (4,0) node[right]{$v_x$}; 
+    \draw[-latex] (0, -4) -- (0,4) node[above]{$v_y$}; 
+    \foreach \i in {1,2,...,200}{
+    \pgfmathparse{random()}
+    \pgfmathsetmacro\rpos{-6*ln(\pgfmathresult)/7}
+    \pgfmathparse{random()}
+    \pgfmathsetmacro\thetapos{360*random()}
+    \fill (\thetapos:\rpos) circle (0.05);
+    }
+  \end{tikzpicture}
+  \captionof{figure}{Distribution des particules du gaz dans l'espace des vitesses.}
+\end{center}
+
+À l'équilibre thermodynamique (défini dans la partie suivante), la distribution $G(\vv{v})$ des vitesses d'un gaz au repos doit avoir deux propriétés fondamentales :
+\begin{itemize}
+  \item Elle doit être \textbf{homogène}, c'est-à-dire que c'est la même en tout point du gaz ;
+  \item elle est \textbf{isotrope}, c'est à dire qu'il n'y a pas de direction privilégiée, et dans ce cas la distribution de vitesse ne dépend que de la norme de la vitesse, on a :
+    \begin{equation}
+      G(\vv{v}) = G(\norm{\vv{v}})
+    \end{equation}
+\end{itemize}
+
+Une des conséquences importantes de l'isotropie est que la vitesse moyenne des particules du gaz est nulle :
+\begin{eqencadre}
+  \langle \vv{v} \rangle  = \frac{1}{N} \sum_i \vv*{v}{i} = 0
+\end{eqencadre}
+
+Pour caractériser la \textit{vitesse moyenne}, on utilise très souvent la \textbf{vitesse quadratique moyenne} $u$ définie par
+\begin{eqencadre}
+  u = \sqrt{\langle v^2 \rangle} 
+\end{eqencadre}
+
+Ainsi, l'énergie cinétique moyenne d'une particule du gaz est 
+
+\begin{eqencadre}
+  \langle E_c \rangle = \frac{1}{N} \sum_i \frac{1}{2}m v_i^2  = \frac{1}{2}mu^2 
+\end{eqencadre}
+
+  \section{État d'équilibre thermodynamqiue}%
+  \label{sec:etat_d_equilibre_thermodynamqiue}
+  \subsection{Définitions}%
+  \label{sub:definitions}
+ Un système est à \textbf{l'équilibre thermodynamique} lorsque les grandeurs macroscopiques qui le caractérisent (pression, volume, température, ...) sont indépendantes du temps sans aucun échange avec l'extérieur.
+
+Les grandeurs qui caractérisent l'état d'équilibre thermodynamique d'un système sont des \textbf{variables d'état}. Par exemple, la température, la pression, le volume,...
+
+On distingue deux types de variables d'état : 
+\begin{itemize}
+  \item Une variable \textbf{extensive} est proportionnelle au volume du système, elle est différente pour un sous-système plus petit. Par exemple : le volume, la masse, la quantité de matière.
+
+  \item Une variable \textbf{intensive} est indépendante de la taille du système, elle est la même pour chaque sous-système d'un système homogène. Par exemple la température, la pression, la masse volumique,... 
+\end{itemize}
+
+Une fonction mathématique de variables d'état est une \textbf{fonction d'état}.
+
+À l'équilibre thermodynamique, toutes les variables d'état ne sont pas indépendantes, elles sont reliées par une \textbf{équation d'état}.  
+
+Par exemple considérons la situation suivante où un ressort de raideur $k$ subit un allongement algébrique $\Delta L$ : 
+
+\begin{center}
+\begin{tikzpicture}
+%mur
+\draw (0,-1) -- (0,1);
+\foreach \h in {-1,-0.8,...,1} {
+  \draw (0,\h) -- ($(-0.3,\h-0.3)$);
+}
+%axe
+\draw[->] (0,-0.5) -- (10,-0.5) node[above] {$\vec{e}_x$};
+\draw[decorate,decoration={zigzag,amplitude=0.3cm,pre length=0.5cm,post length=0.5cm}] (0,0.1) -- (5,0.1);
+
+\draw[thick,rounded corners=1mm] (5,0.7) rectangle (6.2,-0.45) node[midway] {$m$};
+\draw[dashed, rounded corners] (0.5, -0.3) rectangle (4.5, 1); 
+\draw (2.5, 1) node[above]{Système thermodynamique};
+\draw[dotted] (4.5,-0.45) -- (4.5,-1);
+\draw[dotted] (3.5,0.5) -- (3.5,-1);
+\draw[|-|] (3.5,-1) -- (4.5,-1) node[midway,fill=white] {$\Delta L$};
+\draw[->,thick] (4.5,0.1) -- (3.5,0.1) node[above,fill=white,opacity=0.6,text opacity=1,yshift=3] {$\vec{F}$};
+\draw (2,0.8) node[align=center] {$k$};
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+  \item Le système thermodynamique est le ressort ;
+  \item la température $T$ , l'allongement $\Delta L$ et la force $F$ sont des variables d'état ;
+  \item l'équation d'état s'écrit : $F = -k(T)\Delta L$ ;
+  \item l'énergie élastique $E = \frac{1}{2}k(T) \Delta L^2$ est une fonction d'état. 
+\end{itemize}
+
+\subsection{La pression}%
+\label{sub:la_pression}
+
+Considérons un système thermodynamique délimité par une surface $\Sigma$. 
+\begin{center}
+  \begin{tikzpicture}
+    \draw[decorate, decoration={random steps, segment length=1mm, amplitude=0.3mm}] (0,0) circle(1cm);
+    \draw (-135:1) node[below left]{$\Sigma$ };
+    \draw[very thick] (1, -0.2) -- (1, 0.2) node[midway, left]{$\D S$};
+    \draw[-latex] (1, 0) -- ++(1,0) node[midway, above] {$\D \vv{F}$}; 
+  \end{tikzpicture}
+\end{center}
+Le système exerce sur une \emph{petite} portion $\D S$ de cette surface une force 
+\begin{eqencadre}
+  \D \vv{F}  = p \D S \vv{n} 
+\end{eqencadre}
+où $\vv{n}$ est un vecteur unitaire normal à la surface et dirigé vers l'extérieur du système et $p$ est la \textbf{pression} du système. À l'équilibre thermodynamique, la pression d'un système qui n'est soumis à aucune autre force est homogène et égale à la pression du milieu extérieur.
+
+La pression $p$ se mesure en pascals (P). $\SI{1}{\pascal} = \SI{1}{\newton\per\meter}$ 
+
+\subsection{La température}%
+\label{sub:la_temperature}
+
+La \textbf{température} d'un système thermodynamique est une grandeur qui est proportionnelle à l'énergie cinétique microscopique moyenne des particules qui composent le système. 
+
+Par définition, on a 
+\begin{eqencadre}
+  \langle E_c \rangle = \frac{1}{2}mu^2 = \frac{3}{2}k_B  T
+\end{eqencadre}
+où 
+\begin{equation}
+ k_B = \frac{R}{\mathcal{N}_A} = \SI{1.38e-23}{\joule\per\kelvin}  
+\end{equation}
+est la \textbf{constante de Boltzman} qui est choisie pour faire coïncider cette définition de la température avec l'équation des gaz parfaits.
+
+Son unité est le kelvin (K), on peut aussi l'exprimer en degrés celsius (\si{\celsius}) $\SI{0}{\celsius} = \SI{273.15}{\kelvin}$. 
+
+On peut ainsi calculer l'ordre de grandeur de la vitesse quadratique moyenne des particules d'un gaz, par exemple pour les molécules de dioxygène ($M=\SI{32e-3}{\kg\per\mol} $ ) de l'air à température ambiante ($T=\SI{300}{\kelvin}$), on a 
+\luaexec{M=32e-3; T=300;u=(3*_R*T/M)^0.5}
+\begin{equation}
+  u = \sqrt{\frac{3k_BT}{m}} = \sqrt{\frac{3RT}{m\mathcal{N}_A}} = \sqrt{\frac{3RT}{M}} \approx \luaexec{SI(u, 0, "\\meter\\per\\second")}
+\end{equation}
+
+\subsection{Modèle du gaz parfait}%
+\label{sub:modele_du_gaz_parfait}
+
+Pour un gaz réel, on peut tracer expérimentalement, à température $T$ fixée, la valeur du produit $pV$ en fonction de la pression $p$ (diagramme d'Amagat). 
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+xmin=0, xlabel = Pression (bar),
+ylabel = $pV$ (\si{\bar\litre}),
+]
+  \def\n{1}
+  \def\R{8.31}
+  \def\T{300}
+  \def\b{2.64e-5}
+  \def\a{0.0244}
+
+  \addplot[samples at={0.2e-3, 0.3e-3, 0.4e-3, 0.5e-3, 0.7e-3, 1e-3, 1.3e-3, 1.7e-3, 3e-3, 24e-3, 200e-3}, smooth, gray, thick]
+            ({1e-5*(\n*\R*\T/(x-\n*\b)-\n^2*\a/x^2)},{1e-2*(\n*\R*\T/(1-\n*\b/x)-\n^2*\a/x)}) node[pos=0, right]{\ce{H2}};
+
+  \def\b{3.91e-5}
+  \def\a{0.138}
+  \addplot[samples at={0.2e-3, 0.25e-3, 0.3e-3, 0.4e-3, 0.5e-3, 0.7e-3, 1e-3, 1.3e-3, 1.7e-3, 3e-3, 24e-3, 200e-3}, smooth, thick]
+            ({1e-5*(\n*\R*\T/(x-\n*\b)-\n^2*\a/x^2)},{1e-2*(\n*\R*\T/(1-\n*\b/x)-\n^2*\a/x)}) node[pos=0, right]{\ce{N2}};
+
+  \def\b{3.17e-5}
+  \def\a{0.137}
+  \addplot[samples at={0.2e-3, 0.3e-3, 0.4e-3, 0.5e-3, 0.7e-3, 1e-3, 1.3e-3, 1.7e-3, 3e-3, 24e-3, 200e-3}, smooth, thick, dotted]
+            ({1e-5*(\n*\R*\T/(x-\n*\b)-\n^2*\a/x^2)},{1e-2*(\n*\R*\T/(1-\n*\b/x)-\n^2*\a/x)}) node[pos=0, right]{\ce{O2}};
+
+  \def\b{0}
+  \def\a{0}
+  \addplot[samples at={0.2e-3, 200e-3}, smooth, thick, dashed]
+            ({1e-5*(\n*\R*\T/(x-\n*\b)-\n^2*\a/x^2)},{1e-2*(\n*\R*\T/(1-\n*\b/x)-\n^2*\a/x)}) node[pos=0.5, fill=white]{\ce{Gaz Parfait}};
+\end{axis}  
+\end{tikzpicture}
+\captionof{figure}{Évolution du produit $pV$ en fonction de $p$ pour une mole de  différents gaz réels à $T=\SI{300}{\kelvin}$ et modèle du gaz parfait.}
+\end{center}
+
+On remarque alors que quelle que soit la nature du gaz, lorsque la pression devient suffisamment faible, le produit $pV$ tend vers une constante qui ne dépend que de la température, identique pour tous les gaz : $K(T)$ .
+
+On définit un gaz parfait comme un gaz pour lequel on a $pV = K(T)$ quelle que soit la pression $p$. On obtient alors l'équation d'état des gaz parfaits 
+\begin{eqencadre}
+  pV = nRT
+\end{eqencadre}
+où
+\begin{itemize}
+  \item $p$ est la pression du gaz en pascals ;
+  \item $V$ est le volume du gaz en \si{\cubic\meter} ;
+  \item $n$ est la quantité de matière en moles ;
+  \item $T$ est la température en kelvin
+  \item $R=\SI{8.31}{\joule\per\kelvin\per\mol}$ est la constante des gaz parfaits.
+\end{itemize}
+
+Le modèle du gaz parfait décrit assez bien les gaz réels à température ambiante (\SI{300}{\kelvin}) et jusqu'à des pressions de l'ordre de la pression atmosphérique (\SI{e5}{\pascal}). Dans ces conditions, le volume molaire d'un gaz est 
+\begin{eqencadre}
+  V_m \approx \SI{25}{\litre\per\mol}
+\end{eqencadre}
+
+\subsection{Phase condensé peu compressible et peu dilatable}%
+\label{sub:phase_condense_peu_compressible}
+
+Une phase condensée est une phase liquide ou solide. Lorsque la phase condensée est peu compressible, son volume $V$ dépend très peu de la pression. Le volume d'une phase condensée peu dilatable dépend très peu de la température. Dans le modèle de la phase condensée \textbf{indilatable} et \textbf{incompressible}, le volume du système ne dépend pas de la pression ni de la température.
+\begin{eqencadre}
+  V(T, P, n) = nV_m
+\end{eqencadre}
+où $n$ est la quantité de matière du système et $V_m$ le volume molaire du système.
+
+\section{Énergie interne}%
+\label{sec:energie_interne}
+\subsection{Définition}%
+\label{sub:definition}
+
+L'énergie interne $U$ d'un système thermodynamique correspond à l'énergie \emph{contenue} dans le système sous plusieurs formes :
+
+\begin{itemize}
+  \item Énergie cinétique microscopique des particules ;
+  \item énergie potentielle d'interaction entre les particules du système.
+\end{itemize}
+
+\begin{eqencadre}
+  U = E_{c,\text{micro}} + E_{p, \text{micro}}
+\end{eqencadre}
+
+L'énergie interne ne comprend pas l'énergie cinétique macroscopique, ni l'énergie potentielle macroscopique du système.
+
+\subsection{Énergie interne d'un gaz parfait}%
+\label{sub:energie_interne_d_un_gaz_parfait}
+
+Dans un gaz parfait, l'énergie potentielle d'interaction entre les particules est nulle (modèle du gaz parfait) et on a 
+\begin{eqencadre}
+  U = E_{c, \text{micro}}
+\end{eqencadre}
+%Or on sait que l'énergie cinétique microscopique est proportionnelle à la température et donc pour un gaz parfait $U = A \times n \times T$, où $A$ est une constante qui dépend du type de gaz parfait et $n$ la quantité de matière de gaz.
+
+\subsubsection{Gaz parfait monoatomique}%
+\label{ssub:gaz_parfait_monoatomique}
+
+Pour un \textbf{gaz parfait monoatomique}, c'est à dire que les particules sont des atomes uniques, on peut considérer les particules comme ponctuelles et leur énergie cinétique microscopique n'est qu'une énergie cinétique de translation. On, on a vu que dans ce cas, l'énergie cinétique moyenne des particules est 
+\begin{equation}
+  \langle E_c \rangle = \frac{3}{2}k_B T
+\end{equation}
+Donc l'énergie cinétique microscopique totale de $N$ particules du gaz est
+\begin{equation}
+  E_{c,\text{micro}} = \frac{3}{2}Nk_BT = \frac{3}{2}n\mathcal{N}_Ak_B T
+\end{equation}
+%
+avec $n$ l aquantité de matière de gaz (en moles). On a donc finalement 
+\begin{eqencadre}
+  U = \frac{3}{2}nRT
+\end{eqencadre}
+
+L'énergie interne molaire $U_m$ est $U_m=\frac{U}{n}=\frac{3}{2}RT$. On note aussi $U = C_V T$, où $C_V$ est la capacité thermique à volume constant. Ou encore $U_m = C_{Vm}T$ où $C_{Vm}$ est la capacité thermique molaire à volume constant et pour un gaz parfait monoatomique on a 
+\begin{eqencadre}
+  C_{Vm} = \frac{3}{2}R \approx \SI{12.5}{\joule\per\kelvin\per\mole}
+\end{eqencadre}
+
+\subsubsection{Gaz parfait diatomique}%
+\label{ssub:GP_diatomique}
+Pour un gaz parfait diatomique, c'est un peu plus compliqué. La capacité thermique molaire à volume constant dépend de la température. En effet, on peut montrer que la capacité thermique molaire à volume constant d'un gaz parfait dépend du nombre de termes qui interviennent dans l'écriture de l'énergie d'une particule. 
+
+Une molécule de gaz parfait diatomique possède une énergie cinétique de translation :
+\begin{equation}
+  E_{\text{trans.}} = \frac{1}{2}m \dot{x}^2 + \frac{1}{2}m \dot{y}^2 + \frac{1}{2}m \dot{z}^2
+\end{equation}
+
+Ainsi qu'une énergie de vibration 
+ \begin{equation}
+   E_\text{vib.} = \frac{1}{2}k \Delta L^2 + \frac{1}{2}m \dot{L}^2
+ \end{equation}
+ où $L$ est la longueur de la liaison entre les deux atomes et $k$ la constante de raideur de la liaison (on modélise la liaison par un ressort de raideur $k$)
+
+ Et enfin une énergie cinétique de rotation autour des axes $x$ et $y$. La liaison état dirigée suivant l'axe $z$ on considère que le moment d'inertie par rapport à cet axe est nul.
+ \begin{equation}
+   E_\text{rot.} = \frac{1}{2}J_x\omega_x^2 + \frac{1}{2}J_y\omega_y^2
+ \end{equation}
+ 
+ La physique statistique permet de démontrer le théorème d' \emph{équipartition de l'énergie} qui dit que l'énergie moyenne d'un système thermodynamique à l'équilibre est de $\frac{1}{2}nRT$ par terme quadratique dans l'expression de son énergie. On s'attend donc à de que l'énergie interne d'un gaz parfait diatomique soit $U=\frac{7}{2}nRT$. 
+
+ Mais lorsqu'on prend en compte le comportement quantique du système, on se rend compte que les degrés de liberté de rotation et de vibration sont \emph{gelés} en dessous d'une certaine température. Typiquement les température de \emph{dégel} des degrés de liberté de rotation et de vibration sont $T_\text{rot.}\approx \SI{2}{\kelvin}$ et $T_\text{vib.}\approx \SI{2000}{\kelvin}$. On peut alors tracer la courbe représentative de $C_{Vm}$ en fonction de $T$ :
+ \begin{center}
+ \begin{tikzpicture}
+   \begin{axis}[
+   xmode=log,
+   ytick={1.5, 2.5, 3.5},
+   yticklabels={$\frac{3}{2}R$, $\frac{5}{2}R$, $\frac{7}{2}R$},
+   xlabel = Température (K),
+   ylabel = $C_{Vm}$, 
+   xmax=100000, xmin=0.01,
+   ]
+     \addplot[domain=0.01:100000, smooth, thick] table {data/CV_GP_diatomique.csv};
+     \draw[dashed] (axis cs:1e-3, 1.5) -- (axis cs:1e6, 1.5);
+     \draw[dashed] (axis cs:1e-3, 2.5) -- (axis cs:1e6, 2.5);
+     \draw[dashed] (axis cs:1e-3, 3.5) -- (axis cs:1e6, 3.5);
+     \draw[dotted] (axis cs:10, 0) -- (axis cs:10,3.7) node[pos=0.8, right, rotate=90, fill=white]{\SI{10}{\kelvin}};
+     \draw[dotted] (axis cs:500, 0) -- (axis cs:500,3.7) node[pos=0.8, right, rotate=90, fill=white]{\SI{500}{\kelvin}};
+   \end{axis}
+ \end{tikzpicture}
+ \end{center}
+ On observe qu'autour de la température ambiante, les degrés de liberté de vibration sont gelés et on a 
+ \begin{eqencadre}
+   C_{Vm} = \frac{5}{2}R \approx \luaexec{SI(5/2*_R, 1, "\\joule\\per\\kelvin\\per\\mole")}  
+ \end{eqencadre}
+
+ \subsection{Énergie interne d'une phase condensée incompressible, indilatable}%
+ \label{sub:energie_interne_d_une_phase_condensee_incompressible_in}
+ L'énergie interne d'une phase condensée incompressible et indilatable ne dépend que de la température et on a
+
+ \begin{eqencadre}
+   U(T) = C_VT = nC_{Vm}T
+ \end{eqencadre}
+
+ $C_V$ est la capacité thermique à volume constant, mais comme le volume ne peut de toute façon pas changer, on note souvent $C_V=C$, que l'on appelle simplement la capacité thermique du solide.  
+
+ Par exemple, pour l'eau liquide, on a $C_{m}\approx \SI{75.2}{\joule\per\kelvin\per\mole}$ et sa capacité thermique massique est $c\approx \SI{4.2}{\joule\per\kelvin\per\gram}$. C'est beaucoup plus que pour un gaz parfait.
+
+\section{Corps pur diphasé en équilibre}%
+\label{sec:corps_pur_diphase_en_equilibre}
+
+\subsection{Diagramme de phases $(P,T)$ }%
+\label{sub:diagramme_de_phases_p_t_}
+On peut représenter les domaines d'existence des différentes phases (liquide, solide, gaz) d'un corps pur sur un diagramme $(P,T)$. 
+
+\noindent\begin{minipage}[t]{0.45\linewidth}
+\begin{center}
+  \tikzstyle{axisarrow} = [-{Latex[inset=0pt,length=5pt]}]
+  \begin{tikzpicture}[scale=1.1]
+	% Draw the grid.
+	\draw [gray!10, step=0.25,thin] (-3,-3) grid (3,3);
+	\draw [gray!30, step=1.0,thin] (-3,-3) grid (3,3);
+
+	% Draw Axes
+	\draw[axisarrow] (-2.75,-3) -- (-2.75,3);
+	\node[inner sep=0pt] at (-2.5,2.8) {$P$};
+	\draw[axisarrow] (-3,-2.75) -- (3,-2.75);
+	\node[inner sep=0pt] at (2.8,-2.5) {$T$};
+
+  \coordinate (T) at (-0.5, -1);
+  \coordinate (C) at (2, 1);
+	% Draw phase boundaries
+	\draw[thick] (-2.75,-2.75) edge[out=20,in=240] (-0.5,-1);
+	\draw[thick] (T) -- (0,2.8);
+	\draw[thick] (T) edge[out=20,in=250] (C);
+	
+	\node[inner sep=0pt] at (-1.75,1) {Solide};
+	\node[inner sep=0pt] at (0.7,1) {Liquide};
+	\node[inner sep=0pt] at (1,-2) {Gaz};
+
+	\fill (T) circle(2pt) node[below right]{$T$}; 
+	\fill (C) circle(2pt) node[above, yshift=2pt]{$C$}; 
+\end{tikzpicture}	
+\captionof{figure}{Diagramme de phase typique d'un corps pur. $T$ est le point triple où les trois phases coexistent et $C$ est le point critique à partir duquel il n'y a plus de distinction entre gaz et liquide.}
+\end{center}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.5\linewidth}
+\begin{center}
+  \begin{tikzpicture}
+  \begin{semilogyaxis}[
+    xmin=0,xmax=650,
+    ymax = 1e12,
+    ymin=1,
+    xlabel=Température (K),
+    ylabel=Pression (Pa),
+    grid=both,
+    width=\linewidth,
+    %try min ticks log=10,
+    ]
+    \addplot[mark=none, thick, smooth] table[x index=0, y index=1] {data/diag_phases_eau_LG.csv};
+    \addplot[mark=none, thick, smooth] table[x index=0, y index=1] {data/diag_phases_eau_SL.csv};
+    \draw (axis cs:100,1e5) node{Solide};
+    \draw (axis cs:500,1e3) node{Gaz};
+    \draw (axis cs:400,2e7) node{Liquide};
+  \end{semilogyaxis}
+  \end{tikzpicture}
+\captionof{figure}{Diagramme de phases réel de l'eau.}
+\end{center}
+\end{minipage}
+
+
+Au niveau des frontières il y a coexistence de deux phases. Le point $T$ est appelé le \textbf{point triple}, les trois phases coexistent. Le point $C$ est le point critique, au-delà de ce point il n'y a plus de distinction nette entre gaz et liquide.
+
+On notera le cas particulier de l'eau pour laquelle la frontière liquide--solide a une pente négative.
+
+\subsection{Équilibre liquide--vapeur, diagramme de Clapeyron $(p, v)$}%
+\label{sub:equilibre_liquide_vapeur_diagramme_de_clapeyron_p_v_}
+ 
+On peut représenter les domaines d'existence des phases liquide et gaz dans un diagramme $(p,v)$, où $v$ est le volume massique du système $v=\frac{V}{m}$.  
+
+\begin{center}
+  \begin{tikzpicture}
+  \begin{axis}[
+  xmode=log,
+  ymin=0,
+  ymax=1.5,
+  width=11cm,
+  height=8cm,
+  xlabel near ticks,
+  ylabel near ticks,
+  xmin=0.3,
+  xticklabels={},
+  yticklabels={},
+  xlabel = Volume massique $v$,
+  ylabel = Pression $p$, 
+  extra y ticks={0.09,1},
+  extra y tick labels={$p_T$, $p_C$}, 
+  ]
+    \foreach \a in {1,...,15}{
+    \addplot[mark=none, smooth, gray, thin] table[x index=0, y index=\a] {data/isothermes.csv};
+    }
+    \draw[dashed, gray] (axis cs:0.01, 1) -- (axis cs:25,1);
+    \draw[dashed, gray] (axis cs:0.01, 0.09) -- (axis cs:25,0.09);
+    \addplot[mark=none, thick, 
+             postaction=decorate, 
+             decoration={text along path, 
+                         text={|\small| Courbe d'ébullition},
+                         text align={align=center},
+                         transform={yshift=0.1cm},
+                         }
+            ] table[x index=0, y index=2] {data/clapeyron.csv};
+    \addplot[mark=none, thick,
+             postaction=decorate, 
+             decoration={text along path, 
+                         text={|\small| Courbe de rosée},
+                         reverse path,
+                         text align={align=center},
+                         transform={yshift=0.1cm},
+                         }
+            ] table[x index=1, y index=2] {data/clapeyron.csv};
+    \draw (axis cs:1.5, 0.45) node{Liquide+Gaz};
+    \draw (axis cs:20, 0.45) node{Gaz};
+    \draw (axis cs:0.3, 0.45) node[rotate=90, below, yshift=-0.2cm]{Liquide};
+    \draw[fill=black] (axis cs:1,1) circle(2pt) node[above]{$C$};
+
+  \end{axis}
+  \begin{scope}[xshift=10cm]
+  \begin{axis}[
+    height=8cm,
+    width=8cm,
+    yticklabels={},
+    xticklabels={},
+    xlabel=Température $T$, 
+    ymin=0,
+    ymax=1.5,
+    xmax=1.4,
+  ]
+    
+    \draw[thin, gray] \foreach \T in {0.7,0.75,...,1.4}{
+      (axis cs:\T,0) -- (axis cs:\T, 1.5)
+    };
+    \addplot[mark=none, thick] table {data/pt.csv};
+    \draw[dashed, gray] (axis cs:0, 1) -- (axis cs:1.5,1);
+    \draw[dashed, gray] (axis cs:0, 0.09) -- (axis cs:1.5,0.09);
+    \draw[fill=black] (axis cs:1,1) circle(2pt) node[above]{$C$};
+    \draw[fill=black] (axis cs:0.6,0.090) circle(2pt) node[above]{$T$};
+  \end{axis}
+  \end{scope}
+  \end{tikzpicture}
+  \captionof{figure}{Représentation des domaines d'existence des phases liquide et gaz dans un diagramme de Clapeyron $(p,v)$ à gauche et dans le diagramme d'états à droite. On a aussi représenté en gris un ensemble d'isothermes.}
+\end{center}
+ 
+Le diagramme de Clapeyron permet de décrire l'évolution d'un système système composé d'un corps pur lors de son changement d'état liquide/gaz. On y voit ce qu'il se passe lorsqu'on croise la frontière liquide/gaz du diagramme d'états.
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[xmode=log, 
+               xlabel=Volume massique, 
+               ylabel=Température, 
+               zlabel=Pression,
+               xlabel style={sloped},
+               ylabel style={sloped},
+               zmax=1.5,
+               xticklabels={},
+               yticklabels={},
+               zticklabels={},
+               ]
+    \addplot3[mark=none, thick] table[x index=0, z index=2, y index=3] {data/clapeyron.csv};
+    \addplot3[mark=none, thick] table[x index=1, z index=2, y index=3] {data/clapeyron.csv};
+    \foreach \T in {1,...,15}{
+        \addplot3[mark=none, smooth, gray, thin] 
+          table[x index=0, z index=\T,
+                y expr={0.7+0.05*(\T-1)},
+        ] {data/isothermes.csv};
+          };
+    \draw[fill=black] (axis cs:1,1,1) circle(2pt) node[above]{$C$};
+
+  \end{axis}
+\end{tikzpicture}
+\captionof{figure}{Sur ce graphique en 3D, on voit en même temps le diagramme de Clapeyron et le diagramme de phases.}
+\end{center}
+
+\subsection{Détermination de la composition d'un mélange}%
+\label{sub:determination_de_la_composition_d_un_melange}
+Le diagramme de Clapeyron permet de déterminer la composition d'un mélange liquide/gaz. On commence par définir le \textbf{titre molaire} en vapeur $x_v$ comme :
+\begin{eqencadre}
+  x_v = \frac{n_v}{n_v+n_l}
+\end{eqencadre}
+où $n_v$ est la quantité de matière de vapeur et $n_l$ la quantité de matière de liquide. On définit de la même manière le titre molaire en liquide $x_l$. On a évidemment la relation $x_v+x_l=1$. 
+
+\begin{center}
+  \begin{tikzpicture}
+  \begin{axis}[
+  xmode=log,
+  ymin=0,
+  ymax=1.5,
+  width=11cm,
+  height=8cm,
+  xlabel near ticks,
+  ylabel near ticks,
+  xmin=0.3,
+  xticklabels={},
+  yticklabels={},
+  xlabel = Volume massique $v$,
+  ylabel = Pression $p$, 
+  extra y ticks={0.09,1},
+  extra y tick labels={$p_T$, $p_C$}, 
+  ]
+   \addplot[mark=none, smooth, gray, thin] table[x index=0, y index=3] {data/isothermes.csv};
+    
+    \draw[dashed, gray] (axis cs:0.01, 1) -- (axis cs:25,1);
+    \draw[dashed, gray] (axis cs:0.01, 0.09) -- (axis cs:25,0.09);
+    \addplot[mark=none, thick] table[x index=0, y index=2] {data/clapeyron.csv};
+    \addplot[mark=none, thick] table[x index=1, y index=2] {data/clapeyron.csv};
+    \draw[fill=black] (axis cs:1,1) circle(2pt) node[above]{$C$};
+    
+    \coordinate (A) at (axis cs:0.518, 0.383362);
+    \coordinate (B) at (axis cs:4.197, 0.383362);
+    \coordinate (M) at (axis cs:2, 0.383362);
+
+    \fill (A) circle(2pt) node[left]{$A$};
+    \fill (B) circle(2pt) node[right]{$B$};
+    \fill (M) circle(2pt) node[below]{$M$};
+  \end{axis}
+  \end{tikzpicture}
+\end{center}
+Si le système se trouve au point $M$ dans le diagramme de Clapeyron, les titres molaires en liquide et en vapeur sont donnés par 
+\begin{eqencadre}
+  x_l = \frac{MB}{AB} \quad \text{et} \quad x_v=\frac{AM}{AB}
+\end{eqencadre}
+Cette relation permet de déterminer graphiquement la composition d'un système à partir du diagramme de Clapeyron.
+
+On peut démontrer cette relation en écrivant que le volume total est égale à la somme du volume de liquide et du volume de gaz :
+\begin{equation}
+  V = V_g + V_l  
+\end{equation}
+Donc le volume massique de l'ensemble s'écrit
+\begin{equation}
+  v = \frac{V_g + V_l}{m}=\frac{V_g+V_l}{m_g+m_l} = \frac{V_g}{m_g+m_l} + \frac{V_l}{m_g+m_l} = \frac{m_gv_g}{m_g+m_l}+\frac{m_lv_l}{m_g+m_l}
+\end{equation}
+En remarquant que la fraction massique est égale à la fraction molaire pour un corps pur, ou peut écrire
+\begin{equation}
+  v=x_gv_g + x_lv_l = x_gv_g + (1-x_g)v_l = x_g(v_g-v_l)+v_l 
+\end{equation}
+D'où on tire finalement:
+\begin{equation}
+  x_g = \frac{v-v_l}{v_g-v_l} = \frac{AM}{AB}
+\end{equation}
+On procède de manière analogue pour déterminer $x_l$.
+
+\subsection{Application au stockage de fluides (plus au programme)}%
+\label{sub:application_au_stockage_de_fluides}
+Le diagramme de Clapeyron permet de comprendre un certain nombre de problématiques liées au stockage des fluides. Par exemple, il permet d'expliquer pourquoi il faut éviter de stocker des fluides avec un volume massique inférieur au volume massique du point critique lorsque la température de stockage est inférieure à la tempétature critique.
+
+\begin{center}
+  \begin{tikzpicture}
+  \begin{axis}[
+  xmode=log,
+  ymin=0,
+  ymax=1.5,
+  width=11cm,
+  height=8cm,
+  xlabel near ticks,
+  ylabel near ticks,
+  xmin=0.3,
+  xticklabels={},
+  yticklabels={},
+  xlabel = Volume massique $v$,
+  ylabel = Pression $p$, 
+  extra y ticks={0.09,1},
+  extra y tick labels={$p_T$, $p_C$}, 
+  ]
+   \addplot[mark=none, smooth, gray, thin] table[x index=0, y index=3] {data/isothermes.csv}; 
+   \draw (axis cs:0.5, 0.7) node[fill=white]{$T_1$} ;
+   \addplot[mark=none, smooth, gray, thin] table[x index=0, y index=8] {data/isothermes.csv};
+   \draw (axis cs:0.9, 1.22) node[fill=white]{$T_2$};
+    
+    %\draw[dashed, gray] (axis cs:0.01, 1) -- (axis cs:25,1);
+    %\draw[dashed, gray] (axis cs:0.01, 0.09) -- (axis cs:25,0.09);
+    \draw[dashed, gray] (axis cs:0.7, 0) -- (axis cs:0.7, 2);
+    \draw[dashed, gray] (axis cs:2, 0) -- (axis cs:2, 2);
+    \addplot[mark=none, thick] table[x index=0, y index=2] {data/clapeyron.csv};
+    \addplot[mark=none, thick] table[x index=1, y index=2] {data/clapeyron.csv};
+    \draw[fill=black] (axis cs:1,1) circle(2pt) node[above]{$C$};
+    
+    \coordinate (A) at (axis cs:0.518, 0.383362);
+    \coordinate (B) at (axis cs:4.197, 0.383362);
+    \coordinate (M2) at (axis cs:2, 0.383362);
+    \coordinate (M1) at (axis cs:0.7, 0.383362);
+
+    \fill (A) circle(2pt) node[left]{$A$};
+    \fill (B) circle(2pt) node[right]{$B$};
+    \fill (M1) circle(2pt) node[below]{$M_1$};
+    \fill (M2) circle(2pt) node[below]{$M_2$};
+
+  \end{axis}
+  \end{tikzpicture}
+\captionof{figure}{Stockage de fluides à une température inférieure à la température critique.\label{fig:stockage_fluide}}
+\end{center}
+
+Considérons par exemple le fluide de la figure~\ref{fig:stockage_fluide}. Le fluide est stocké à la température $T_1$. Lorsque la température s'élève jusqu'à la température $T_2$, on remarque que si le point de départ est $M_1$, le point d'arrivée est sur une isotherme très pentue et la pression risque d'augmenter énormément avec la température. Alors que si le point de départ est $M_2$, le point d'arrivée est dans une zone où la pression augmente beaucoup moins vite.
+
+On remarque aussi qu'en partant de $M_1$, lorsque la température augmente, la totalité du fluide devient liquide avant de devenir supercritique. On liquéfie un fluide en le chauffant, ce qui est plutôt contre-intuitif.
+
+
+\end{document}

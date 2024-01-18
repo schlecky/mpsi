@@ -1,0 +1,140 @@
+\documentclass[a4paper]{tp}
+\usepackage{tikz}  
+\usepackage{qrcode}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{arrows.meta}
+\titre{TP4 : Relation de conjugaison et appareil photo}
+\begin{document}
+
+\section{Le viseur}
+
+%\vspace{-0.5cm}
+\subsection{Principe de fonctionnement}
+
+
+Un viseur est un instrument qui, pour la personne qui regarde dedans, donne simultanément une image nette de l'objet visé et d'une croix appelée \emph{réticule} se trouvant à l'intérieur du viseur. Le viseur est composé :
+\begin{itemize}
+  \item d'un objectif (une lentille convergente) qui forme l'image de l'objet visée dans le plan du réticule ;
+  \item d'un oculaire (lentille convergente) qui forme, du réticule, une image que l'on peut observer sans accomoder (donc sans fatigue).
+\end{itemize}
+
+La distance distance entre l'objectif et le réticule détermine la distance de visée de la lunette, c'est la distance à laquelle se trouve l'objet visé.
+%
+La distance entre l'oculaire et le réticule est réglée par chaque utilisateur pour qu'il puisse observer le réticule sans fatigue.
+
+
+
+\begin{center}
+  \begin{tikzpicture}[
+vue/.pic={
+	\def\C{0.55}
+	\draw[fill=white] (0.5,0)
+		ellipse [x radius=0.05,y radius=0.2]
+		(0,0) .. controls (0.25,0.2-\C*0.25) .. (0.5,0.2) .. controls (0.55,0.2+\C*0.05) .. (0.6,0.3)
+		(0,0) .. controls (0.25,-0.2+\C*0.25) .. (0.5,-0.2) .. controls (0.55,-0.2-\C*0.05) .. (0.6,-0.3)
+		;
+	\fill (0.5,0) ellipse [x radius=0.025,y radius=0.1];
+	}
+]
+   \draw[-latex] (0,0) -- (10,0);
+   \draw[fill=black] (1,0) coordinate (A) circle(0.05) node[below]{$A$};
+   \draw[<->] (3, -1) -- (3, 1) node[above] {objectif};
+   \draw[dashed] (6, -1) -- (6, 1) node[above] {réticule};
+   \draw[<->] (8, -1) -- (8, 1) node[above] {oculaire};
+   \draw[rayon] (A) -- (3,0.8) coordinate (B);
+   \draw[rayon] (B) -- (6,0) coordinate(Ap);
+   \draw[rayon] (A) -- (3,-0.8) coordinate(C);
+   \draw[rayon] (C) -- (Ap); 
+   \draw[fill=black] (Ap) circle (0.05) node[below right] {$A'$};
+   \draw [decorate,decoration={brace,amplitude=10pt,mirror,raise=4pt},yshift=0pt]
+(3,-1) -- (8,-1) node [black,midway,yshift=-20pt] {viseur};
+   \draw (9.5,0) pic[xscale=-1] {vue} node[below right]{observateur};
+  \end{tikzpicture}
+  \captionof{figure}{Schéma du viseur}
+\end{center}
+
+Lors de l'utilisation d'un viseur, la première étape est de régler la distance entre le réticule et l'oculaire pour que l'utilisateur voie nette l'image du réticule lorsqu'il regarde dans le viseur.
+
+On peut ensuite régler la distance entre l'objectif et le réticule pour fixer la distance de visée. Lorsqu'on utilise le viseur avec une distance de visée fixe, on dit que le viseur est à \emph{frontale fixe}.  
+
+
+\subsection{Utilisation}%
+\label{sub:utilisation}
+Nous allons utiliser le viseur en mode \emph{frontale fixe}, c'est à dire que la distance de visée sera fixe. L'objet visé se trouve donc toujours à la même distance du viseur, on pourra considérer que c'est la distance entre l'objet visé et la graduation marquée par le pieds du viseur. En pratique on n'a même pas besoin de connaitre cette distance.
+
+L'intérêt du viseur est qu'il peut viser des objets ou des images, réels ou virtuels. Il peut même viser les lentilles. On pourra donc mesurer les distances entre objets, images et lentilles en mesurant le déplacement du viseur.
+
+\textbf{Remarque : } Pour être sûr que l'objet visé et le réticule sont dans le même plan, on peut utiliser la parallaxe : en bougeant légèrement la tête on ne doit pas voir l'objet et le réticule bouger l'un par rapport à l'autre. S'ils bougent il faut légèrement ajuster la position de la lunette. 
+
+\section{Formule de conjugaison}
+\subsection{Principe de la mesure}%
+\label{sub:principe_de_la_mesure}
+
+
+On cherche à vérifier expérimentalement la relation de conjugaison de Descartes :
+\begin{equation*}
+  \frac{1}{\ol{OA'}}-\frac{1}{\ol{OA}} = \frac{1}{f'}
+\end{equation*}
+
+Il va donc falloir mesurer la distance $\ol{OA'}$ pour plusieurs valeurs de $\ol{OA}$. Pour cela on peut procéder de la manière suivante :
+
+\begin{itemize}
+  \item Placer un objet lumineux sur le banc optique, et déterminer la position du viseur correspondante.
+
+  \item Ajouter la lentille, viser la lentille et déterminer la position du viseur. On peut en déduire la distance objet-lentille.
+
+  \item Déplacer le viseur pour viser l'image et en déduire la distance image-lentille.
+
+  \item Déplacer la lentille et répéter les deux opérations précédentes.
+\end{itemize}
+
+\subsection{Expérience}%
+\label{sub:experience}
+Appliquer la méthode précédente pour vérifier la relation de conjugaison pour une lentille convergente.
+
+Mesurer plusieurs valeurs de $\ol{OA}$  et $\ol{OA'}$ en changeant la position de la lentille et en gardant l'objet fixe. On prendra soin de faire des mesures pour des images réelles et virtuelles.
+
+Pour vérifier la formule de conjugaison, on peut tracer un graphique représentant $\frac{1}{\ol{OA'}}$ en fonction de $\frac{1}{\ol{OA}}$. On devrait alors obtenir une droite de coefficient directeur égal à 1 et d'ordonnée à l'origine égale à $\frac{1}{f'}$.
+
+Ne pas oublier d'estimer les incertitudes sur les mesures et de placer les barres d'erreur correspondante sur le graphique.
+
+\section{L'appareil photo}%
+\label{sec:l_appareil_photo}
+
+\subsection{Modélisation}%
+\label{sub:modelisation}
+
+On modélise un appareil photo avec une lentille convergente de focale $f'$ et un écran. On ajuste la distance lentille-écran afin de former sur l'écran une image nette d'un objet lumineux. On pourra ajouter sur la lentille différentes ouvertures modélisant le diaphragme de l'appareil photo.
+
+\subsection{Influence de la focale}%
+\label{sub:influence_de_la_focale}
+
+\begin{itemize}
+\item En gardant la distance objet-lentille constante, on changera la lentille pour observer l'influence de la distance focale de l'objectif sur la taille de l'image formée sur l'écran.
+\end{itemize}
+
+\subsection{Influence de l'ouverture}%
+\label{sub:influence_de_l_ouverture}
+
+\subsubsection{Sur la luminosité de l'image}%
+\label{ssub:sur_la_luminosite_de_l_image}
+
+Pour une lentille donnée, on observera l'influence de l'ouverture sur la luminosité de l'image. Pour faire des mesures quantitatives de l'intensité lumineuse, on peut utiliser l'application pour smartphone (\url{https://phyphox.org}).
+\begin{center}
+\qrcode[hyperlink, height = 3 cm]{https://phyphox.org}
+\end{center}
+
+\begin{itemize}
+  \item Mesurer l'intensité lumineuse pour différentes ouvertures.
+  \item Tracer sur un graphique l'intensité lumineuse en fonction de $d^2$, où $d$ est le diamètre de l'ouverture. Commenter. 
+\end{itemize}
+
+\subsubsection{Sur la profondeur de champ}%
+\label{ssub:sur_la_profondeur_de_champ}
+\begin{itemize}
+  \item Déterminer qualitativement l'évolution de la profondeur de champ en fonction du diamètre du diaphragme.
+\end{itemize}
+
+
+\end{document}

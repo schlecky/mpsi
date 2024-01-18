@@ -1,0 +1,191 @@
+%! TeX program = lualatex
+\documentclass{tp}
+\usepackage{makecell}
+\usepackage{pgfplots}
+\titre{TP19 : Oscillateurs en régime libre}
+\begin{document}
+%\small
+\section{Objectif du TP}
+L'objectif du TP est de réaliser des oscillateurs harmoniques amortis mécanique et électrique et d'étudier leur comportement en régime libre. On mettra en évidence la similitude des comportements des deux types d'oscillateurs.
+
+Le TP se déroule en deux parties distinctes, vous changerez de paillasse au milieu du TP.
+
+\section{Partie mécanique}%
+\label{sec:partie_mecanique}
+
+\subsection{Étude des oscillations libres}%
+\label{sub:etude_des_oscillations_libres}
+
+On cherche à faire l'acquisition informatique de la position d'une masse accrochée à l'extrémité d'un ressort. Pour cela, un fil conducteur entouré d'une gaine isolante est accroché à la masse et son extrémité dénudée est plongée dans de l'eau. On applique une tension de \SI{30}{\volt} entre le haut et le bas du récipient d'eau. Le potentiel de l'extrémité dénudée du fil varie alors linéairement avec son déplacement dans l'eau. On peut donc déterminer le déplacement de la masse en mesurant le potentiel de l'extrémité du fil.
+\begin{center}
+  \begin{tikzpicture}
+    \def\l{1.4} % Largeur du récipient
+    \coordinate (A) at (-\l/2, 0.5);
+    \fill[fill=gray!10] ($(A)+(0, -0.5)$) rectangle ++(\l, -4);
+    \draw (A) -- ++(0, -4.5) -- ++(\l, 0) node[right] {\SI{-15}{\volt}} -- ++(0, 4.5) coordinate (B);
+    \draw[thick] ($(A)+(0,-0.5)$) -- ++(\l/2-0.1,0) ++(0.2,0) -- ($(B)+(0, -0.5)$) node[right]{\SI{+15}{\volt}};
+    \draw[very thick] (0,1) -- (0, -1.5);
+
+    \def\a{0.7}
+    \coordinate (S) at (0, 1+\a);
+    \draw[fill=gray!40] (-\a/2, 1) rectangle ++(\a, \a) ++(0, -\a/2) node[right]{Masse}; 
+    \draw[fill=gray] (-\a/2, -1) rectangle ++(\a, 0.2) ++(0, -0.1) coordinate(liege);
+    \draw [stealth-] (liege) -- ++(1, 0) node[right] {Rondelle de liège};
+    \draw[dashed] (-\l/2-0.2, -1.5) coordinate (V1) -- ++(\l+0.4, 0) coordinate (V2);
+    \draw[dashed] (-\l/2-0.5, -2) node[below]{\SI{0}{\volt}} -- (-\l/2-0.2, -2) coordinate (Vz1) -- ++ (\l+0.4, 0) coordinate (Vz2);
+    \draw[-stealth] (Vz2) -- (V2) node[midway, right] {$x$};
+    \draw[-stealth] (Vz1) -- (V1) node[midway, left] {$U$};
+
+    %Ressort
+    \draw[thick, decorate,decoration={zigzag,amplitude=0.2cm,pre length=0.2cm,post length=0.2cm}] (S) -- ++(0, 2) coordinate(R) node[midway, right, xshift=0.2cm]{ressort}; 
+    \draw[fill=gray!40] (R) circle(3pt);
+
+    %Alimentation
+    \draw (-7, -4) rectangle ++(2, 4); 
+    \draw (-7, -2) node[rotate=90, below]{Alimentation};
+    \draw (-5, -2) node[left](V15){\SI{+15}{\volt}};
+    \draw (-5, -1) node[left](V0){\SI{0}{\volt}};
+    \draw (-5, -3) node[left](Vm15){\SI{-15}{\volt}};
+
+    \draw[rounded corners] (V15.east) -- ++(2, 0) |- ($(A)+(0, -0.5)$);
+    \draw[rounded corners] (Vm15.east) -- ++(2, 0) |- ($(A)+(0, -4.5)$);
+    \draw [thick]($(A)+(0, -4.5)$) -- ++(\l,0);
+
+    %Interface
+    \draw (-7, 1) rectangle ++(2, 3);
+    \draw (-7, 2.5) node[rotate=90, below]{Interface};
+    \draw (-5, 2) node[left](GND){Masse};
+    \draw (-5, 3) node[left](EA0){EA0};
+
+    \draw[rounded corners] (GND.east) -- ++(1,0) --($(V0.east)+(1,0)$) -- (V0.east);
+    \draw[rounded corners] (EA0.east) -- ++(1,0) |- ($(R)+(-3pt,0)$);
+
+  \end{tikzpicture}
+\captionof{figure}{Schéma du montage pour la mesure électrique du déplacement de la masse}
+\end{center}
+Pour réalise le montage, on procédera aux étapes suivantes :
+\begin{itemize}
+  \item Remplir d'eau l'éprouvette.
+  \item Passer le fil dans la partie supérieure du dispositif, puis enfoncer la rondelle de liège dessus. Placer l'ensemble dans l'éprouvette.
+  \item Relier les trois bornes de l'alimentation stabilisée à l'aide de fils simples : le potentiel le plus bas à la borne en bas de l'éprouvette, le potentiel le plus élevé à la borne en haut de l'éprouvette, et le $0$ à la masse de la plaquette.
+  \item Relier l'entrée EA0 de la plaquette au fil : pour ce faire, on exploitera les propriétés conductrices du métal, et on fixera le fil à une pince ``croco" maintenant le ressort à la potence.
+  \item Vérifier que le fil électrique soudé est bien vertical et que la rondelle conductrice supérieure est immergée.
+  \item Recentrer le fil électrique soudé si nécessaire afin qu'il ne frotte pas sur le bord de la rondelle.
+\end{itemize}
+
+Il est en pratique difficile de régler le montage pour que le potentiel de l'extrémité du fil soit à \SI{0}{V} lorsque la masse est immobile. On retranchera la valeur de la tension à l'équilibre aux valeurs mesurées pour déterminer le déplacement.
+
+Une fois que le montage est prêt, procéder à un enregistrement du déplacement de la masse. Déterminer à partir des mesures les paramètres de l'oscillateur $\omega_0$ et $Q$. On pourra modéliser la courbe obtenue pour vérifier qu'elle correspond bien à la forme attendue théoriquement.
+
+\subsection{Détermination statique de la constante de raideur}%
+\label{sub:determination_statique_de_la_constante_de_raideur}
+
+Déterminer la constante de raideur du ressort en y accrochant différentes masses et en mesurant l'allongement du ressort pour ces masses. On représentera graphiquement l'allongement en fonction de la masse accrochée et on en déduira une valeur de $k$. 
+
+\subsection{Détermination de la période propre}%
+\label{sub:determination_de_la_periode_propre}
+
+Accrocher une masse de valeur connue au ressort et mesurer la durée de plusieurs périodes. En déduire la valeur de la période propre $T_0$ de l'oscillateur et la comparer à la valeur attendue en utilisant la raideur trouvée dans la partie~\ref{sub:determination_statique_de_la_constante_de_raideur}
+
+\section{Oscillateur électrique}%
+\label{sec:oscillateur_electrique}
+
+\subsection{Montage}%
+\label{sub:montage}
+
+On alimente un circuit $RLC$ série avec un signal carré d'amplitude \SI{4}{\volt} et de fréquence $f=\SI{120}{\hertz}$. On prendra $C=\SI{3.3}{\nano\farad}$ ;$L=\SI{40}{\milli\henry}$, $r=\SI{4}{\ohm}$ (résistance interne de la bobine) et $R=\SI{270}{\ohm}$.  On n'oubliera pas de mesurer la valeur réelle de chacun des composants.  
+
+\begin{center}
+  \begin{circuitikz}
+    \draw (0,0) to[square voltage source, v=$u(t)$ ] (0,2) coordinate(Y1) to[C=$C$] (2, 2) to[L=$L$] (4,2) to[R=$r$ ] (6,2) coordinate (Y2) to[R=$R$, v<=$u_R(t)$  ] (6,0) to[short] (0,0) node[ground]{}; 
+    \draw[-stealth] (Y1) --++(135:1) node[above] {Voie 1};
+    \draw[-stealth] (Y2) --++(45:1) node[above] {Voie 2};
+  \end{circuitikz}
+\end{center}
+
+\subsection{Étude théorique}%
+\label{sub:etude_theorique}
+
+La tension $u_R(t)$ vérifie l'équation différentielle
+\begin{equation}
+  \ddt{u_R} + 2\lambda \dt{u_R} + \omega_0^2u_R = 0 \quad \text{avec} \quad \omega_0 = \frac{1}{\sqrt{LC}} \quad \text{et}\quad \lambda=\frac{R}{2L}
+\end{equation}
+Avec les valeurs proposées, le discriminant de l'équation caractéristique est négatif ; de sorte que $u_R(t)$ est pseudo-périodique de pseudo-pulsation 
+\begin{equation}
+  \omega = \omega_0\sqrt{1-\frac{\lambda^2}{\omega_0^2}}
+\end{equation}
+proche de la pulsation propre $\omega_0$. On a donc 
+\begin{equation}
+  u_R(t) = \frac{ER}{L\omega}\e^{-\lambda t}\sin(\omega t)
+\end{equation}
+Les extrema (max et min) $U_n$ successifs de $u_R(t)$ sont atteints près des extrema du sinus (l'amortissement est faible) et donc on a 
+\begin{equation}
+  U_n = \frac{ER}{L\omega}\exp\left( -\lambda\frac{(2n+1)\pi}{2\omega} \right) = U_0\exp\left( -\lambda\frac{n\pi}{\omega} \right)  
+\end{equation}
+On exprime habituellement ce résultat en fonction du \textbf{décrément logarithmique} $\delta$ :
+\begin{equation}
+  \delta = \ln\left( \frac{u_R(t)}{u_R(t+T)} \right)  = \lambda\frac{\pi}{\omega}
+\end{equation}
+On a alors 
+\begin{equation}
+  U_n = U_0\exp\left(-n\delta\right) \quad \text{ou} \quad \ln(U_n)=\ln(U_0)-\delta n
+\end{equation}
+Les points représentant $\ln(U_n)$ en fonction de $n$ sont alignés suivant une droite de pente $-\delta$. 
+
+\subsection{Manipulations}%
+\label{sub:manipulations}
+
+Réaliser le montage et visualiser les différentes tensions. 
+\begin{itemize}
+  \item Relever dans un tableau les extrema successifs $U_n$ en utilisant l'oscilloscope numérique.
+
+  \item Construre le graphique représentant $\ln(U_n)$ en fonction de $n$. Et en déduire la valeur du coefficient d'amortissement $\lambda$, ainsi que le facteur de qualité $Q=\frac{\omega_0}{2\lambda}$. Pour cela, on remarquera que 
+  \begin{equation}
+    \delta = \frac{\pi}{\sqrt{Q^2-\frac{1}{4}}}
+  \end{equation}
+  
+  \item Comparer avec les valeurs numériques obtenues à partir des expressions théoriques.
+
+  \item Vérifier que la valeur de $Q$ correspond à celle estimé en comptant le nombre d'oscillations.
+\end{itemize}
+
+%\subsection{Portrait de phase}%
+%\label{sub:portrait_de_phase}
+
+%On souhaite afficher à l'oscilloscope l'allure du portrait de phase pour la charge $q$  du condensateur. Pour cela il faut mesurer la tension $u_C$  aux bornes de $C$ qui donne accès à $q$ car $q=Cu_C$ et l'intensité $i$ du courant qui circule dans le circuit car $i=\dot{q}$. Pour mesurer $i$ on peut mesurer la tension aux bornes d'une des résistances (plutôt $R$ car comme $R>r$ la tension mesurée sera plus importante).
+
+%On pourrait imaginer modifier le circuit précédent pour placer $R$ juste après $C$, placer la masse de l'oscilloscope entre les deux et une voie de l'oscilloscope à l'autre borne de chaque composant
+
+%\begin{center}
+  %\begin{circuitikz}
+    %\draw (0,0) to[square voltage source, v=$u(t)$ ] (0,2) coordinate(Y1) to[C=$C$] (2, 2) node[ground]{} to[R=$R$, v<=$u_R(t)$] (4,2) coordinate (Y2) to[R=$r$ ] (6,2)  to[L=$L$,   ] (6,0) to[short] (0,0) node[ground]{}; 
+    %\draw[-stealth] (Y1) --++(135:1) node[above] {Voie 1};
+    %\draw[-stealth] (Y2) --++(90:1) node[right] {Voie 2};
+  %\end{circuitikz}
+%\end{center}
+
+%Malheureusement,  ce montage pose un problème de masses, la masse de l'oscilloscope étant branchée à un endroit différent de la masse du générateur, les deux résistances et la bobine sont court-circuitées et le circuit ne fonctionnera plus correctement.
+
+%Pour découpler les masses de l'oscilloscope et du générateur, on peut brancher l'un des deux sur un transformateur d'isolement.
+
+%\begin{itemize}
+  %\item Utiliser le transformateur d'isolement et observer le portrait de phase à l'oscilloscope.
+%\end{itemize}
+
+\subsection{Circuit $RLC$ très amorti}%
+\label{sub:circuit_rlc_tres_amorti}
+
+\begin{itemize}
+  \item Déterminer une valeur de $R$ pour se placer en régime apériodique.
+
+  \item Visualiser l'allure de la tension aux bornes de $C$ et le portrait de phase en régime apériodique.
+
+  \item Déterminer expérimentalement la valeur de $R$ correspondant au régime critique et comparer à la valeur attendue.
+\end{itemize}
+
+\section{Conclusion}%
+\label{sec:conclusion}
+
+Établir une correspondance entre les grandeurs électriques et mécaniques pour ces deux oscillateurs.
+
+\end{document}
