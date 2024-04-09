@@ -153,6 +153,7 @@ def f(x, A, tau):
 
 lx = np.linspace(0,10, 1000)
 ly = (1-np.exp(-lx/3))+np.random.normal(np.zeros(len(lx)),0.01)
+luy = np.ones(1000) 
 
 popt,_ = curve_fit(f, lx, ly, [1], 1/luy)
 
