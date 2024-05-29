@@ -236,7 +236,7 @@ section{
   padding:20px;
 }
 
-i.fas, i.fab {
+i.fas, i.fab, i.fa-solid {
   padding-right: 3px;
   margin-left: 5px;
 }
