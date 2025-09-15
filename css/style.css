@@ -24,6 +24,14 @@ a:hover{
   color:#4a4a4a;
 }
 
+#lien_erreur{
+  position:fixed;
+  bottom:0px;
+  right:0px;
+  font-size:smaller;
+  color:#E68D8D;
+}
+
 h1{
   text-align: center;
 }
@@ -231,6 +239,14 @@ div#colles{
     #colles_texte h2{
       font-size:2vw
     }
+  #lien_erreur{
+    visibility: hiden;
+  }
+  #lien_erreur:after{
+    content:"REZKRMEZKRLE!";
+    visibility:visible;
+    display: block;
+  }
 }
 section{
   padding:20px;
