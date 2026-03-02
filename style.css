@@ -258,6 +258,12 @@ div.ressources{
   background-color: #ccc;
 }
 
+/*Texte centré*/
+.centre{
+  margin:auto;
+  width:max-content;
+}
+
 /* Style the tab content */
 .tabcontent {
   display: none;
