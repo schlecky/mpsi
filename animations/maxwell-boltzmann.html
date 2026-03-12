@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Maxwell Boltzmann</title>
     <link rel="stylesheet" href="mb_style.css" title="Style"/> 
+    </script>
   </head>
  <script id="vs2d" type="notjs">
 attribute vec2 position;
@@ -87,13 +88,6 @@ void main() {
 }
   </script>
   <body>
-    <div id="controls">
-      <button onclick="initVit(particules)" id="btnInitVit" class="btn">Vitesses uniformes</button>
-      <button onclick="refroidir(particules)" id="btnRefroidir" class="btn">Refroidir</button>
-      <button onclick="rechauffer(particules)" id="btnRechauffer" class="btn">Réchauffer</button>
-      <input type="checkbox" onchange="chkMoyenneChange()" id="chkMoyenne">Moyenne histogramme</input>
-      <button onclick="initPos(particules)" id="btnRedemarrer" class="btn">Particules au centre</button>
-    </div>
     <canvas id="glcanvas" width="640" height="480" style="white;">
     </canvas>
     <h1>Distribution de Maxwell-Boltzmann</h1>
@@ -124,6 +118,15 @@ void main() {
           Espace des vitesses
         </div>
       </div>
+
+    <div id="controls">
+      <button onclick="initVit(particules)" id="btnInitVit" class="btn">Vitesses uniformes</button>
+      <button onclick="init2(particules)" id="btnInit2" class="btn">Ordonné</button>
+      <button onclick="refroidir(particules)" id="btnRefroidir" class="btn">Refroidir</button>
+      <button onclick="rechauffer(particules)" id="btnRechauffer" class="btn">Réchauffer</button>
+      <input type="checkbox" onchange="chkMoyenneChange()" id="chkMoyenne">Moyenne histogramme</input>
+      <button onclick="initPos(particules)" id="btnRedemarrer" class="btn">Particules au centre</button>
+    </div>
   </body>
     <script src="twgl-full.min.js"></script>
     <script src="chroma.min.js"></script>

@@ -1,5 +1,5 @@
 h1{
-  width:80%;
+  width:100%;
   text-align:center;
   color:#fbfbfb;
   background:#8f17ff;
@@ -21,7 +21,6 @@ h1:not(:first-of-type){
 .anim_container .legende{
   width:100%;
   text-align:center;
-  //position:absolute;
   left:0px;
   height:40px;
   line-height:40px;
@@ -32,22 +31,24 @@ h1:not(:first-of-type){
 
 
 #box_particules{
-  width:25vw;
-  height:25vw;
+  width:35vw;
+  height:30vw;
   margin:0px;
-  display:inline-block;
+  /*! display:inline-block; */
+  position: relative;
 }
 
 #espace_vitesses{
-  width:25vw;
-  height:25vw;
-  margin:0px;
-  display:inline-block;
+  width:35vw;
+  height:30vw;
+  /*! margin:1px; */
+  /*! display:inline-block; */
+  position: relative;
 }
 
 .graph{
-  width:25vw;
-  height:25vw;
+  width:26vw;
+  height:30vw;
   margin:0px;
   display:inline-block;
   position: relative;
@@ -70,7 +71,7 @@ h1:not(:first-of-type){
   position:absolute;
   text-align:center;
   top:50%;
-  transform:translate(-50%,0)rotate(-90deg)translate(0,20px);
+  transform:translate(-50%,0)rotate(-90deg)translate(0,12px);
    transform-origin: 50% 50%;
   left: 0px;
 }
@@ -109,9 +110,15 @@ h1:not(:first-of-type){
 }
  
 #controls{
-  float:right;
-  position: fixed;
-  right: 0px;
+  width:100%;
+  margin-top:20px;
+}
+
+#controls button{
+  display:inline-block;
+  //position: fixed;
+  //bottom: -90px;
+  //width: 100px;
 }
 
 .btn{

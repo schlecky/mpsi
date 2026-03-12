@@ -8,7 +8,7 @@ const colorScale = chroma.scale(['blue', 'red']).mode('lch');
 const partCoul = chroma('blue').brighten().gl();
 const partCoulSel = chroma('red').brighten().gl();
 const rayon = 0.04;
-const nParticules = 500;
+const nParticules = 200;
 const eye = [2, 4, -6];
 const up = [0, 1, 0];
 
@@ -92,11 +92,30 @@ function initPos(particules){
     particules[i].pos = v3.create(rand(-0.3, 0.3), rand(-0.3, 0.3), rand(-0.3, 0.3));
   }
 }
+//function initVit(particules){
+  //for(var i=0; i<particules.length; i++){
+    //particules[i].vit = v3.create(1 + rand(-0.01, 0.01), rand(-0.01, 0.01), rand(-0.01, 0.01));
+  //}
+//}
+
+
 function initVit(particules){
   for(var i=0; i<particules.length; i++){
-    particules[i].vit = v3.create(1 + rand(-0.01, 0.01), rand(-0.01, 0.01), rand(-0.01, 0.01));
+    particules[i].vit = v3.create(1 , 0, 0);
   }
 }
+
+function init2(particules){
+  n = Math.pow(particules.length, 1/2);
+  dx = (xmax-xmin-3*rayon)/n;
+  dy = (ymax-ymin-3*rayon)/n;
+  for(var i=0; i<particules.length; i++){
+    particules[i].vit = v3.create(0 , 0, 1);
+    particules[i].pos = v3.create(xmin + 1.5*rayon + (xmax-xmin)/n*Math.floor(i%n), ymin + 1.5*rayon+ (ymax-ymin)/n*((i-i%n)/n), 0);
+  }
+  particules[particules.length-1].vit = v3.create(1 + rand(-0.01, 0.01), rand(-0.01, 0.01), rand(-0.01, 0.01));
+}
+
 function refroidir(particules){
   for(var i=0; i<particules.length; i++){
     particules[i].vit = v3.mulScalar(particules[i].vit, 0.8);
