@@ -9,7 +9,7 @@ const nPointsIsotherme = 200;
 const up = [0, 1, 0];
 
 const programInfo = twgl.createProgramInfo(gl, ["vs", "fs"]);
-const programInfoLine = twgl.createProgramInfo(gl, ["vs", "line_fs"]);
+const programInfoLine = twgl.createProgramInfo(gl, ["line_vs", "line_fs"]);
 
 var bufferInfo;
 
@@ -21,7 +21,7 @@ const lineBufferInfo = twgl.createBufferInfoFromArrays(gl, lineArrays);
 
 var isothermeArrays = {
   position : {numComponents:3, data:[]},
-  indices : {numComponents:2, data:[]},
+  //indices : {numComponents:2, data:[]},
 }
 
 var isothermeBufferInfo;
@@ -65,7 +65,7 @@ var state = {
     'txtLiquideGaz':{'couleur':chroma('white').gl(),type:gl.TRIANGLES, program:programInfo},
     'txtLiquide':{'couleur':chroma('white').gl(),type:gl.TRIANGLES, program:programInfo},
 
-    'fond':{'couleur':chroma('white').gl(),type:gl.TRIANGLES, program:programInfo},
+    'fond':{'couleur':chroma.mix('blue', "white", 0.8).gl(),type:gl.TRIANGLES, program:programInfo},
 
     'axeV':{'couleur':chroma('black').gl(),type:gl.TRIANGLES, program:programInfo},
     'axeT':{'couleur':chroma('black').gl(),type:gl.TRIANGLES, program:programInfo},
@@ -78,7 +78,7 @@ var state = {
     'crb_rosee':{'couleur':chroma('white').gl(), type:gl.LINES, program:programInfoLine},
     'crb_ebul':{'couleur':chroma('yellow').gl(), type:gl.LINES, program:programInfoLine},
 
-    'isotherme':{'couleur':chroma('black').gl(), type:gl.LINES, program:programInfoLine},
+    'isotherme':{'couleur':chroma('black').gl(), type:gl.LINE_STRIP, program:programInfoLine},
   };
 
 const tempSlider = document.querySelector("#temperature");
@@ -87,7 +87,7 @@ const tempSlider = document.querySelector("#temperature");
 const uniforms = {
   u_lightWorldPos: [-5, 4, 1],
   u_lightColor: [1, 1, 1, 1],
-  u_ambient: [0.2, 0.2, 0.2, 1],
+  u_ambient: [0.3, 0.3, 0.3, 1],
   u_specular: [1, 1, 1, 1],
   u_shininess: 30,
   u_specularFactor: 0.3,
@@ -113,12 +113,13 @@ tempSlider.addEventListener('input', temperatureChanged);
 
 
 function createIsothermeBufferInfo(){
-  for(var i=0; i<nPointsIsotherme; i++){
-    isothermeArrays.indices.data.push(i);
-    if((i>0) && (i<nPointsIsotherme-1))
-      isothermeArrays.indices.data.push(i);
-  }
-  isothermeArrays.position.data = Array(nPointsIsotherme*3).fill(0);
+  //for(var i=0; i<nPointsIsotherme; i++){
+    //isothermeArrays.indices.data.push(i);
+    //if((i>0) && (i<nPointsIsotherme-1))
+      //isothermeArrays.indices.data.push(i);
+  //}
+  //isothermeArrays.position.data = Array(nPointsIsotherme*3).fill(0);
+  isothermeArrays.position.data = [];
   isothermeBufferInfo = twgl.createBufferInfoFromArrays(gl, isothermeArrays);
   bufferInfos['isotherme'] = isothermeBufferInfo;
 }
@@ -128,19 +129,31 @@ function calcIsothermeArray(temp){
   var vmin = -5;
   var vmax = 5;
   var x = temp;
-  isothermeArrays.position.data.length = 0;
+  //isothermeArrays.position.data.length = 0;
   for(var i=0; i<nPointsIsotherme; i++){
+    //var z = vmin+i*(vmax-vmin)/nPointsIsotherme;
+    //var coord = coordinatesOnSurface(v3.create(x,5,z));
+    //isothermeArrays.position.data.push(coord[0]-0.1);
+    ////isothermeArrays.position.data.push(temp);
+    //isothermeArrays.position.data.push(coord[1]+0.1);
+    ////isothermeArrays.position.data.push(3);
+    //isothermeArrays.position.data.push(coord[2]+0.1);
+    ////isothermeArrays.position.data.push(z);
+    //var z = vmin + i * (vmax - vmin) / (nPointsIsotherme - 1);
     var z = vmin+i*(vmax-vmin)/nPointsIsotherme;
     var coord = coordinatesOnSurface(v3.create(x,5,z));
-    isothermeArrays.position.data.push(coord[0]-0.1);
-    //isothermeArrays.position.data.push(temp);
-    isothermeArrays.position.data.push(coord[1]+0.1);
-    //isothermeArrays.position.data.push(3);
-    isothermeArrays.position.data.push(coord[2]+0.1);
-    //isothermeArrays.position.data.push(z);
-  }
 
-  twgl.setAttribInfoBufferFromArray(gl, isothermeBufferInfo.attribs.position, isothermeArrays.position);
+    isothermeArrays.position.data[3*i+0] = coord[0]-0.1;
+    isothermeArrays.position.data[3*i+1] = coord[1]+0.1;
+    isothermeArrays.position.data[3*i+2] = coord[2]+0.1;
+  }
+  //twgl.setAttribInfoBufferFromArray(gl, isothermeBufferInfo.attribs.position, isothermeArrays.position);
+  //twgl.setAttribInfoBufferFromArray(gl, bufferInfos['isotherme'].attribs.position, isothermeArrays.position.data);
+  bufferInfos['isotherme'] = twgl.createBufferInfoFromArrays(gl, {
+    position: isothermeArrays.position.data
+  });
+
+  //bufferInfos['isotherme'].numElements = nPointsIsotherme;
 }
 
 function coordinatesOnSurface(point){
@@ -468,12 +481,18 @@ function render_cube(time){
 
   for(let k in bufferInfos){
     if(k in toDraw){
-      //gl.useProgram(toDraw[k]['program']);
       gl.useProgram(toDraw[k]['program'].program);
       twgl.setBuffersAndAttributes(gl, toDraw[k]['program'], bufferInfos[k]);
       uniforms.u_diffuse = toDraw[k]['couleur'];
       twgl.setUniforms(toDraw[k]['program'], uniforms);
-      gl.drawElements(toDraw[k]['type'], bufferInfos[k].numElements, gl.UNSIGNED_SHORT, 0);
+      if(k == 'isotherme'){
+        const bufferInfo = twgl.createBufferInfoFromArrays(gl, isothermeArrays);
+        twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
+        gl.drawArrays(gl.LINE_STRIP, 0, bufferInfo.numElements);
+      } else {
+        gl.drawElements(toDraw[k]['type'], bufferInfos[k].numElements, gl.UNSIGNED_SHORT, 0);
+      }
+      //gl.drawElements(toDraw[k]['type'], bufferInfos[k].numElements, gl.UNSIGNED_SHORT, 0);
     }
   }
 }
@@ -487,7 +506,7 @@ function render(time) {
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
   gl.clearColor(1, 1, 1, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
+  
   gl.enable(gl.DEPTH_TEST);
   //gl.enable(gl.CULL_FACE);
   //gl.enable(gl.BLEND);
