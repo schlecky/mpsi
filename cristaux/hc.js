@@ -185,7 +185,7 @@ $( document ).ready(function() {
 
   var sizeSlider = document.getElementById("sizeSlider");
   sizeSlider.oninput = function() {
-    Jmol.script(JmolApplet0, "select all; spacefill "+this.value+"%");
+    Jmol.script(JmolApplet0, "select all; spacefill "+this.value/100);
   } 
 
   var btnPlanA = document.getElementById("btnPlanA");
