@@ -35,7 +35,7 @@ var Info = {
 function configApplet(){
   Info.height = window.innerHeight;
   $("#appdiv").html(Jmol.getAppletHtml("JmolApplet0", Info))
-  Jmol.script(JmolApplet0, "load hc.cif 1 {113 886 1}; wireframe off;unitcell off;axes off;spacefill 1.3; moveto 0 {-1 1 0}  125");
+  Jmol.script(JmolApplet0, "load hc.cif 1 {113 886 1}; wireframe off;unitcell off;axes off; moveto 0 {-1 1 0}  125");
   Jmol.script(JmolApplet0, "define planA (titanium) AND WITHIN(0.1, PLANE, @{plane(@1,@1069,@901)})");
   Jmol.script(JmolApplet0, "select planA; color atoms [xCCA2F3];"); 
   Jmol.script(JmolApplet0, "define planB (titanium) AND WITHIN(0.1, PLANE, @{plane(@2,@1070,@902)})");
@@ -47,7 +47,7 @@ function configApplet(){
   Jmol.script(JmolApplet0, "define mailleHC (titanium) AND (cell=555); ")
   Jmol.script(JmolApplet0, "data \"element_vdw\" 22 1.91 ; 82 0.8585 END \"element_vdw\"");
   Jmol.script(JmolApplet0, "set defaultVDW USER");
-  Jmol.script(JmolApplet0, "select all;spacefill 100%");
+  Jmol.script(JmolApplet0, "select all;spacefill 1.48");
 
   Jmol.script(JmolApplet0, "");
   Jmol.script(JmolApplet0, "hide all;"); 
