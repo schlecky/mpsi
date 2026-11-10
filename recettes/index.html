@@ -88,8 +88,15 @@ Il faut indiquer le chemin complet du fichier <code>data.txt</code>. Les donnée
 d = data[:,1]</code></pre>
       </dd>
 
-      <dt><button type="button" aria-expanded="false" aria-controls="faq_plot_desc">Tracer un graphique avec des barres d'erreur</button></dt>
+      <dt><button type="button" aria-expanded="false" aria-controls="faq_plot_desc">Tracer un graphique </button></dt>
       <dd id="faq_plot_desc">
+        <code>lx</code> et <code>ly</code> sont des listes (tableaux numpy ou listes python) contenant les valeurs de x et de y. On trace le graphique représentant y = f(x) de la manière suivante :
+                <pre class="line-numbers"><code class=language-python>plt.plot(lx, ly)
+plt.show()</code></pre>
+      </dd>
+
+      <dt><button type="button" aria-expanded="false" aria-controls="faq_ploterr_desc">Tracer un graphique avec des barres d'erreur</button></dt>
+      <dd id="faq_ploterr_desc">
         <code>lx</code> et <code>ly</code> sont des listes (tableaux numpy ou listes python) contenant les valeurs de x et de y. <code>lux</code> et <code>luy</code> sont des listes contenant les incertitudes associées à x et y. On trace le graphique représentant y = f(x) avec les barres d'erreur correspondantes de la manière suivante :
                 <pre class="line-numbers"><code class=language-python>plt.errorbar(lx, ly, yerr=luy, xerr=lux, fmt="o", capsize=3, zorder=0) </code></pre>
       </dd>
